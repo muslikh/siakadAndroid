@@ -4,9 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txt_id = (TextView) findViewById(R.id.txt_id);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("SIAKAD");
+        toolbar.setSubtitle("SMK NEGERI PRIGEN");
+        toolbar.setLogo(R.mipmap.ic_logo);
+
         txt_username = (TextView) findViewById(R.id.txt_username);
         btn_logout = (Button) findViewById(R.id.btn_logout);
 
@@ -32,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         id = getIntent().getStringExtra(TAG_ID);
         username = getIntent().getStringExtra(TAG_USERNAME);
 
-        txt_id.setText("ID : " + id);
-        txt_username.setText("USERNAME : " + username);
+//        txt_id.setText("ID : " + id);
+//        txt_username.setText("USERNAME : " + username);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
 
@@ -53,5 +65,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        TableLayout tableLayout = (TableLayout) this.findViewById(R.id.tabelJadwal);
+        TableRow row = (TableRow)getLayoutInflater().inflate(R.layout.jadwal_row, null);
+        ((TextView)row.findViewById(R.id.noTabel)).setText("2");
+        ((TextView)row.findViewById(R.id.jamTabel)).setText("8 - 10 ");
+        ((TextView)row.findViewById(R.id.GuruTabel)).setText("aku ");
+        ((TextView)row.findViewById(R.id.pelajaranTabel)).setText("ngoding ");
+
+        return  true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.setting:
+                Toast.makeText(getApplicationContext(),"Setting",Toast.LENGTH_LONG).show();
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"));
+//
+//                startActivity(browserIntent);
+
+                return true;
+
+        }
+        return false;
     }
 }
