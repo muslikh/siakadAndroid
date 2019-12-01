@@ -34,10 +34,11 @@ public class MainActivity extends AppCompatActivity
 
 private SliderLayout sliderShow;
 
-    Button btn_logout;
+    Button leftMenu;
     TextView txt_id, txt_username;
     String id, username;
     SharedPreferences sharedpreferences;
+    NavigationView navigationView;
 
     public static final String TAG_ID = "id";
     public static final String TAG_USERNAME = "username";
@@ -94,33 +95,8 @@ private SliderLayout sliderShow;
 //        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        NavigationView navigationView = findViewById(R.id.drawer);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        menuKiri();
 
-                switch (menuItem.getItemId())
-                {
-                    case R.id.logout:
-
-                                // update login session ke FALSE dan mengosongkan nilai id dan username
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putBoolean(Login.session_status, false);
-                                editor.putString(TAG_ID, null);
-                                editor.putString(TAG_USERNAME, null);
-                                editor.commit();
-
-                                Intent intent = new Intent(MainActivity.this, Login.class);
-                                finish();
-                                startActivity(intent);
-
-                        break;
-
-                }
-
-                return false;
-            }
-        });
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
 
@@ -165,6 +141,36 @@ private SliderLayout sliderShow;
     }
 
 
+    public void menuKiri()
+    {
+        NavigationView navigationView = findViewById(R.id.drawer);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId())
+                {
+                    case R.id.logout:
+
+                        // update login session ke FALSE dan mengosongkan nilai id dan username
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putBoolean(Login.session_status, false);
+                        editor.putString(TAG_ID, null);
+                        editor.putString(TAG_USERNAME, null);
+                        editor.commit();
+
+                        Intent intent = new Intent(MainActivity.this, Login.class);
+                        finish();
+                        startActivity(intent);
+
+                        break;
+
+                }
+
+                return false;
+            }
+        });
+    }
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -180,15 +186,37 @@ private SliderLayout sliderShow;
         return  true;
     }
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.setting:
-                Toast.makeText(getApplicationContext(),"Setting",Toast.LENGTH_LONG).show();
-//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"));
-//
-//                startActivity(browserIntent);
+        int id = item.getItemId();
 
-                return true;
+            if(id ==  R.id.leftMenu)
+            {
+                NavigationView navigationView = findViewById(R.id.drawer);
+                navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
+                        switch (menuItem.getItemId())
+                        {
+                            case R.id.logout:
+
+                                // update login session ke FALSE dan mengosongkan nilai id dan username
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putBoolean(Login.session_status, false);
+                                editor.putString(TAG_ID, null);
+                                editor.putString(TAG_USERNAME, null);
+                                editor.commit();
+
+                                Intent intent = new Intent(MainActivity.this, Login.class);
+                                finish();
+                                startActivity(intent);
+
+                                break;
+
+                        }
+
+                        return false;
+                    }
+                });
         }
         return false;
     }
@@ -219,4 +247,5 @@ private SliderLayout sliderShow;
     public void onPageScrollStateChanged(int state) {
 
     }
+
 }
