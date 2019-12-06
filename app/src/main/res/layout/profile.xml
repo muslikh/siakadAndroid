@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/profileToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark" />
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/aksesMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileToolbar"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/colorWhite"
+        app:itemTextColor="@color/colorWhite"
+        app:menu="@menu/menu_atas" />
+
+    <ImageView
+        android:id="@+id/fotoProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/aksesMenu"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="142dp"
+        android:layout_marginLeft="142dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginRight="141dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+
+
+    <TableLayout
+
+        android:id="@+id/tabelProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fotoProfile"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp">
+
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_namaUser"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Lengkap" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/namaUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Muhammad Muslikh " />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_ttl"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Tempat dan Tanggal Lahir" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/ttlUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+        <TextView
+            android:id="@+id/label_kodeKelas"
+            android:layout_width="129dp"
+            android:layout_height="wrap_content"
+            android:text="Kelas" />
+
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:text=":"/>
+        <TextView
+            android:id="@+id/kodeKelasUser"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+        <TextView
+            android:id="@+id/label_jurusan"
+            android:layout_width="129dp"
+            android:layout_height="wrap_content"
+            android:text="Jurusan" />
+
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:text=":"/>
+        <TextView
+            android:id="@+id/jurusanUser"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" " />
+        </TableRow>
+
+    </TableLayout>
+</RelativeLayout>

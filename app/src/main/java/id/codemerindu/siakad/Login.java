@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
     Boolean session = false;
-    String id, username;
+    String id, username,nama;
     public static final String my_shared_preferences = "my_shared_preferences";
     public static final String session_status = "session_status";
 
@@ -79,7 +79,8 @@ public class Login extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
         id = sharedpreferences.getString(TAG_ID, null);
-        username = sharedpreferences.getString(TAG_USERNAME, null);
+//        username = sharedpreferences.getString(TAG_USERNAME, null);
+       // nama = sharedpreferences.getString(TAG_NAMA, null);
 
         if (session) {
             Intent intent = new Intent(Login.this, MainActivity.class);

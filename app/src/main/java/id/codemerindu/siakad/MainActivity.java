@@ -13,20 +13,28 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+
+import static id.codemerindu.siakad.Login.my_shared_preferences;
+import static id.codemerindu.siakad.Login.session_status;
 
 public class MainActivity extends AppCompatActivity
         implements BaseSliderView.OnSliderClickListener,
@@ -34,14 +42,21 @@ public class MainActivity extends AppCompatActivity
 
 private SliderLayout sliderShow;
 
-    Button leftMenu;
-    TextView txt_id, txt_username;
-    String id, username;
+
+    TextView namaUser, txt_id;
+    String id, username, idu;
     SharedPreferences sharedpreferences;
     NavigationView navigationView;
 
+    Boolean session = false;
+
+    private static final String TAG_SUCCESS = "success";
+    int success;
+    private String url = Server.URL + "masuk.php";
     public static final String TAG_ID = "id";
+    public static final String TAG_IDU = "idu";
     public static final String TAG_USERNAME = "username";
+    String tag_json_obj = "json_obj_req";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +65,8 @@ private SliderLayout sliderShow;
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        txt_id = (TextView)findViewById(R.id.txt_id);
 
         getSupportActionBar().setTitle("SIAKAD");
         toolbar.setSubtitle("SMK NEGERI PRIGEN");
@@ -63,36 +80,30 @@ private SliderLayout sliderShow;
                 switch (menuItem.getItemId())
                 {
                     case  R.id.beranda:
-                        Toast.makeText(getApplication(),"Beranda",Toast.LENGTH_LONG).show();
+//                        Intent beranda = new Intent(MainActivity.this,MainActivity.class);
+//                        startActivity(beranda);
                         break;
                     case  R.id.grup:
                         break;
                     case  R.id.profil:
+
+                        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+                        session = sharedpreferences.getBoolean(session_status, false);
+                        if (session) {
+                            Intent profil = new Intent(MainActivity.this, Profile.class);
+                            profil.putExtra(TAG_IDU, idu);
+                            startActivity(profil);
+                        }
                         break;
                 }
                 return false;
             }
         });
 
-        txt_username = (TextView) findViewById(R.id.txt_username);
-//        btn_logout = (Button) findViewById(R.id.btn_logout);
-//        btn_logout.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                // update login session ke FALSE dan mengosongkan nilai id dan username
-//                SharedPreferences.Editor editor = sharedpreferences.edit();
-//                editor.putBoolean(Login.session_status, false);
-//                editor.putString(TAG_ID, null);
-//                editor.putString(TAG_USERNAME, null);
-//                editor.commit();
-//
-//                Intent intent = new Intent(MainActivity.this, Login.class);
-//                finish();
-//                startActivity(intent);
-//            }
-//        });
+//        txt_username = (TextView) findViewById(R.id.txt_username);
+//        namaUser = (TextView) findViewById(R.id.namaUser);
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         menuKiri();
@@ -128,15 +139,21 @@ private SliderLayout sliderShow;
         sliderShow.addOnPageChangeListener(this);
 
 
-        sharedpreferences = getSharedPreferences(Login.my_shared_preferences, Context.MODE_PRIVATE);
+
+        // Cek session login jika TRUE maka langsung buka Profile
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        idu = sharedpreferences.getString(TAG_ID, null);
 
         id = getIntent().getStringExtra(TAG_ID);
-        username = getIntent().getStringExtra(TAG_USERNAME);
+  //      nama = getIntent().getStringExtra(TAG_NAMA);
+        //username = getIntent().getStringExtra(TAG_MESSA);
 
-//        txt_id.setText("ID : " + id);
-//        txt_username.setText("USERNAME : " + username);
+    //    namaUser.setText("a"+username);
+        txt_id.setText("ID : " + id);
+    //    txt_username.setText("USERNAME : " + username);
 
-
+//getData();
 
     }
 
@@ -154,7 +171,7 @@ private SliderLayout sliderShow;
 
                         // update login session ke FALSE dan mengosongkan nilai id dan username
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putBoolean(Login.session_status, false);
+                        editor.putBoolean(session_status, false);
                         editor.putString(TAG_ID, null);
                         editor.putString(TAG_USERNAME, null);
                         editor.commit();
@@ -174,8 +191,8 @@ private SliderLayout sliderShow;
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         TableLayout tableLayout = (TableLayout) this.findViewById(R.id.tabelJadwal);
         TableRow row = (TableRow)getLayoutInflater().inflate(R.layout.jadwal_row, null);
         ((TextView)row.findViewById(R.id.noTabel)).setText("2");
@@ -185,41 +202,15 @@ private SliderLayout sliderShow;
 
         return  true;
     }
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-            if(id ==  R.id.leftMenu)
-            {
-                NavigationView navigationView = findViewById(R.id.drawer);
-                navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                        switch (menuItem.getItemId())
-                        {
-                            case R.id.logout:
-
-                                // update login session ke FALSE dan mengosongkan nilai id dan username
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putBoolean(Login.session_status, false);
-                                editor.putString(TAG_ID, null);
-                                editor.putString(TAG_USERNAME, null);
-                                editor.commit();
-
-                                Intent intent = new Intent(MainActivity.this, Login.class);
-                                finish();
-                                startActivity(intent);
-
-                                break;
-
-                        }
-
-                        return false;
-                    }
-                });
-        }
-        return false;
-    }
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        int id = item.getItemId();
+//
+//            if(id ==  R.id.leftMenu)
+//            {
+//
+//        }
+//        return false;
+//    }
 
     @Override
     protected void onStop() {
@@ -248,4 +239,66 @@ private SliderLayout sliderShow;
 
     }
 
-}
+    public void getData()
+    {
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//        JSONObject jsonBody = new JSONObject();
+//        success = jsonBody.getInt(TAG_SUCCESS);
+
+        //final String requestBody = jsonBody.toString();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    success = jObj.getInt(TAG_SUCCESS);
+                    if (success == 1) {
+                        namaUser.setText(jObj.getString(TAG_USERNAME));
+                    }
+                    // Check for error node in json
+//                    if (success == 1) {
+//                        String username = jObj.getString(TAG_USERNAME);
+//                        String id = jObj.getString(TAG_ID);
+//
+//                        Log.e("Successfully Login!", jObj.toString());
+//
+//                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+//
+//                        // menyimpan login ke session
+//                        SharedPreferences.Editor editor = sharedpreferences.edit();
+//                        editor.putBoolean(session_status, true);
+//                        editor.putString(TAG_ID, id);
+//                        editor.putString(TAG_USERNAME, username);
+//                        editor.commit();
+//
+//                        // Memanggil main activity
+//                        Intent intent = new Intent(Login.this, MainActivity.class);
+//                        intent.putExtra(TAG_ID, id);
+//                        intent.putExtra(TAG_USERNAME, username);
+//                        finish();
+//                        startActivity(intent);
+//                    } else {
+//                        Toast.makeText(getApplicationContext(),
+//                                jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+//
+//                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.d("onErrorResponse: Error", error.toString());
+            }
+            });
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
+        }
+
+    }

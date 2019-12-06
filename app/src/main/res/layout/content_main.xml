@@ -105,6 +105,7 @@
                 android:text="Aku" />
 
             <TextView
+                android:id="@+id/txt_id"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -136,9 +137,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="-1dp"
-        android:background="@color/colorPrimary"
-        app:itemIconTint="@color/design_default_color_primary"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
         app:menu="@menu/menu_atas" />
 
