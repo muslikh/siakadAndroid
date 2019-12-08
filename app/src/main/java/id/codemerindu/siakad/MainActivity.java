@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +67,13 @@ private SliderLayout sliderShow;
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG_IDU,idu);
+// set Fragmentclass Arguments
+        fragSiswa fragobj = new fragSiswa();
+        fragobj.setArguments(bundle);
+
         txt_id = (TextView)findViewById(R.id.txt_id);
 
         getSupportActionBar().setTitle("SIAKAD");
@@ -79,7 +87,7 @@ private SliderLayout sliderShow;
 
                 switch (menuItem.getItemId())
                 {
-                    case  R.id.beranda:
+                    case  R.id.jadwal:
 //                        Intent beranda = new Intent(MainActivity.this,MainActivity.class);
 //                        startActivity(beranda);
                         break;
@@ -93,8 +101,16 @@ private SliderLayout sliderShow;
                             Intent profil = new Intent(MainActivity.this, Profile.class);
                             profil.putExtra(TAG_IDU, idu);
                             startActivity(profil);
+//                            Fragment fragment = new fragSiswa();
+//                            getSupportFragmentManager().beginTransaction()
+//                                    .replace(R.id.fragsiswa
+//                                            , fragment, fragment.getClass().getSimpleName())
+//                                    .addToBackStack(null)
+//                                    .commit();
+//                            break;
                         }
-                        break;
+
+
                 }
                 return false;
             }

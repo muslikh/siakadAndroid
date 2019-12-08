@@ -4,183 +4,99 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import static id.codemerindu.siakad.Login.my_shared_preferences;
+import static id.codemerindu.siakad.Login.session_status;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class Profile extends AppCompatActivity {
 
-    TextView namaUser,ttlUser,kodeKelas,jurusan;
-    String id;
+    TextView namaUser, ttlUser, kodeKelas, jurusan;
+    String idu;
     SharedPreferences sharedpreferences;
-    public final static String TAG="Profile";
+    public final static String TAG = "Profile";
     public final static String TAG_IDU = "idu";
+    PagerAdapter pagerAdapter;
 
-    final String url = "http://152746201341.ip-dynamic.com/login/siswa.php";
-    private RequestQueue requestQueue;
+    Boolean session = false;
+
 
     @Override
-    public void onCreate(Bundle savedIntanceState)
-    {
+    public void onCreate(Bundle savedIntanceState) {
         super.onCreate(savedIntanceState);
         setContentView(R.layout.profile);
 
-        requestQueue = Volley.newRequestQueue(this);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.profileToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("SIAKAD");
-        toolbar.setSubtitle("SMK NEGERI PRIGEN");
-        toolbar.setLogo(R.mipmap.ic_logo);
+        getSupportActionBar().setTitle("Detail Profil");
 
-        namaUser = (TextView) findViewById(R.id.namaUser);
-        ttlUser = (TextView) findViewById(R.id.ttlUser);
-        kodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
-        jurusan = (TextView) findViewById(R.id.jurusanUser);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
+        //Memanggil dan Memasukan Value pada Class PagerAdapter(FragmentManager dan JumlahTab)
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.aksesMenu);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        //Memasang Adapter pada ViewPager
+        viewPager.setAdapter(pagerAdapter);
+
+        /*
+         Menambahkan Listener yang akan dipanggil kapan pun halaman berubah atau
+         bergulir secara bertahap, sehingga posisi tab tetap singkron
+         */
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        //Callback Interface dipanggil saat status pilihan tab berubah.
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            public void onTabSelected(TabLayout.Tab tab) {
+                //Dipanggil ketika tab memasuki state/keadaan yang dipilih.
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-                switch (menuItem.getItemId())
-                {
-                    case  R.id.beranda:
-                        Intent beranda = new Intent(getApplicationContext(),MainActivity.class);
-                        startActivity(beranda);
-                        break;
-                    case  R.id.grup:
-                        break;
-                    case  R.id.profil:
-//                        Intent profil = new Intent(getApplicationContext(), Profile.class);
-//                        startActivity(profil);
-                        break;
-                }
-                return false;
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //Dipanggil saat tab keluar dari keadaan yang dipilih.
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //Dipanggil ketika tab yang sudah dipilih, dipilih lagi oleh user.
             }
         });
 
-        getData(url);
+
     }
 
-    public void getData(String url)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-        StringRequest stringRequests =
-                new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray dataArray= new JSONArray(response);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
-                    for (int i =0; i<dataArray.length(); i++)
-                    {
-
-                        JSONObject obj = dataArray.getJSONObject(i);
-                        int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
-                        String nama = obj.getString("nama");
-                        int id = obj.getInt("id_siswa");
-                        String tempatLahir = obj.getString("tempat_lahir");
-                        String tanggalLahir = obj.getString("tanggal_lahir");
-                        String kodekelas = obj.getString("kode_kelas");
-                        String jurusanS = obj.getString("kode_jurusan");
-                        if (extraId== id )
-                        {
-                            namaUser.setText(nama);
-                           ttlUser.setText(tempatLahir +","+ tanggalLahir);
-                            kodeKelas.setText(kodekelas);
-                            jurusan.setText(jurusanS);
-                        }
-                    }
-
-//                    JSONObject obj = new JSONObject(response.toString());
-//                    JSONArray dataArray= obj.getJSONArray("data");
-                    Log.d(TAG, "onResponse:" + response);
-                }  catch(
-            JSONException e)
-
-            {
-                e.printStackTrace();
-            }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                namaUser.setText(error.getLocalizedMessage());
-            }
-    });
-     requestQueue.add(stringRequests);
+        return true;
     }
 
-//
-//    public void getData()
-//    {
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        final String url = "http://152746201341.ip-dynamic.com/login/siswa.php";
-//       final  JSONObject jsonObject = new JSONObject();
-//            final String request = jsonObject.toString();
-//
-//
-//            sharedpreferences = getSharedPreferences(Login.my_shared_preferences, Context.MODE_PRIVATE);
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//
-//                try{
-//                JSONObject obj = new JSONObject(response.toString());
-//                    JSONArray dataArray= obj.getJSONArray("data");
-//
-//                int i = 28;
-//                int idsiswa = Integer.parseInt(dataArray.getJSONObject(i).getString("id_siswa"));
-//                int ambilId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
-//
-//                if (ambilId == idsiswa)
-//                {
-//                    namaUser.setText(dataArray.getJSONObject(i).getString("nama"));
-//                }
-////                    if( id == 29 )
-////                    {
-////                        namaUser.setText(jsonObject1.getString("nama"-> id));
-////                    }
-//            } catch(
-//            JSONException e)
-//
-//            {
-//                e.printStackTrace();
-//            }
-//        }
-//    }, new Response.ErrorListener()
-//
-//    {
-//        @Override
-//        public void onErrorResponse(VolleyError error)
-//            {
-//                    Log.d("error",error.toString());
-//            }
-//        });
-//        queue.add(stringRequest);
-//    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (id == R.id.editDataSiswa) {
+            idu = getIntent().getStringExtra(TAG_IDU);
+            sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+            session = sharedpreferences.getBoolean(session_status, false);
+            if (session) {
+                Intent profil = new Intent(Profile.this, EditDataSiswa.class);
+                profil.putExtra(TAG_IDU, idu);
+                startActivity(profil);
+            }
+        }
+
+        return false;
+    }
 }

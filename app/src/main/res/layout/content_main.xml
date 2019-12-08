@@ -15,7 +15,7 @@
         android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/aksesMenu"
+        android:layout_below="@+id/toolbar"
         android:layout_marginTop="0dp" />
 
     <TableLayout
@@ -136,11 +136,11 @@
         android:id="@+id/aksesMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
         android:background="@color/colorPrimaryDark"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
-        app:menu="@menu/menu_atas" />
+        app:menu="@menu/menu_bawah" />
 
 </RelativeLayout>

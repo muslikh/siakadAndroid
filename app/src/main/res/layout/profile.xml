@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/mainProfile"
     android:layout_height="match_parent">
 
 
@@ -12,22 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark" />
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/aksesMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profileToolbar"
-        android:layout_marginTop="0dp"
-        android:background="@color/colorPrimaryDark"
-        app:itemIconTint="@color/colorWhite"
-        app:itemTextColor="@color/colorWhite"
-        app:menu="@menu/menu_atas" />
 
     <ImageView
         android:id="@+id/fotoProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/aksesMenu"
+        android:layout_below="@id/profileToolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
@@ -42,110 +33,39 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
-
-    <TableLayout
-
-        android:id="@+id/tabelProfile"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fotoProfile"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_below="@id/fotoProfile"
+        android:layout_marginTop="5dp">
 
-
-
-        <TableRow
-            android:layout_gravity="center"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/label_namaUser"
-                android:layout_width="129dp"
-                android:layout_height="wrap_content"
-                android:text="Nama Lengkap" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="wrap_content"
-                android:text=":"/>
-            <TextView
-                android:id="@+id/namaUser"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Muhammad Muslikh " />
-
-        </TableRow>
-        <TableRow
-            android:layout_gravity="center"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/label_ttl"
-                android:layout_width="129dp"
-                android:layout_height="wrap_content"
-                android:text="Tempat dan Tanggal Lahir" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="wrap_content"
-                android:text=":"/>
-
-            <TextView
-                android:id="@+id/ttlUser"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=" " />
-        </TableRow>
-
-
-
-        <TableRow
-            android:layout_gravity="center"
-            android:padding="5dp">
-
-        <TextView
-            android:id="@+id/label_kodeKelas"
-            android:layout_width="129dp"
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_datasiswa"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kelas" />
+            android:text="Data Siswa" />
 
-        <TextView
-            android:layout_width="10dp"
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_dataortu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=":"/>
-        <TextView
-            android:id="@+id/kodeKelasUser"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=" " />
-        </TableRow>
-        <TableRow
-            android:layout_gravity="center"
-            android:padding="5dp">
+            android:text="Data Ortu / Wali" />
+    </android.support.design.widget.TabLayout>
 
-        <TextView
-            android:id="@+id/label_jurusan"
-            android:layout_width="129dp"
-            android:layout_height="wrap_content"
-            android:text="Jurusan" />
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/view_pager">
 
-        <TextView
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:text=":"/>
-        <TextView
-            android:id="@+id/jurusanUser"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=" " />
-        </TableRow>
+    </android.support.v4.view.ViewPager>
 
-    </TableLayout>
+
 </RelativeLayout>
