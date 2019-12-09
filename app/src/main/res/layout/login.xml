@@ -76,10 +76,41 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:background="@color/colorPrimary"
-            android:text="login"
+            android:text="Masuk"
             android:textStyle="bold"
             app:fontFamily="monospace" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btn_lupaPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:text=" Lupa Password "
+                android:textColor="#D81313"
+
+                android:textStyle="bold"
+                app:fontFamily="monospace" />
+
+            <TextView
+                android:id="@+id/btn_isiFormulir"
+                android:layout_width="154dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="80dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:text=" Isi Formulir "
+                android:textColor="#D81313"
+                android:textStyle="bold"
+                app:fontFamily="monospace" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

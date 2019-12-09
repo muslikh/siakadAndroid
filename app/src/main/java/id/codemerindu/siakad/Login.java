@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -59,6 +60,23 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        TextView lupaPass = (TextView) findViewById(R.id.btn_lupaPass);
+        TextView isiForm = (TextView) findViewById(R.id.btn_isiFormulir);
+        lupaPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Prosee Pengembanga",Toast.LENGTH_LONG).show();
+            }
+        });
+        isiForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent isiForm = new Intent(Login.this,FormulirPPDB.class);
+                startActivity(isiForm);
+            }
+        });
+
 
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {

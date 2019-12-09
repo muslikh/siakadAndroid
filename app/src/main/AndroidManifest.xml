@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditDataSiswa"></activity>
+        <activity android:name=".FormulirPPDB"></activity>
+        <activity android:name=".EditDataSiswa" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Login">
             <intent-filter>
