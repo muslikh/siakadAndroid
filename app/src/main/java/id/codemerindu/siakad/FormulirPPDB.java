@@ -2,9 +2,11 @@ package id.codemerindu.siakad;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -14,6 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -23,14 +27,15 @@ public class FormulirPPDB extends AppCompatActivity {
 
     private EditText username,password,nisn,nama,jurusan,thnmasuk;
     private Button simpan;
+    private String id_siswa, namaS, usernameS, passwordS, nisnS,jurusanS,thnmasukS;
     private String TAG = "tag";
-    private String Daftar = "daftar";
-    private   String USERNAME_BEFORE = "usernameBefore";
-    private    String USERNAME = "username";
-    private    String PASSWORD = "password";
-    private String url = "http://smknprigen.sch.id/login/mainppdb.php";
-    int SOCKET_TIMEOUT = 3000;
-    int RETRIES = 1;
+    private String TAG_SUCCESSS = "success";
+    private String TAG_MESSAGE = "message";
+    private static String url = Server.URL + "insert.php";
+    private static String url_update = Server.URL + "update.php";
+   // private String url = "http://smknprigen.sch.id/login/mainppdb.php";
+//    int SOCKET_TIMEOUT = 3000;
+//    int RETRIES = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,37 +46,109 @@ public class FormulirPPDB extends AppCompatActivity {
         username = (EditText) findViewById(R.id.ppdb_username);
         password = (EditText) findViewById(R.id.ppdb_password);
         nisn = (EditText) findViewById(R.id.ppdb_nisn);
-        nama = (EditText) findViewById(R.id.ppdb_nisn);
+        nama = (EditText) findViewById(R.id.ppdb_namaLengkap);
         jurusan = (EditText) findViewById(R.id.ppdb_jurusan);
         thnmasuk = (EditText) findViewById(R.id.ppdb_thnMasuk);
         simpan = (Button) findViewById(R.id.ppdbSimpan);
         simpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, String> map = new HashMap<>();
-                map.put(TAG,Daftar);
-                map.put(USERNAME,username.getText().toString());
-                map.put(PASSWORD,password.getText().toString());
-                request.sendPostRequest
+                simpan_update();
             }
+ //               Map<String, String> map = new HashMap<>();
+//                map.put(TAG,Daftar);
+//                map.put(USERNAME,username.getText().toString());
+//                map.put(PASSWORD,password.getText().toString());
+//                request.sendPostRequest();
+//            }
         });
+    }
 
-        public void sendPostRequest(String url, Map<String, String> params) {
-            StringRequest stringRequests =
-            new StringRequest(Request.Method.POST, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    onSucces(response);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    mVolleyInterface.onFailed(error);
-                }
-            });
-            stringRequests.setRetryPolicy(new DefaultRetryPolicy(SOCKET_TIMEOUT,RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    private void simpan_update()
+    {
+//        String url;
+//        if(id_siswa.isEmpty())
+//        {
+//            url = url_insert;
+//        }else{
+//            url = url_update;
+//        }
 
-            request.add(stringRequests);
-        }
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject dataObj = new JSONObject(response);
+                   int  success = dataObj.getInt(TAG_SUCCESSS);
+
+                    // Cek error node pada json
+                    if (success == 1) {
+                        Log.d("Add/update", dataObj.toString());
+
+//                        callVolley();
+//                        kosong();
+
+                        Toast.makeText(FormulirPPDB.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                       // adapter.notifyDataSetChanged();
+
+                    } else {
+                        Toast.makeText(FormulirPPDB.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Error: " + error.getMessage());
+                Toast.makeText(FormulirPPDB.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+
+//                JSONArray array=new JSONArray();
+//
+//                JSONObject jsonObject=new JSONObject();
+//
+                String usernameS = username.getText().toString();
+                String passwordS = password.getText().toString();
+                String namaS = nama.getText().toString();
+                String jurusanS = jurusan.getText().toString();
+                String nisnS = nisn.getText().toString();
+                String thnmasukS = thnmasuk.getText().toString();
+                String  id_siswaBaru = "1000";
+//                for(i=0;<array.si)
+                // Posting parameters ke post url
+                  Map<String, String> params = new HashMap<String, String>();
+                // jika id kosong maka simpan, jika id ada nilainya maka update
+//                if (id_siswa.isEmpty()){
+//                    params.put("username", usernameS);
+//                    params.put("password", passwordS);
+//                    params.put("nama", nama);
+//                    params.put("jurusan", jurusanS);
+//                    params.put("nisn", nisnS);
+//                    params.put("thnmasuk", thnmasukS);
+//                } else {
+                   // params.put("id", getString(id_siswa));
+                    params.put("id_siswaBaru", id_siswaBaru);
+                    params.put("username", usernameS);
+                    params.put("password", passwordS);
+                    params.put("nama", namaS);
+                    params.put("jurusan", jurusanS);
+                    params.put("nisn", nisnS);
+                    params.put("thnmasuk", thnmasukS);
+                //}
+                return params;
+            }
+
+        };
+
+        AppController.getInstance().addToRequestQueue(stringRequest);
     }
 }
