@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +28,6 @@ public class FormulirPPDB extends AppCompatActivity {
 
     private EditText username,password,nisn,nama,jurusan,thnmasuk;
     private Button simpan;
-    private String id_siswa, namaS, usernameS, passwordS, nisnS,jurusanS,thnmasukS;
     private String TAG = "tag";
     private String TAG_SUCCESSS = "success";
     private String TAG_MESSAGE = "message";
@@ -83,7 +83,7 @@ public class FormulirPPDB extends AppCompatActivity {
 
                     // Cek error node pada json
                     if (success == 1) {
-                        Log.d("Add/update", dataObj.toString());
+//                        Log.d("Add/update", dataObj.toString());
 
 //                        callVolley();
 //                        kosong();
@@ -110,22 +110,18 @@ public class FormulirPPDB extends AppCompatActivity {
         }) {
 
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError {
 
-//                JSONArray array=new JSONArray();
-//
-//                JSONObject jsonObject=new JSONObject();
-//
                 String usernameS = username.getText().toString();
                 String passwordS = password.getText().toString();
                 String namaS = nama.getText().toString();
                 String jurusanS = jurusan.getText().toString();
                 String nisnS = nisn.getText().toString();
                 String thnmasukS = thnmasuk.getText().toString();
-                String  id_siswaBaru = "1000";
+              //  String  id_siswaBaru = "1000";
 //                for(i=0;<array.si)
                 // Posting parameters ke post url
-                  Map<String, String> params = new HashMap<String, String>();
+                  Map<String, String> params = new HashMap<>();
                 // jika id kosong maka simpan, jika id ada nilainya maka update
 //                if (id_siswa.isEmpty()){
 //                    params.put("username", usernameS);
@@ -136,7 +132,7 @@ public class FormulirPPDB extends AppCompatActivity {
 //                    params.put("thnmasuk", thnmasukS);
 //                } else {
                    // params.put("id", getString(id_siswa));
-                    params.put("id_siswaBaru", id_siswaBaru);
+//                    params.put("id_siswaBaru", id_siswaBaru);
                     params.put("username", usernameS);
                     params.put("password", passwordS);
                     params.put("nama", namaS);
