@@ -64,6 +64,8 @@ public class FormulirPPDB extends AppCompatActivity {
         });
     }
 
+
+
     private void simpan_update()
     {
 //        String url;
@@ -110,18 +112,19 @@ public class FormulirPPDB extends AppCompatActivity {
         }) {
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
 
-                String usernameS = username.getText().toString();
-                String passwordS = password.getText().toString();
-                String namaS = nama.getText().toString();
-                String jurusanS = jurusan.getText().toString();
-                String nisnS = nisn.getText().toString();
-                String thnmasukS = thnmasuk.getText().toString();
+            protected Map<String,String> getParams(){
+
+//                String usernameS = username.getText().toString();
+//                String passwordS = password.getText().toString();
+//                String namaS = nama.getText().toString();
+//                String jurusanS = jurusan.getText().toString();
+//                String nisnS = nisn.getText().toString();
+//                String thnmasukS = thnmasuk.getText().toString();
               //  String  id_siswaBaru = "1000";
 //                for(i=0;<array.si)
                 // Posting parameters ke post url
-                  Map<String, String> params = new HashMap<>();
+                    Map<String,String> params = new HashMap<String, String>();
                 // jika id kosong maka simpan, jika id ada nilainya maka update
 //                if (id_siswa.isEmpty()){
 //                    params.put("username", usernameS);
@@ -133,16 +136,22 @@ public class FormulirPPDB extends AppCompatActivity {
 //                } else {
                    // params.put("id", getString(id_siswa));
 //                    params.put("id_siswaBaru", id_siswaBaru);
-                    params.put("username", usernameS);
-                    params.put("password", passwordS);
-                    params.put("nama", namaS);
-                    params.put("jurusan", jurusanS);
-                    params.put("nisn", nisnS);
-                    params.put("thnmasuk", thnmasukS);
+                    params.put("username", username.getText().toString());
+                    params.put("password", password.getText().toString());
+                    params.put("nama", nama.getText().toString());
+                    params.put("kode_jurusan", jurusan.getText().toString());
+                    params.put("nisn", nisn.getText().toString());
+                    params.put("tahun_nmasuk", thnmasuk.getText().toString());
                 //}
                 return params;
             }
 
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
         };
 
         AppController.getInstance().addToRequestQueue(stringRequest);
