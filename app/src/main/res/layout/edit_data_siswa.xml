@@ -104,5 +104,11 @@
                 android:text=" " />
         </TableRow>
     </TableLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateSiswa"
+        android:layout_below="@+id/tabelProfile"
+        android:text="Simpan Data"/>
 
 </RelativeLayout>
