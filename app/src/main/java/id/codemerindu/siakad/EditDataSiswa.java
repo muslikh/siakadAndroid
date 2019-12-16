@@ -32,6 +32,7 @@ public class EditDataSiswa extends AppCompatActivity {
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
     EditText EdnamaUser,EdttlUser,EdkodeKelas,Edjurusan;
+    TextView idUser;
     Button updateSiswa;
 
 
@@ -44,7 +45,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
     public void editData(String url)
     {
-
+        idUser = (TextView)  findViewById(R.id.idUser);
         EdnamaUser = (EditText) findViewById(R.id.namaUser);
         EdttlUser = (EditText) findViewById(R.id.ttlUser);
         EdkodeKelas = (EditText) findViewById(R.id.kodeKelasUser);
@@ -72,12 +73,14 @@ public class EditDataSiswa extends AppCompatActivity {
                                 int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
                                 String nama = obj.getString("nama");
                                 int id = obj.getInt("id_siswa");
+                                String id_siswa = getIntent().getStringExtra(TAG_IDU);
                                 String tempatLahir = obj.getString("tempat_lahir");
                                 String tanggalLahir = obj.getString("tanggal_lahir");
                                 String kodekelas = obj.getString("kode_kelas");
                                 String jurusanS = obj.getString("kode_jurusan");
                                 if (extraId== id )
                                 {
+                                    idUser.setText(id_siswa);
                                     EdnamaUser.setText(nama);
                                     EdttlUser.setText(tempatLahir +","+ tanggalLahir);
                                     EdkodeKelas.setText(kodekelas);
@@ -134,12 +137,13 @@ public class EditDataSiswa extends AppCompatActivity {
             protected Map<String,String> getParams() throws AuthFailureError {
 
                 Map<String,String> map = new HashMap<>();
-                //map.put("id_siswaBaru", extraId);
+
+                map.put("id_siswa", idUser.getText().toString());
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("kode_jurusan", Edjurusan.getText().toString());
-                map.put("kelas", EdkodeKelas.getText().toString());
+                map.put("kode_kelas", EdkodeKelas.getText().toString());
                 // params.put("tahun_nmasuk", thnmasuk.getText().toString());
-                //}
+
                 return map;
             }
 

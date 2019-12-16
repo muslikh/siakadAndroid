@@ -19,6 +19,28 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/label_id"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="ID " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/idUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
                 android:id="@+id/label_namaUser"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
