@@ -3,7 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TableLayout
 
         android:id="@+id/tabelProfile"
@@ -11,18 +17,21 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
     <!--identitas siswa-->
     <TableRow
         android:layout_gravity="center"
         android:padding="5dp"
         >
+
         <TextView
-            android:layout_span="2"
-            android:text="Identitas Pribadi :"
-            android:textStyle="bold"
-            />
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            android:layout_span="3"
+            android:text="Keterangan Peserta Didik :"
+            android:textStyle="bold" />
     </TableRow>
 
     <TableRow
@@ -47,15 +56,37 @@
             android:text="Muhammad Muslikh " />
 
     </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_jkl"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Jenis Kelamin" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/jklUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
     <TableRow
         android:layout_gravity="center"
         android:padding="5dp">
 
         <TextView
             android:id="@+id/label_ttl"
-            android:layout_width="129dp"
+            android:layout_width="151dp"
             android:layout_height="wrap_content"
-            android:text="Tempat dan Tanggal Lahir" />
+            android:text="Tempat, Tanggal Lahir" />
 
         <TextView
             android:layout_width="10dp"
@@ -70,24 +101,492 @@
             android:text=" " />
     </TableRow>
 
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_agama"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Agama" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/agmUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
 
 
-    <TableRow
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_kewarga"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Kewarganegaraan" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/wargaUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_anakKe"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Anak Keberapa" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/anakKeUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_sdrkan"
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:text="jumlah Saudara kandung" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/jmlsdrkanUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_sdrtir"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Jumlah Saudara Tiri" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/jmlsdrtirUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_hobi"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Hobbi" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/hobiUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+            <!--identitas alamat-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="209dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Tempat Tinggal :"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_alamat"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Alamat" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/alamatUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Jl. Manngaa, Dusun Nanas Desa Pepaya Kecamatan Bengkuang Provinsi Bumbu Kacang Negara Rujak Manis "/>
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nope"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor Telepon / HP" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/nopeUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_stsTinggal"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Status Tinggal" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/stsTinggalUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Bersama Orang Tua / Saudara" />
+        </TableRow>
+        <!--identitas alamat-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="209dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Kesehatan :"
+                android:textStyle="bold" />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_goldar"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Golongan Darah" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/goldarUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_ketsakit"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Penyakit Yang Pernah Diderita" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/ketsakitUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_TgBb"
+                android:layout_width="139dp"
+                android:layout_height="wrap_content"
+                android:text="Tinggi Badan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/tgUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+
+            <TextView
+                android:id="@+id/label_TgBb2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Berat Badan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/bbUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <!--identitas pendididkan-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="209dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Pendidikan :"
+                android:textStyle="bold" />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="209dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Pendidikan Sebelumnya :"/>
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_luludari"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="a). Lulusan Dari" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/lulusanUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_noijasah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="b). Tanggal dan Nomor Ijasah" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/noijasahUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_noskhun"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="b). Tanggal dan Nomor Ijasah" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/noskhunUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="209dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Pindahan :"/>
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_pindahdari"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="a). Dari Skolah" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/pindahanUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_almatskl"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="b). Alamat sekolah" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/almtskl"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="209dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Diterima Disekolah Ini :"/>
+        </TableRow>
+        <TableRow
         android:layout_gravity="center"
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/label_kodeKelas"
+            android:id="@+id/label_kelasawal"
             android:layout_width="129dp"
             android:layout_height="wrap_content"
-            android:text="Kelas" />
+            android:text="a). Di Kelas" />
 
         <TextView
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:text=":"/>
         <TextView
-            android:id="@+id/kodeKelasUser"
+            android:id="@+id/kelasawalUser"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -101,7 +600,7 @@
             android:id="@+id/label_jurusan"
             android:layout_width="129dp"
             android:layout_height="wrap_content"
-            android:text="Jurusan" />
+            android:text="b). Program Keahlian" />
 
         <TextView
             android:layout_width="21dp"
@@ -114,6 +613,30 @@
             android:layout_weight="1"
             android:text=" " />
     </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_kodeKelas"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="c). Kelas Saat Ini" />
+
+            <TextView
+                android:layout_width="21dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+            <TextView
+                android:id="@+id/kodeKelasUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
     </TableLayout>
 
+
+</LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -255,66 +255,6 @@ private SliderLayout sliderShow;
 
     }
 
-    public void getData()
-    {
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        JSONObject jsonBody = new JSONObject();
-//        success = jsonBody.getInt(TAG_SUCCESS);
 
-        //final String requestBody = jsonBody.toString();
-
-        StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    success = jObj.getInt(TAG_SUCCESS);
-                    if (success == 1) {
-                        namaUser.setText(jObj.getString(TAG_USERNAME));
-                    }
-                    // Check for error node in json
-//                    if (success == 1) {
-//                        String username = jObj.getString(TAG_USERNAME);
-//                        String id = jObj.getString(TAG_ID);
-//
-//                        Log.e("Successfully Login!", jObj.toString());
-//
-//                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-//
-//                        // menyimpan login ke session
-//                        SharedPreferences.Editor editor = sharedpreferences.edit();
-//                        editor.putBoolean(session_status, true);
-//                        editor.putString(TAG_ID, id);
-//                        editor.putString(TAG_USERNAME, username);
-//                        editor.commit();
-//
-//                        // Memanggil main activity
-//                        Intent intent = new Intent(Login.this, MainActivity.class);
-//                        intent.putExtra(TAG_ID, id);
-//                        intent.putExtra(TAG_USERNAME, username);
-//                        finish();
-//                        startActivity(intent);
-//                    } else {
-//                        Toast.makeText(getApplicationContext(),
-//                                jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-//
-//                    }
-                } catch (JSONException e) {
-                    // JSON error
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.d("onErrorResponse: Error", error.toString());
-            }
-            });
-        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
-        }
 
     }

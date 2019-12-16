@@ -35,7 +35,6 @@ public class EditDataSiswa extends AppCompatActivity {
     TextView idUser;
     Button updateSiswa;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +72,14 @@ public class EditDataSiswa extends AppCompatActivity {
                                 int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
                                 String nama = obj.getString("nama");
                                 int id = obj.getInt("id_siswa");
-                                String id_siswa = getIntent().getStringExtra(TAG_IDU);
+                                String id_siswa = obj.getString("id_siswa");
                                 String tempatLahir = obj.getString("tempat_lahir");
                                 String tanggalLahir = obj.getString("tanggal_lahir");
                                 String kodekelas = obj.getString("kode_kelas");
                                 String jurusanS = obj.getString("kode_jurusan");
                                 if (extraId== id )
                                 {
-                                    idUser.setText(id_siswa);
+                                   idUser.setText(id_siswa);
                                     EdnamaUser.setText(nama);
                                     EdttlUser.setText(tempatLahir +","+ tanggalLahir);
                                     EdkodeKelas.setText(kodekelas);
