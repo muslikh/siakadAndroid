@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity {
         lupaPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Prosee Pengembanga",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Prosee Pengembangan",Toast.LENGTH_LONG).show();
             }
         });
         isiForm.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +154,27 @@ public class Login extends AppCompatActivity {
 
                     // Check for error node in json
                     if (success == 1) {
+                        String username = jObj.getString(TAG_USERNAME);
+                        String id = jObj.getString(TAG_ID);
+
+                        Log.e("Successfully Login!", jObj.toString());
+
+                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+                        // menyimpan login ke session
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putBoolean(session_status, true);
+                        editor.putString(TAG_ID, id);
+                        editor.putString(TAG_USERNAME, username);
+                        editor.commit();
+
+                        // Memanggil main activity
+                        Intent intent = new Intent(Login.this, MainActivity.class);
+                        intent.putExtra(TAG_ID, id);
+                        intent.putExtra(TAG_USERNAME, username);
+                        finish();
+                        startActivity(intent);
+                    } else if (success == 2) {
                         String username = jObj.getString(TAG_USERNAME);
                         String id = jObj.getString(TAG_ID);
 

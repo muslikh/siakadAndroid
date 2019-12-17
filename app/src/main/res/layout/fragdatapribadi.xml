@@ -48,12 +48,12 @@
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:text=":"/>
+
         <TextView
             android:id="@+id/namaUser"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Muhammad Muslikh " />
+            android:layout_weight="1" />
 
     </TableRow>
         <TableRow

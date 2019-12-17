@@ -3,6 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TableLayout
 
@@ -12,19 +19,22 @@
         android:layout_below="@+id/tab_dataortu"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
 
-        <!--Indentitas Ortu-->
+        <!--Indentitas Ayah-->
         <TableRow
             android:layout_gravity="center"
             android:padding="5dp"
             >
+
             <TextView
-                android:layout_span="2"
-                android:text="Identitas Orang Tua :"
-                android:textStyle="bold"
-                />
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Tentang Ayah :"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -32,7 +42,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/label_namaOrtu"
+                android:id="@+id/label_namaayah"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:text="Nama Ayah" />
@@ -42,11 +52,11 @@
                 android:layout_height="wrap_content"
                 android:text=":"/>
             <TextView
-                android:id="@+id/namaOrtu"
+                android:id="@+id/namaAyah"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="siapa ya" />
+                android:text="" />
 
         </TableRow>
         <TableRow
@@ -73,23 +83,44 @@
         </TableRow>
 
 
-
         <TableRow
             android:layout_gravity="center"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/label_Pekerjaan"
+                android:id="@+id/label_AgamaAyah"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="Pekerjaan" />
+                android:text="Agama" />
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
             <TextView
-                android:id="@+id/pekerjaanBapak"
+                android:id="@+id/agamaAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_KewargaAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Kewarganegaraan" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/KewargaAyah"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -100,24 +131,542 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/label_gajiBapak"
+                android:id="@+id/label_pendAyah"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="Jumlah Penghasilan" />
+                android:text="Pendidikan" />
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
             <TextView
-                android:id="@+id/gajiBapak"
+                android:id="@+id/pendidikanAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_kerjaAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pekerjaan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/kerjaAyah"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=" " />
         </TableRow>
 
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_pengeluaranAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pengeluaran Perbulan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/pengeluaranAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_alamtAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Alamat  Rumah " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/AlamatAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nohpAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor HP " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/nohpAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+    <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;    -->
+
+        <!--Indentitas Ibu-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Tentang Ibu:"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_namaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Ibu" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/namaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_ttlIbu"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:text="Tempat, Tanggal Lahir" />
+
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/ttlIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_AgamaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Agama" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/agamaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_KewargaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Kewarganegaraan" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/KewargaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_pendIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pendidikan" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/pendidikanIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_kerjaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pekerjaan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/kerjaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_pengeluaranIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pengeluaran Perbulan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/pengeluaranIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_alamtIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Alamat  Rumah " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/AlamatIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nohpIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor HP " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/nohpIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;    -->
+
+        <!--Indentitas Wali-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Tentang Wali  :"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_namaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Ibu" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/namaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_ttlWali"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:text="Tempat, Tanggal Lahir" />
+
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/ttlWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_AgamaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Agama" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/agamaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_KewargaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Kewarganegaraan" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/KewargaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_pendWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pendidikan" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/pendidikanWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_kerjaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pekerjaan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/kerjaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_pengeluaranWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pengeluaran Perbulan " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/pengeluaranWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_alamtWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Alamat  Rumah " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/AlamatWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nohpWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor HP " />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+            <TextView
+                android:id="@+id/nohpWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
 
     </TableLayout>
-
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
