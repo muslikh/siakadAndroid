@@ -1,17 +1,11 @@
 <resources>
-    <string name="app_name">AndroidLoginAndRegistration</string>
+    <string name="app_name">SIAKAD</string>
 
-    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="register">Register</string>
-    <string name="register_caption">Dont have an account? Register</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
     <string name="logout">Logout</string>
     <string name="navigation_drawer_open">navigation_drawer_open</string>
     <string name="navigation_drawer_close">navigation_drawer_close</string>
-    <string name="greeting">Hi, %s :)</string>
 
 </resources>

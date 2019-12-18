@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity {
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
-
+    private static final String TAG_LEVEL = "level";
     public final static String TAG_USERNAME = "username";
     public final static String TAG_ID = "id";
 
@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
     Boolean session = false;
-    String id, username,nama;
+    String id, username,nama, level;
     public static final String my_shared_preferences = "my_shared_preferences";
     public static final String session_status = "session_status";
 
@@ -104,6 +104,7 @@ public class Login extends AppCompatActivity {
             Intent intent = new Intent(Login.this, MainActivity.class);
             intent.putExtra(TAG_ID, id);
             intent.putExtra(TAG_USERNAME, username);
+            intent.putExtra(TAG_LEVEL, level);
             finish();
             startActivity(intent);
         }
@@ -156,6 +157,7 @@ public class Login extends AppCompatActivity {
                     if (success == 1) {
                         String username = jObj.getString(TAG_USERNAME);
                         String id = jObj.getString(TAG_ID);
+                        String level = jObj.getString(TAG_LEVEL);
 
                         Log.e("Successfully Login!", jObj.toString());
 
@@ -167,35 +169,25 @@ public class Login extends AppCompatActivity {
                         editor.putString(TAG_ID, id);
                         editor.putString(TAG_USERNAME, username);
                         editor.commit();
+                        if(level.equals("siswa")) {
+                            // Memanggil main activity
+                            Intent intent = new Intent(Login.this, MainActivity.class);
+                            intent.putExtra(TAG_ID, id);
+                            intent.putExtra(TAG_USERNAME, username);
+                            intent.putExtra(TAG_LEVEL, level);
+                            finish();
+                            startActivity(intent);
+                        }else if(level.equals("admin")){
 
-                        // Memanggil main activity
-                        Intent intent = new Intent(Login.this, MainActivity.class);
-                        intent.putExtra(TAG_ID, id);
-                        intent.putExtra(TAG_USERNAME, username);
-                        finish();
-                        startActivity(intent);
-                    } else if (success == 2) {
-                        String username = jObj.getString(TAG_USERNAME);
-                        String id = jObj.getString(TAG_ID);
-
-                        Log.e("Successfully Login!", jObj.toString());
-
-                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-
-                        // menyimpan login ke session
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putBoolean(session_status, true);
-                        editor.putString(TAG_ID, id);
-                        editor.putString(TAG_USERNAME, username);
-                        editor.commit();
-
-                        // Memanggil main activity
-                        Intent intent = new Intent(Login.this, MainActivity.class);
-                        intent.putExtra(TAG_ID, id);
-                        intent.putExtra(TAG_USERNAME, username);
-                        finish();
-                        startActivity(intent);
-                    } else {
+                            // Memanggil main activity
+                            Intent intent = new Intent(Login.this, MainActivity.class);
+                            intent.putExtra(TAG_ID, id);
+                            intent.putExtra(TAG_USERNAME, username);
+                            intent.putExtra(TAG_LEVEL, level);
+                            finish();
+                            startActivity(intent);
+                        }
+                    }  else {
                         Toast.makeText(getApplicationContext(),
                                 jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 

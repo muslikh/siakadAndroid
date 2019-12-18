@@ -45,7 +45,7 @@ private SliderLayout sliderShow;
 
 
     TextView namaUser, txt_id;
-    String id, username, idu;
+    String id, username, idu,level;
     SharedPreferences sharedpreferences;
     NavigationView navigationView;
 
@@ -56,6 +56,7 @@ private SliderLayout sliderShow;
     private String url = Server.URL + "masuk.php";
     public static final String TAG_ID = "id";
     public static final String TAG_IDU = "idu";
+    private static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
     String tag_json_obj = "json_obj_req";
 
@@ -162,11 +163,20 @@ private SliderLayout sliderShow;
         idu = sharedpreferences.getString(TAG_ID, null);
 
         id = getIntent().getStringExtra(TAG_ID);
+        String Siswa= "siswa";
+       String  level = getIntent().getStringExtra(TAG_LEVEL);
+        if(level.equals(Siswa))
+        {
+            txt_id.setText("wirda Gendut nemo");
+        }else{
+
+            txt_id.setText(" ");
+        }
   //      nama = getIntent().getStringExtra(TAG_NAMA);
         //username = getIntent().getStringExtra(TAG_MESSA);
 
     //    namaUser.setText("a"+username);
-        txt_id.setText("ID : " + id);
+       // txt_id.setText("ID : " + id);
     //    txt_username.setText("USERNAME : " + username);
 
 //getData();
