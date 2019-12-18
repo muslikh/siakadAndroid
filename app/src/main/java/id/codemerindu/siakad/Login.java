@@ -168,25 +168,26 @@ public class Login extends AppCompatActivity {
                         editor.putBoolean(session_status, true);
                         editor.putString(TAG_ID, id);
                         editor.putString(TAG_USERNAME, username);
+                        editor.putString(TAG_LEVEL, level);
                         editor.commit();
-                        if(level.equals("siswa")) {
+//                        if(level.equals("siswa")) {
                             // Memanggil main activity
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             intent.putExtra(TAG_ID, id);
                             intent.putExtra(TAG_USERNAME, username);
                             intent.putExtra(TAG_LEVEL, level);
-                            finish();
+                           // finish();
                             startActivity(intent);
-                        }else if(level.equals("admin")){
-
-                            // Memanggil main activity
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            intent.putExtra(TAG_ID, id);
-                            intent.putExtra(TAG_USERNAME, username);
-                            intent.putExtra(TAG_LEVEL, level);
-                            finish();
-                            startActivity(intent);
-                        }
+//                        }else if(level.equals("admin")){
+//
+//                            // Memanggil main activity
+//                            Intent intent = new Intent(Login.this, AdminActivity.class);
+//                            intent.putExtra(TAG_ID, id);
+//                            intent.putExtra(TAG_USERNAME, username);
+//                            intent.putExtra(TAG_LEVEL, level);
+//                            //finish();
+//                            startActivity(intent);
+//                        }
                     }  else {
                         Toast.makeText(getApplicationContext(),
                                 jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();

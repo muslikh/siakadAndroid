@@ -46,7 +46,7 @@ private SliderLayout sliderShow;
 
 
     TextView namaUser, txt_id;
-    String id, username, idu,level;
+    String id, username, idu,level,levelU;
     SharedPreferences sharedpreferences;
     NavigationView navigationView;
 
@@ -70,11 +70,11 @@ private SliderLayout sliderShow;
         setSupportActionBar(toolbar);
 
 
-        Bundle bundle = new Bundle();
-        bundle.putString(TAG_IDU,idu);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(TAG_IDU,idu);
 // set Fragmentclass Arguments
-        fragSiswa fragobj = new fragSiswa();
-        fragobj.setArguments(bundle);
+//        fragSiswa fragobj = new fragSiswa();
+//        fragobj.setArguments(bundle);
 
         txt_id = (TextView)findViewById(R.id.txt_id);
 
@@ -158,34 +158,39 @@ private SliderLayout sliderShow;
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
         idu = sharedpreferences.getString(TAG_ID, null);
+        levelU = sharedpreferences.getString(TAG_LEVEL, null);
 
-        id = getIntent().getStringExtra(TAG_ID);
+        //id = getIntent().getStringExtra(TAG_ID);
         String Siswa= "siswa";
-       String  level = getIntent().getStringExtra(TAG_LEVEL);
-                    txt_id.setText(level);
-//        if(level.equals("siswa"))
-//        {
-//            txt_id.setText("wirda ");
-//        }else if(level.equals("admin"))
-//        {
-//            txt_id.setText("wirda  nemo");
-//        }
-
-        FileOutputStream fileOutputStream;
-        try {
-            //Membuat Berkas Baru dengan mode Private
-            fileOutputStream = openFileOutput("DataSaya", Context.MODE_PRIVATE);
-
-            //Menulis Data Baru dan Mengkonversinya kedalam bentuk byte
-            fileOutputStream.write(level.getBytes());
-
-            //Menutup FileOutputStream
-            fileOutputStream.close();
-
-            Toast.makeText(getApplicationContext(), "Data Disimpan di Internal", Toast.LENGTH_SHORT).show();
-        }catch (Exception ex){
-            ex.printStackTrace();
+      //level = getIntent().getStringExtra(TAG_LEVEL);
+                   // txt_id.setText(id);
+        if(levelU.equals("siswa"))
+        {
+            txt_id.setText("wirda ");
+        }else if(levelU.equals("admin"))
+        {
+            Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+            intent.putExtra(TAG_ID, id);
+            intent.putExtra(TAG_USERNAME, username);
+            intent.putExtra(TAG_LEVEL, level);
+            startActivity(intent);
         }
+
+//        FileOutputStream fileOutputStream;
+//        try {
+//            //Membuat Berkas Baru dengan mode Private
+//            fileOutputStream = openFileOutput("DataSaya", Context.MODE_PRIVATE);
+//
+//            //Menulis Data Baru dan Mengkonversinya kedalam bentuk byte
+//            fileOutputStream.write(level.getBytes());
+//
+//            //Menutup FileOutputStream
+//            fileOutputStream.close();
+//
+//            Toast.makeText(getApplicationContext(), "Data Disimpan di Internal", Toast.LENGTH_SHORT).show();
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//        }
 
     }
 
@@ -271,6 +276,19 @@ private SliderLayout sliderShow;
 
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        // update login session ke FALSE dan mengosongkan nilai id dan username
+//        SharedPreferences.Editor editor = sharedpreferences.edit();
+//        editor.putBoolean(session_status, false);
+//        editor.putString(TAG_ID, null);
+//        editor.putString(TAG_USERNAME, null);
+//        editor.commit();
+//
+//        Intent intent = new Intent(MainActivity.this, Login.class);
+//        finish();
+//        startActivity(intent);
+//    }
+}
 
-
-    }
