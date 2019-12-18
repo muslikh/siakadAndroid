@@ -32,6 +32,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
 import java.util.HashMap;
 
 import static id.codemerindu.siakad.Login.my_shared_preferences;
@@ -89,8 +90,7 @@ private SliderLayout sliderShow;
                 switch (menuItem.getItemId())
                 {
                     case  R.id.jadwal:
-//                        Intent beranda = new Intent(MainActivity.this,MainActivity.class);
-//                        startActivity(beranda);
+
                         break;
                     case  R.id.grup:
                         break;
@@ -116,9 +116,6 @@ private SliderLayout sliderShow;
                 return false;
             }
         });
-
-//        txt_username = (TextView) findViewById(R.id.txt_username);
-//        namaUser = (TextView) findViewById(R.id.namaUser);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
@@ -165,21 +162,30 @@ private SliderLayout sliderShow;
         id = getIntent().getStringExtra(TAG_ID);
         String Siswa= "siswa";
        String  level = getIntent().getStringExtra(TAG_LEVEL);
-        if(level.equals(Siswa))
-        {
-            txt_id.setText("wirda Gendut nemo");
-        }else{
+                    txt_id.setText(level);
+//        if(level.equals("siswa"))
+//        {
+//            txt_id.setText("wirda ");
+//        }else if(level.equals("admin"))
+//        {
+//            txt_id.setText("wirda  nemo");
+//        }
 
-            txt_id.setText(" ");
+        FileOutputStream fileOutputStream;
+        try {
+            //Membuat Berkas Baru dengan mode Private
+            fileOutputStream = openFileOutput("DataSaya", Context.MODE_PRIVATE);
+
+            //Menulis Data Baru dan Mengkonversinya kedalam bentuk byte
+            fileOutputStream.write(level.getBytes());
+
+            //Menutup FileOutputStream
+            fileOutputStream.close();
+
+            Toast.makeText(getApplicationContext(), "Data Disimpan di Internal", Toast.LENGTH_SHORT).show();
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
-  //      nama = getIntent().getStringExtra(TAG_NAMA);
-        //username = getIntent().getStringExtra(TAG_MESSA);
-
-    //    namaUser.setText("a"+username);
-       // txt_id.setText("ID : " + id);
-    //    txt_username.setText("USERNAME : " + username);
-
-//getData();
 
     }
 
