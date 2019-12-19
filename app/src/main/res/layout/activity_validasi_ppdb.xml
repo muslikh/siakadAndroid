@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".validasiPPDB">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark" />
+
+
+
+    <TableLayout
+
+        android:id="@+id/TBSiswaBaru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="8dp">
+
+        <TableRow
+            android:gravity="center"
+            android:id="@+id/rowlay"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="6dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="5"
+                android:text="List Siswa BARU"
+                android:textAlignment="center"
+                android:textSize="18dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No." />
+
+            <TextView
+                android:layout_width="66dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NISN " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_weight="1"
+                android:text="Nama Lengkap" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Program Keahlian" />
+
+            <TextView
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Aksi" />
+        </TableRow>
+
+        <TableRow
+            android:background="@android:color/darker_gray"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/nomor"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="1." />
+
+            <TextView
+                android:id="@+id/nisn"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="88888888"/>
+            <TextView
+                android:id="@+id/nama"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Muhamamd Muslikh " />
+
+            <TextView
+                android:id="@+id/programkeahlian"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TKJ" />
+            <Button
+                android:id="@+id/aksiValidasi"
+                android:text="Validasi"
+                />
+            <!--<TextView-->
+                <!--android:id="@+id/aksiValidasi"-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Validasi" />-->
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

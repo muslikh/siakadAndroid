@@ -160,10 +160,6 @@ private SliderLayout sliderShow;
         idu = sharedpreferences.getString(TAG_ID, null);
         levelU = sharedpreferences.getString(TAG_LEVEL, null);
 
-        //id = getIntent().getStringExtra(TAG_ID);
-        String Siswa= "siswa";
-      //level = getIntent().getStringExtra(TAG_LEVEL);
-                   // txt_id.setText(id);
         if(levelU.equals("siswa"))
         {
             txt_id.setText("wirda ");
@@ -175,22 +171,6 @@ private SliderLayout sliderShow;
             intent.putExtra(TAG_LEVEL, level);
             startActivity(intent);
         }
-
-//        FileOutputStream fileOutputStream;
-//        try {
-//            //Membuat Berkas Baru dengan mode Private
-//            fileOutputStream = openFileOutput("DataSaya", Context.MODE_PRIVATE);
-//
-//            //Menulis Data Baru dan Mengkonversinya kedalam bentuk byte
-//            fileOutputStream.write(level.getBytes());
-//
-//            //Menutup FileOutputStream
-//            fileOutputStream.close();
-//
-//            Toast.makeText(getApplicationContext(), "Data Disimpan di Internal", Toast.LENGTH_SHORT).show();
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//        }
 
     }
 

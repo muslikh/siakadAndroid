@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminActivity"></activity>
+        <activity android:name=".validasiPPDB"></activity>
+        <activity android:name=".AdminActivity" />
         <activity android:name=".Pendaftar" />
         <activity android:name=".FormulirPPDB" />
         <activity android:name=".EditDataSiswa" />
