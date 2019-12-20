@@ -1,9 +1,16 @@
 package id.codemerindu.siakad;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,26 +30,29 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class validasiPPDB extends AppCompatActivity {
+public class validasiPPDB extends Fragment{
 
     final String url = Server.URL+"siswabaru.php";
     final String url_pindah = Server.URL+"pindah.php";
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_validasi_ppdb);
+        View view=inflater.inflate(R.layout.activity_validasi_ppdb,container,false);
 
-        DtSiswaBaru();
+//        addHeaders(view);
+//        addData();
+        DtSiswaBaru(view);
 
-        Button validasi = (Button) findViewById(R.id.aksiValidasi);
-        validasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pindah();
-            }
-        });
+//        Button validasi = (Button) view.findViewById(R.id.aksiValidasi);
+//        validasi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                pindah();
+//            }
+//        });
 //        TableRow tableRow = new TableRow(this);
 //        tableRow.setClickable(true);  //allows you to select a specific row
 //
@@ -57,18 +67,19 @@ public class validasiPPDB extends AppCompatActivity {
 //            }
 //        });
 
-
-        TableLayout tableLayout = (TableLayout) this.findViewById(R.id.tabelJadwal);
-        TableRow row = (TableRow)getLayoutInflater().inflate(R.layout.jadwal_row, null);
-        ((TextView)row.findViewById(R.id.noTabel)).setText("2");
-        ((TextView)row.findViewById(R.id.jamTabel)).setText("8 - 10 ");
-        ((TextView)row.findViewById(R.id.GuruTabel)).setText("aku ");
-        ((TextView)row.findViewById(R.id.pelajaranTabel)).setText("validasi ");
+//
+//        TableLayout tableLayout = (TableLayout) this.findViewById(R.id.tabelJadwal);
+//        TableRow row = (TableRow)getLayoutInflater().inflate(R.layout.jadwal_row, null);
+//        ((TextView)row.findViewById(R.id.noTabel)).setText("2");
+//        ((TextView)row.findViewById(R.id.jamTabel)).setText("8 - 10 ");
+//        ((TextView)row.findViewById(R.id.GuruTabel)).setText("aku ");
+//        ((TextView)row.findViewById(R.id.pelajaranTabel)).setText("validasi ");
+        return view;
     }
 
     public void pindah()
     {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequests =
                 new StringRequest(Request.Method.POST, url_pindah, new Response.Listener<String>() {
                     @Override
@@ -92,15 +103,15 @@ public class validasiPPDB extends AppCompatActivity {
         requestQueue.add(stringRequests);
     }
 
-    public void DtSiswaBaru()
+    public void DtSiswaBaru(final  View v)
     {
-       final TextView nisn = (TextView) findViewById(R.id.nisn);
-        final   TextView nomor = (TextView) findViewById(R.id.nomor);
-        final  TextView nama = (TextView) findViewById(R.id.nama);
-        final  TextView program = (TextView) findViewById(R.id.programkeahlian);
+       final TextView nisn = (TextView) v.findViewById(R.id.nisn);
+        final   TextView nomor = (TextView) v.findViewById(R.id.nomor);
+        final  TextView nama = (TextView) v.findViewById(R.id.nama);
+        final  TextView program = (TextView) v.findViewById(R.id.programkeahlian);
 
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequests =
                 new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -108,15 +119,64 @@ public class validasiPPDB extends AppCompatActivity {
                         try {
                             JSONArray dataArray= new JSONArray(response);
 
+                            TableLayout tv = (TableLayout) v.findViewById(R.id.TBSiswaBaru);
+                            tv.removeViewInLayout(v);
+                            int flag = 1;
+
                             for (int i =0; i<dataArray.length(); i++)
                             {
+                                    JSONObject obj = dataArray.getJSONObject(i);
 
-                                JSONObject obj = dataArray.getJSONObject(i);
+//                                TableRow tr = new TableRow(getActivity());
+//                                tr.setLayoutParams(new ViewGroup.LayoutParams(
+//                                        ViewGroup.LayoutParams.FILL_PARENT,
+//                                        ViewGroup.LayoutParams.WRAP_CONTENT
+//                                ));
+//
+////                                if (flag == 1) {
+//
+//                                    TextView b6 = new TextView(getActivity());
+//                                    b6.setText("No");
+//                                    tr.addView(b6);
+//                                    TextView b19 = new TextView(getActivity());
+//                                    b19.setText("Nama Lengkap");
+//                                    tr.addView(b19);
+//                                    TextView b29 = new TextView(getActivity());
+//                                    b29.setText("Program Keahlian");
+//                                    tr.addView(b29);
+//                                    tv.addView(tr);
+//                                    final View vline = new View(getActivity());
+//                                    vline.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 2));
+//                                    vline.setBackgroundColor(Color.BLUE);
+//                                    tv.addView(vline);
+//                                    flag = 0;
+//                                }else{
+
+//                                    TextView no = new TextView(getActivity());
+//                                    no.setText(obj.getString("id_siswaBaru"));
+//
+//                                   no.setTextColor(Color.BLACK);
+//                                    tr.addView(no);
+//
+//                                    TextView nama = new TextView(getActivity());
+//                                    nama.setText(obj.getString("nama"));
+//                                   nama.setTextColor(Color.BLACK);
+//                                    tr.addView(nama);
+//                                    TextView program = new TextView(getActivity());
+//                                    program.setText(obj.getString("program"));
+//                                    tr.addView(program);
+//                                    program.setTextColor(Color.BLACK);
+//                                    tv.addView(tr);
+//                                    final View vline1 = new View(getActivity());
+//                                    vline1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 1));
+//                                    vline1.setBackgroundColor(Color.BLUE);
+//                                    tv.addView(vline1);
+
                                 nisn.setText(obj.getString("nisn"));
                                 nomor.setText(obj.getString("id_siswaBaru"));
                                 nama.setText(obj.getString("nama"));
                                 program.setText(obj.getString("program"));
-
+                 //             }
 
 
                             }
@@ -130,9 +190,93 @@ public class validasiPPDB extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        nama.setText(error.getLocalizedMessage());
+                       // nama.setText(error.getLocalizedMessage());
                     }
                 });
         requestQueue.add(stringRequests);
     }
+
+    private TextView getTextView (int id, String title, int color, int typeface, int bgColor)
+    {
+        TextView tv = new TextView(getActivity());
+        tv.setId(id);
+        tv.setText(title.toUpperCase());
+        tv.setTextColor(color);
+        tv.setTypeface(Typeface.DEFAULT,typeface);
+        return tv;
+
+
+    }
+
+
+    private TableRow.LayoutParams getLayoutParams()
+    {
+        TableRow.LayoutParams params = new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+        );
+        return params;
+    }
+
+    private TableLayout.LayoutParams getTBLayoutParams()
+    {
+        return new TableLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+    }
+    public void addData() {
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+//        StringRequest stringRequests =
+//                new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONArray dataArray= new JSONArray(response);
+//\
+//                            for (int i =0; i<dataArray.length(); i++)
+//                            {
+//
+//                                JSONObject obj = dataArray.getJSONObject(i);
+//
+//                                    TableRow tr = new TableRow(getActivity());
+//                                    tr.setLayoutParams(getLayoutParams());
+//                                   //r.addView(getTextView(i + 1, dataArray[i], Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+//                                    tr.addView(getTextView(i + numCompanies, os[i], Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+//                                    tl.addView(tr, getTBLayoutParams());
+//                                }
+//
+//
+//                        }  catch(
+//                                JSONException e);
+//
+//                        {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        // nama.setText(error.getLocalizedMessage());
+//                    }
+//                });
+//        requestQueue.add(stringRequests);
+
+    }
+
+    public void addHeaders(View view)
+    {
+        TableLayout tl = view.findViewById(R.id.TBSiswaBaru);
+        TableRow tr = new TableRow(getActivity());
+
+        tr.setLayoutParams(getLayoutParams());
+        tr.addView(getTextView(0, "COMPANY", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(0, "OS", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tl.addView(tr, getTBLayoutParams());
+    }
+
+  //}
+
+
 }

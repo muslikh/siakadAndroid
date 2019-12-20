@@ -41,7 +41,8 @@
                 android:id="@+id/ppdb_nisn"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:inputType="textNoSuggestions"
+
+                android:inputType="textPersonName"
                 android:hint="Nomor NISN"/>
         </TableRow>
         <TableRow
@@ -62,8 +63,9 @@
                 android:id="@+id/ppdb_namaLengkap"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:inputType="textPersonName"
                 android:hint="Nama Lengkap"/>
-            android:inputType="textNoSuggestions"
+
         </TableRow>
         <TableRow
             android:layout_height="match_parent"
@@ -83,8 +85,8 @@
                 android:id="@+id/ppdb_ttl"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:inputType="textPersonName"
                 android:hint="Tempat Tanggal Lahir"/>
-            android:inputType="textNoSuggestions"
         </TableRow>
         <TableRow
             android:layout_height="match_parent"
@@ -104,8 +106,8 @@
                 android:id="@+id/ppdb_jurusan"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:inputType="textPersonName"
                 android:hint="Jurusan"/>
-            android:inputType="textNoSuggestions"
         </TableRow>
 
         <TableRow
@@ -126,8 +128,8 @@
                 android:id="@+id/ppdb_username"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:inputType="textPersonName"
                 android:hint="Username"/>
-            android:inputType="textNoSuggestions"
         </TableRow>
         <TableRow
             android:layout_height="match_parent"
@@ -147,7 +149,7 @@
                 android:id="@+id/ppdb_password"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:inputType="textNoSuggestions"
+                android:inputType="textPersonName"
                 android:hint="Password"/>
         </TableRow>
 

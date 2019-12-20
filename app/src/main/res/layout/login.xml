@@ -100,10 +100,10 @@
 
             <TextView
                 android:id="@+id/btn_isiFormulir"
-                android:layout_width="154dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="80dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="120dp"
                 android:layout_marginTop="10dp"
                 android:background="#ffffff"
                 android:text=" Isi Formulir "

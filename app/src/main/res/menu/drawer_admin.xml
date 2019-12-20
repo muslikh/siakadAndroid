@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<group android:checkableBehavior="single">
+<!--<group android:checkableBehavior="single">-->
+
+<!--</group>-->
+
+    <!--<item android:title="PPDB">-->
+        <!--<menu>-->
+
     <item
-        android:id="@+id/keluarAdmin"
+        android:id="@+id/homeAdmin"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
-        android:title="Keluar"
+        android:title="Berarnda"
         app:showAsAction="always" />
-</group>
-
-    <item android:title="PPDB">
-        <menu>
-
             <item
                 android:id="@+id/bukaMenu"
                 android:enabled="true"
@@ -25,6 +26,12 @@
                 android:icon="@drawable/ic_setting"
                 android:title="Validasi Siswa"
                 app:showAsAction="always" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/keluarAdmin"
+        android:enabled="true"
+        android:icon="@drawable/ic_setting"
+        android:title="Keluar"
+        app:showAsAction="always" />
+        <!--</menu>-->
+    <!--</item>-->
 </menu>

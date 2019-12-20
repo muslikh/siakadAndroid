@@ -1,5 +1,6 @@
 package id.codemerindu.siakad;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -69,6 +71,10 @@ private SliderLayout sliderShow;
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("SIAKAD");
+        toolbar.setSubtitle("SMK NEGERI PRIGEN");
+        toolbar.setLogo(R.mipmap.ic_logo);
+
 
 //        Bundle bundle = new Bundle();
 //        bundle.putString(TAG_IDU,idu);
@@ -77,10 +83,6 @@ private SliderLayout sliderShow;
 //        fragobj.setArguments(bundle);
 
         txt_id = (TextView)findViewById(R.id.txt_id);
-
-        getSupportActionBar().setTitle("SIAKAD");
-        toolbar.setSubtitle("SMK NEGERI PRIGEN");
-        toolbar.setLogo(R.mipmap.ic_logo);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.aksesMenu);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -174,6 +176,38 @@ private SliderLayout sliderShow;
 
     }
 
+    public void alertKeluar()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert
+                .setMessage("Tekan Ya Untuk Keluar")
+                .setCancelable(false)
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putBoolean(session_status, false);
+                        editor.putString(TAG_ID, null);
+                        editor.putString(TAG_USERNAME, null);
+                        editor.commit();
+
+                        Intent intent = new Intent(MainActivity.this, Login.class);
+                        finish();
+                        startActivity(intent);
+
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog keluar = alert.create();
+        keluar.show();
+
+    }
 
     public void menuKiri()
     {
@@ -187,16 +221,7 @@ private SliderLayout sliderShow;
                     case R.id.logout:
 
                         // update login session ke FALSE dan mengosongkan nilai id dan username
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putBoolean(session_status, false);
-                        editor.putString(TAG_ID, null);
-                        editor.putString(TAG_USERNAME, null);
-                        editor.commit();
-
-                        Intent intent = new Intent(MainActivity.this, Login.class);
-                        finish();
-                        startActivity(intent);
-
+                   alertKeluar();
                         break;
 
                 }
@@ -256,19 +281,9 @@ private SliderLayout sliderShow;
 
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        // update login session ke FALSE dan mengosongkan nilai id dan username
-//        SharedPreferences.Editor editor = sharedpreferences.edit();
-//        editor.putBoolean(session_status, false);
-//        editor.putString(TAG_ID, null);
-//        editor.putString(TAG_USERNAME, null);
-//        editor.commit();
-//
-//        Intent intent = new Intent(MainActivity.this, Login.class);
-//        finish();
-//        startActivity(intent);
-//    }
+    @Override
+    public void onBackPressed() {
+       alertKeluar();
+    }
 }
 
