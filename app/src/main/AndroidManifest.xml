@@ -13,9 +13,11 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".validasiPPDB"></activity>
+        <activity android:name=".DataSiswa"/>
+        <!--android:parentActivityName=".AdminActivity"-->
+        <activity android:name=".validasiPPDB"/>
         <activity android:name=".AdminActivity" />
-        <activity android:name=".Pendaftar" />
+        <activity android:name=".Profile" />
         <activity android:name=".FormulirPPDB" />
         <activity android:name=".EditDataSiswa" />
         <activity android:name=".MainActivity" />
@@ -26,7 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Profile" />
     </application>
 
 </manifest>

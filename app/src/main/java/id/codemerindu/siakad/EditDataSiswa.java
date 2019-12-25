@@ -31,8 +31,8 @@ public class EditDataSiswa extends AppCompatActivity {
     final String TAG ="Edit";
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
-    EditText EdnamaUser,EdttlUser,EdkodeKelas,Edjurusan;
-    TextView idUser;
+    EditText EdnamaUser,Edtmplahir,Edtgllahir;
+    TextView idUser,TvkodeKelas,Tvjurusan;
     Button updateSiswa;
 
     @Override
@@ -46,9 +46,10 @@ public class EditDataSiswa extends AppCompatActivity {
     {
         idUser = (TextView)  findViewById(R.id.idUser);
         EdnamaUser = (EditText) findViewById(R.id.namaUser);
-        EdttlUser = (EditText) findViewById(R.id.ttlUser);
-        EdkodeKelas = (EditText) findViewById(R.id.kodeKelasUser);
-        Edjurusan = (EditText)  findViewById(R.id.jurusanUser);
+        Edtmplahir = (EditText) findViewById(R.id.tmplahir);
+        Edtgllahir = (EditText) findViewById(R.id.tanggallahir);
+        TvkodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
+        Tvjurusan = (TextView)  findViewById(R.id.jurusanUser);
         updateSiswa = (Button)  findViewById(R.id.updateSiswa);
         updateSiswa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +82,10 @@ public class EditDataSiswa extends AppCompatActivity {
                                 {
                                    idUser.setText(id_siswa);
                                     EdnamaUser.setText(nama);
-                                    EdttlUser.setText(tempatLahir +","+ tanggalLahir);
-                                    EdkodeKelas.setText(kodekelas);
-                                    Edjurusan.setText(jurusanS);
+                                    Edtmplahir.setText(tempatLahir);
+                                    Edtgllahir.setText(tanggalLahir);
+                                    TvkodeKelas.setText(kodekelas);
+                                    Tvjurusan.setText(jurusanS);
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);
@@ -139,8 +141,6 @@ public class EditDataSiswa extends AppCompatActivity {
 
                 map.put("id_siswa", idUser.getText().toString());
                 map.put("nama", EdnamaUser.getText().toString());
-                map.put("kode_jurusan", Edjurusan.getText().toString());
-                map.put("kode_kelas", EdkodeKelas.getText().toString());
                 // params.put("tahun_nmasuk", thnmasuk.getText().toString());
 
                 return map;

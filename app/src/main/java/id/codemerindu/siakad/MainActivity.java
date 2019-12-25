@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity
 private SliderLayout sliderShow;
 
 
+    private static final int TIME_INTERVAL = 2000;
+    private long mBackPressed;
+
     TextView namaUser, txt_id;
     String id, username, idu,level,levelU;
     SharedPreferences sharedpreferences;
@@ -164,7 +167,7 @@ private SliderLayout sliderShow;
 
         if(levelU.equals("siswa"))
         {
-            txt_id.setText("wirda ");
+
         }else if(levelU.equals("admin"))
         {
             Intent intent = new Intent(MainActivity.this, AdminActivity.class);
@@ -172,6 +175,28 @@ private SliderLayout sliderShow;
             intent.putExtra(TAG_USERNAME, username);
             intent.putExtra(TAG_LEVEL, level);
             startActivity(intent);
+        }else if(levelU.equals("siswabaru"))
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert
+                    .setMessage("Maaf Data Belum Kami Validasi, Maksimal 1 Hari setelah Isi Form. Mohon Bersabar Yaaa\n \n Terima Kasih  :) \n \n Admin ")
+                    .setCancelable(false)
+                    .setNegativeButton("Siap Menunggu", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putBoolean(session_status, false);
+                            editor.putString(TAG_ID, null);
+                            editor.putString(TAG_USERNAME, null);
+                            editor.commit();
+                            Intent tunggu = new Intent(MainActivity.this,Login.class);
+                            finish();
+                            startActivity(tunggu);
+                        }
+                    });
+
+            AlertDialog berhasil = alert.create();
+            berhasil.show();
         }
 
     }
@@ -282,8 +307,19 @@ private SliderLayout sliderShow;
     }
 
     @Override
-    public void onBackPressed() {
-       alertKeluar();
+    public void onBackPressed()
+    {
+        alertKeluar();
+//        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
+//        {
+//            super.onBackPressed();
+////            Intent intent = new Intent(MainActivity.this,Login.class);
+////            startActivity(intent);
+////            return;
+//        }
+//        else { Toast.makeText(getBaseContext(), "Tekan Back Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show(); }
+//
+//        mBackPressed = System.currentTimeMillis();
     }
 }
 

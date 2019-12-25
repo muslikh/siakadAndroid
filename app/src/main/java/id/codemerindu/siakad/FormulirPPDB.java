@@ -1,13 +1,22 @@
 package id.codemerindu.siakad;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -23,35 +32,77 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import static id.codemerindu.siakad.Login.session_status;
 
 public class FormulirPPDB extends AppCompatActivity {
 
 
-
-    private EditText username,password,nisn,nama,jurusan,thnmasuk;
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormat;
+    private String firstItem;
+    private TextView txtjk,tgllahir,thnajaran;
+    private Spinner ppdbjk,jurusan;
+    private EditText username,password,nisn,nama,thnmasuk,tmplahir,edtlahir;
     private Button simpan;
     private String TAG = "tag";
     private String TAG_SUCCESSS = "success";
     private String TAG_MESSAGE = "message";
     private static String url = Server.URL+"insert.php";
     private static String url_update = Server.URL + "update.php";
-   // private String url = "http://smknprigen.sch.id/login/mainppdb.php";
-//    int SOCKET_TIMEOUT = 3000;
-//    int RETRIES = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulir_ppdb);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarPPDB);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Formulir Peserta Didik Baru");
+
+        dateFormat = new SimpleDateFormat("dd-MM-yyy", Locale.US);
+        ppdbjk = (Spinner) findViewById(R.id.ppdbjk);
+        ppdbjk.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String firstItem = String.valueOf(ppdbjk.getSelectedItem());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        jurusan = (Spinner) findViewById(R.id.ppdb_jurusan);
+        jurusan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+        thnajaran = (TextView) findViewById(R.id.tahunppdb);
         username = (EditText) findViewById(R.id.ppdb_username);
         password = (EditText) findViewById(R.id.ppdb_password);
         nisn = (EditText) findViewById(R.id.ppdb_nisn);
+        tmplahir = (EditText) findViewById(R.id.ppdb_tempatlahir);
         nama = (EditText) findViewById(R.id.ppdb_namaLengkap);
-        jurusan = (EditText) findViewById(R.id.ppdb_jurusan);
         //thnmasuk = (EditText) findViewById(R.id.ppdb_thnMasuk);
         simpan = (Button) findViewById(R.id.ppdbSimpan);
         simpan.setOnClickListener(new View.OnClickListener() {
@@ -59,12 +110,16 @@ public class FormulirPPDB extends AppCompatActivity {
             public void onClick(View v) {
                 simpan();
             }
- //               Map<String, String> map = new HashMap<>();
-//                map.put(TAG,Daftar);
-//                map.put(USERNAME,username.getText().toString());
-//                map.put(PASSWORD,password.getText().toString());
-//                request.sendPostRequest();
-//            }
+
+        });
+        tgllahir = (TextView) findViewById(R.id.ppdb_tanggallahir);
+        edtlahir = (EditText) findViewById(R.id.ppdb_tanggallahir);
+        edtlahir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog();
+
+            }
         });
     }
 
@@ -79,6 +134,15 @@ public class FormulirPPDB extends AppCompatActivity {
                 try {
                     JSONObject dataObj = new JSONObject(response);
 
+
+                    int code = Integer.parseInt(dataObj.getString("code"));
+                    if (code == 1)
+                    {
+                        daftarBerhasil();
+                    }else if(code == 0)
+                    {
+                        daftarGAgal();
+                    }
 
                         Toast.makeText(FormulirPPDB.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
                        // adapter.notifyDataSetChanged();
@@ -106,10 +170,15 @@ public class FormulirPPDB extends AppCompatActivity {
 //                    params.put("id_siswaBaru", id_siswaBaru);
                 map.put("username", username.getText().toString());
                 map.put("password", password.getText().toString());
+                map.put("tempat_lahir", tmplahir.getText().toString());
+                map.put("tanggal_lahir", tgllahir.getText().toString());
                 map.put("nama", nama.getText().toString());
-                map.put("kode_jurusan", jurusan.getText().toString());
+                map.put("tahun_masuk", thnajaran.getText().toString());
+                map.put("id_jenis_kelamin", String.valueOf(ppdbjk.getSelectedItem()));
+                map.put("kode_jurusan", String.valueOf(jurusan.getSelectedItem()));
+                map.put("kode_kelas", "X " + String.valueOf(jurusan.getSelectedItem()));
                 map.put("nisn", nisn.getText().toString());
-                   // params.put("tahun_nmasuk", thnmasuk.getText().toString());
+                  //  params.put("tahun_nmasuk", thnmasuk.getText().toString());
                 //}
                 return map;
             }
@@ -118,4 +187,57 @@ public class FormulirPPDB extends AppCompatActivity {
 
         AppController.getInstance().addToRequestQueue(stringRequest);
     }
+
+    public void daftarBerhasil()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert
+                .setMessage("Pendaftaran Berhasil")
+                .setCancelable(false)
+                .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent login = new Intent(FormulirPPDB.this, Login.class);
+                        finish();
+                        startActivity(login);
+
+                    }
+                });
+
+        AlertDialog berhasil = alert.create();
+        berhasil.show();
+    }
+    public void daftarGAgal()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert
+                .setMessage("Pendaftaran Gagal")
+                .setCancelable(false)
+                .setNegativeButton("Ulangi", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                       recreate();
+                    }
+                });
+
+        AlertDialog berhasil = alert.create();
+        berhasil.show();
+    }
+
+    private void showDateDialog()
+    {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year,month,dayOfMonth);
+                tgllahir.setText(dateFormat.format(newDate.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
 }

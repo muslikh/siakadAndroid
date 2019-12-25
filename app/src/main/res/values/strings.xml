@@ -8,4 +8,19 @@
     <string name="navigation_drawer_open">navigation_drawer_open</string>
     <string name="navigation_drawer_close">navigation_drawer_close</string>
 
+    <string-array name="jenis_kelamin">
+        <item>Pilih Jenis Kelamin</item>
+        <item>Laki - Laki</item>
+        <item>Perempuan</item>
+    </string-array>
+
+    <string-array name="program_keahlian">
+        <item>Pilih Program Keahlian</item>
+        <item>AKUNTANSI</item>
+        <item>MULTIMEDIA</item>
+        <item>PERHOTELAN</item>
+        <item>TEKNIK KOMPUTER DAN JARINGAN</item>
+        <item>TATA BOGA</item>
+        <item>TEKNIK SEPEDA MOTOR</item>
+    </string-array>
 </resources>

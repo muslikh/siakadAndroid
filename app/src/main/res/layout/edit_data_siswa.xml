@@ -56,12 +56,12 @@ android:layout_below="@+id/toolbareddaata"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
+
             <EditText
                 android:id="@+id/namaUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Muhammad Muslikh " />
+                android:layout_weight="1" />
 
         </TableRow>
         <TableRow
@@ -69,10 +69,10 @@ android:layout_below="@+id/toolbareddaata"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/label_ttl"
+                android:id="@+id/label_tempatlahir"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="Tempat dan Tanggal Lahir" />
+                android:text="Tempat Lahir" />
 
             <TextView
                 android:layout_width="10dp"
@@ -80,7 +80,30 @@ android:layout_below="@+id/toolbareddaata"
                 android:text=":"/>
 
             <EditText
-                android:id="@+id/ttlUser"
+                android:id="@+id/tmplahir"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_tanggallahir"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Lahir" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/tanggallahir"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -97,13 +120,13 @@ android:layout_below="@+id/toolbareddaata"
                 android:id="@+id/label_kodeKelas"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="Kelas" />
+                android:text="Kelas " />
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
-            <EditText
+            <TextView
                 android:id="@+id/kodeKelasUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -124,7 +147,7 @@ android:layout_below="@+id/toolbareddaata"
                 android:layout_width="21dp"
                 android:layout_height="wrap_content"
                 android:text=":" />
-            <EditText
+            <TextView
                 android:id="@+id/jurusanUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -132,11 +155,19 @@ android:layout_below="@+id/toolbareddaata"
                 android:text=" " />
         </TableRow>
     </TableLayout>
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/updateSiswa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tabelProfile"
-        android:text="Simpan Data"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/btn_normal"
+        android:text="Simpan Data"
+        android:textColor="@color/colorWhite" />
 
 </RelativeLayout>

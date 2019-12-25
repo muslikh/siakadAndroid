@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DataSiswa">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark" />
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/MenuAksi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:background="#4CAF50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/refreshdata"
+            android:text="Refresh Data"/>
+
+        <Button
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/hpssiswa"
+            android:background="#F30808"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hapus Data"/>
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lvsbaru"
+
+        android:layout_width="match_parent"
+        android:layout_height="618dp"
+        android:layout_above="@+id/aksesMenu"
+        android:layout_below="@+id/MenuAksi"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"/>
+
+</RelativeLayout>

@@ -70,13 +70,15 @@
 
 
         <Button
+
             android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
+            android:layout_width="201dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/btn_normal"
             android:text="Masuk"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold"
             app:fontFamily="monospace" />
 
@@ -111,6 +113,12 @@
                 android:textStyle="bold"
                 app:fontFamily="monospace" />
         </LinearLayout>
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By. Muhammad Muslikh"/>
     </LinearLayout>
 
 </RelativeLayout>

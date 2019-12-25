@@ -14,6 +14,12 @@
         android:icon="@drawable/ic_setting"
         android:title="Berarnda"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/dataSiswa"
+        android:enabled="true"
+        android:icon="@drawable/ic_setting"
+        android:title="Data Siswa"
+        app:showAsAction="always" />
             <item
                 android:id="@+id/bukaMenu"
                 android:enabled="true"

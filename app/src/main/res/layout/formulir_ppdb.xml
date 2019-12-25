@@ -7,19 +7,39 @@
     android:layout_height="match_parent"
     tools:context=".FormulirPPDB">
 
-    <Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarPPDB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"/>
 
+    <TextView
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:id="@+id/tvformulirppdb"
+        android:layout_below="@id/toolbarPPDB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Penerimaan Peserta Didik Baru Tahun Ajaran"/>
+
+    <TextView
+
+        android:id="@+id/tahunppdb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvformulirppdb"
+        android:gravity="center"
+        android:text="2019/2020"
+        android:textSize="18dp"
+        android:textStyle="bold" />
     <TableLayout
         android:id="@+id/tablePPDB"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_below="@+id/toolbarPPDB"
+        android:layout_below="@+id/tahunppdb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -37,13 +57,14 @@
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:text=" : " />
+
             <EditText
                 android:id="@+id/ppdb_nisn"
+                android:layout_width="211dp"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
 
-                android:inputType="textPersonName"
-                android:hint="Nomor NISN"/>
+                android:hint="Nomor NISN"
+                android:inputType="textPersonName" />
         </TableRow>
         <TableRow
             android:layout_height="match_parent"
@@ -75,18 +96,18 @@
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tempat Tanggal Lahir "/>
+                android:text="Tempat Lahir "/>
 
             <TextView
                 android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <EditText
-                android:id="@+id/ppdb_ttl"
+                android:id="@+id/ppdb_tempatlahir"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
-                android:hint="Tempat Tanggal Lahir"/>
+                android:hint="Tempat Lahir"/>
         </TableRow>
         <TableRow
             android:layout_height="match_parent"
@@ -96,18 +117,62 @@
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jurusan "/>
+                android:text="Tanggal Lahir "/>
 
             <TextView
                 android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <EditText
+                android:id="@+id/ppdb_tanggallahir"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:hint="Tanggal Lahir"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            >
+            <TextView
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jenis Kelamin"/>
+
+            <TextView
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:text=" : " />
+            <Spinner
+                android:id="@+id/ppdbjk"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/jenis_kelamin"
+                android:padding="5dp"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            >
+            <TextView
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Program Keahlian "/>
+
+            <TextView
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:text=" : " />
+            <Spinner
                 android:id="@+id/ppdb_jurusan"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
-                android:hint="Jurusan"/>
+                android:entries="@array/program_keahlian"
+                android:hint="  "/>
         </TableRow>
 
         <TableRow
@@ -155,8 +220,10 @@
 
     </TableLayout>
 <Button
+    android:textColor="@color/colorWhite"
     android:layout_below="@+id/tablePPDB"
     android:id="@+id/ppdbSimpan"
+    android:background="@drawable/btn_normal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Simpan"/>
