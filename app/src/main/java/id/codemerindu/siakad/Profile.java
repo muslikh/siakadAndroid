@@ -33,7 +33,7 @@ public class Profile extends AppCompatActivity {
     public final static String TAG = "Profile";
     public final static String TAG_IDU = "idu";
     PagerAdapter pagerAdapter;
-    Button btneditdata;
+    Button btneditdata,btnrefresh;
     ImageView fotoProfile;
     Boolean session = false;
 
@@ -44,6 +44,14 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.profile);
 
 
+        btnrefresh = (Button) findViewById(R.id.btnrefreshData);
+
+        btnrefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
         Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
         setSupportActionBar(toolbar);
 

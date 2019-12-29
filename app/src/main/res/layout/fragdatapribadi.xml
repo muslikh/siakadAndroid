@@ -34,28 +34,94 @@
             android:textStyle="bold" />
     </TableRow>
 
-    <TableRow
-        android:layout_gravity="center"
-        android:padding="5dp">
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
 
-        <TextView
-            android:id="@+id/label_namaUser"
-            android:layout_width="129dp"
-            android:layout_height="wrap_content"
-            android:text="Nama Lengkap" />
+            <TextView
+                android:id="@+id/label_namaUser"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Lengkap" />
 
-        <TextView
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:text=":"/>
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
 
-        <TextView
-            android:id="@+id/namaUser"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            <TextView
+                android:id="@+id/namaUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-    </TableRow>
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nisn"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor NISN" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/nisnUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nipdUser"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor NIPD" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/nipdUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nikUser"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor NIK / KTP" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/nikUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </TableRow>
         <TableRow
             android:layout_gravity="center"
             android:padding="5dp">

@@ -1,10 +1,15 @@
 package id.codemerindu.siakad;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,18 +26,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EditDataSiswa extends AppCompatActivity {
 
+
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormat;
     String url = Server.URL +"siswa.php";
     String url_update  = Server.URL+"update.php";
     final String TAG ="Edit";
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
     EditText EdnamaUser,Edtmplahir,Edtgllahir;
-    TextView idUser,TvkodeKelas,Tvjurusan;
+    TextView idUser,TvkodeKelas,Tvjurusan,Tvtgllahir;
     Button updateSiswa;
 
     @Override
@@ -40,14 +50,17 @@ public class EditDataSiswa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data_siswa);
         editData(url);
+
     }
 
     public void editData(String url)
     {
+
         idUser = (TextView)  findViewById(R.id.idUser);
         EdnamaUser = (EditText) findViewById(R.id.namaUser);
         Edtmplahir = (EditText) findViewById(R.id.tmplahir);
         Edtgllahir = (EditText) findViewById(R.id.tanggallahir);
+        Tvtgllahir = (TextView) findViewById(R.id.tanggallahir);
         TvkodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
         Tvjurusan = (TextView)  findViewById(R.id.jurusanUser);
         updateSiswa = (Button)  findViewById(R.id.updateSiswa);
@@ -55,6 +68,14 @@ public class EditDataSiswa extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 simpan();
+            }
+        });
+
+        Edtgllahir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog();
+
             }
         });
 
@@ -68,6 +89,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
                             for (int i =0; i<dataArray.length(); i++)
                             {
+
 
                                 JSONObject obj = dataArray.getJSONObject(i);
                                 int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
@@ -86,6 +108,15 @@ public class EditDataSiswa extends AppCompatActivity {
                                     Edtgllahir.setText(tanggalLahir);
                                     TvkodeKelas.setText(kodekelas);
                                     Tvjurusan.setText(jurusanS);
+
+                                    String code = obj.getString("code");
+                                    if (code.equals("sukses"))
+                                    {
+                                        ubahBerhasil();
+                                    }else if (code.equals("gagal"))
+                                    {
+                                        ubahGagal();
+                                    }
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);
@@ -116,6 +147,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
 
                     Toast.makeText(EditDataSiswa.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
                     // adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
@@ -141,6 +173,8 @@ public class EditDataSiswa extends AppCompatActivity {
 
                 map.put("id_siswa", idUser.getText().toString());
                 map.put("nama", EdnamaUser.getText().toString());
+                map.put("tempat_lahir", Edtmplahir.getText().toString());
+                map.put("tanggal_lahir", Edtgllahir.getText().toString());
                 // params.put("tahun_nmasuk", thnmasuk.getText().toString());
 
                 return map;
@@ -149,5 +183,60 @@ public class EditDataSiswa extends AppCompatActivity {
         };
 
         AppController.getInstance().addToRequestQueue(stringRequest);
+    }
+
+
+    public void ubahBerhasil()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert
+                .setMessage("Perubahan Data Berhasil")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent login = new Intent(EditDataSiswa.this, Profile.class);
+                        finish();
+                        startActivity(login);
+
+                    }
+                });
+
+        AlertDialog berhasil = alert.create();
+        berhasil.show();
+    }
+    public void ubahGagal()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert
+                .setMessage("Perubahan Data Belum Berhasil")
+                .setCancelable(false)
+                .setPositiveButton("Ulangi", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        recreate();
+
+                    }
+                });
+
+        AlertDialog berhasil = alert.create();
+        berhasil.show();
+    }
+
+
+    private void showDateDialog()
+    {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year,month,dayOfMonth);
+                Tvtgllahir.setText(dateFormat.format(newDate.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 }

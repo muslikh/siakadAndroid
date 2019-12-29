@@ -31,6 +31,18 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
+        android:id="@+id/btnrefreshData"
+        android:layout_width="117dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/fotoProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/btn_normal"
+        android:text="Perbarui Data"
+        android:textColor="#ffffff"
+        android:textSize="13dp" />
+    <Button
         android:id="@+id/btneditData"
         android:layout_width="wrap_content"
         android:layout_height="28dp"

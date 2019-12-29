@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +48,15 @@ import java.util.HashMap;
 import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity
+        implements BaseSliderView.OnSliderClickListener,
+        ViewPagerEx.OnPageChangeListener{
+
+    private SliderLayout sliderShow;
+
+    private String url_slider = Server.URL + "slider.php";
+    private RequestQueue requestQueue;
+    private StringRequest stringRequest;
 
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
@@ -77,6 +91,63 @@ public class AdminActivity extends AppCompatActivity {
 
         menuKiriAdmin();
 
+
+        sliderShow = (SliderLayout) findViewById(R.id.slider);
+
+        requestQueue = Volley.newRequestQueue(AdminActivity.this);
+        stringRequest = new StringRequest(Request.Method.GET, url_slider, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try{
+                    JSONArray dataArray= new JSONArray(response);
+
+                    for (int i =0; i<dataArray.length(); i++)
+                    {
+
+                        JSONObject json = dataArray.getJSONObject(i);
+
+                        HashMap<String, String> url_maps = new HashMap();
+                        url_maps.put("Smkn Prigen", json.getString("gb1"));
+                        url_maps.put("Smkn Prigen", json.getString("gb2"));
+
+
+                        //-- looping image stored
+                        for(String name : url_maps.keySet()){
+                            TextSliderView textSliderView = new TextSliderView(AdminActivity.this);
+                            textSliderView
+                                    .description(name)
+                                    .image(url_maps.get(name))
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(AdminActivity.this);
+
+                            textSliderView.bundle(new Bundle());
+                            textSliderView.getBundle()
+                                    .putString("extra", name);
+
+                            sliderShow.addSlider(textSliderView);
+                        }
+                        sliderShow.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                        sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                        sliderShow.setCustomAnimation(new DescriptionAnimation());
+                        sliderShow.setDuration(3000);
+                        sliderShow.addOnPageChangeListener(AdminActivity.this);
+
+
+                    }
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(AdminActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(stringRequest);
     }
 
 
@@ -192,5 +263,32 @@ public class AdminActivity extends AppCompatActivity {
 //        else { Toast.makeText(getBaseContext(), "Tekan Back Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show(); }
 //
 //        mBackPressed = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onStop() {
+        sliderShow.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        Toast.makeText(this, slider.getBundle().get("extra") + "",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.e("Slider Demo", "Page Changed: " + position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

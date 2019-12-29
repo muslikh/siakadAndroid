@@ -22,15 +22,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,8 +47,10 @@ public class MainActivity extends AppCompatActivity
         implements BaseSliderView.OnSliderClickListener,
         ViewPagerEx.OnPageChangeListener{
 
-private SliderLayout sliderShow;
+    private SliderLayout sliderShow;
 
+    private RequestQueue requestQueue;
+    private StringRequest stringRequest;
 
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
@@ -59,7 +64,7 @@ private SliderLayout sliderShow;
 
     private static final String TAG_SUCCESS = "success";
     int success;
-    private String url = Server.URL + "masuk.php";
+    private String url_slider = Server.URL + "slider.php";
     public static final String TAG_ID = "id";
     public static final String TAG_IDU = "idu";
     private static final String TAG_LEVEL = "level";
@@ -130,32 +135,60 @@ private SliderLayout sliderShow;
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
 
-        HashMap<String, String> url_maps = new HashMap();
-        url_maps.put("Bengong", "https://lh3.googleusercontent.com/rQPEV7eJZZNU_1clOKBnHIzZZMaD_rgKebi3OJEGVH6oURVodWnVrtXMMhidN5JvuJg=h310");
-        url_maps.put("Melongo", "https://i0.wp.com/www.amazine.co/wp-content/uploads/2013/12/Kucing_1.jpg");
-        url_maps.put("Apaaa", "http://islamidia.com/wp-content/uploads/2016/07/Kucing-dan-Kedudukannya-Dalam-Pandangan-Islam.jpg");
-        url_maps.put("Bobo", "https://hellosehat.com/wp-content/uploads/2016/11/tidur-dengan-kucing.jpg");
+        requestQueue = Volley.newRequestQueue(MainActivity.this);
+        stringRequest = new StringRequest(Request.Method.GET, url_slider, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-        //-- looping image stored
-        for(String name : url_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(this);
-            textSliderView
-                    .description(name)
-                    .image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
+                try{
+                    JSONArray dataArray= new JSONArray(response);
 
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", name);
+                    for (int i =0; i<dataArray.length(); i++)
+                    {
 
-            sliderShow.addSlider(textSliderView);
-        }
-        sliderShow.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderShow.setCustomAnimation(new DescriptionAnimation());
-        sliderShow.setDuration(3000);
-        sliderShow.addOnPageChangeListener(this);
+                        JSONObject json = dataArray.getJSONObject(i);
+
+                        HashMap<String, String> url_maps = new HashMap();
+                        url_maps.put("Smkn Prigen", json.getString("gb1"));
+                        url_maps.put("Smkn Prigen", json.getString("gb2"));
+
+
+                        //-- looping image stored
+                        for(String name : url_maps.keySet()){
+                            TextSliderView textSliderView = new TextSliderView(MainActivity.this);
+                            textSliderView
+                                    .description(name)
+                                    .image(url_maps.get(name))
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(MainActivity.this);
+
+                            textSliderView.bundle(new Bundle());
+                            textSliderView.getBundle()
+                                    .putString("extra", name);
+
+                            sliderShow.addSlider(textSliderView);
+                        }
+                        sliderShow.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                        sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                        sliderShow.setCustomAnimation(new DescriptionAnimation());
+                        sliderShow.setDuration(3000);
+                        sliderShow.addOnPageChangeListener(MainActivity.this);
+
+
+                    }
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(stringRequest);
 
 
 
