@@ -37,7 +37,7 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
         holder.namas.setText("Nama : "+list_data.get(position).get("nama"));
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));
-        // holder.nisn.setText(list_data.get(position).get("nisn"));
+        holder.nisn.setText("NSN : "+list_data.get(position).get("nisn"));
     }
 
     @Override
@@ -46,16 +46,16 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView namas,kodekelas,kodejurusan;
+        TextView namas,kodekelas,kodejurusan,nisn;
         ImageView imgsbaru;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             namas = (TextView) itemView.findViewById(R.id.namas);
-            kodekelas = (TextView) itemView.findViewById(R.id.kodekelas);
-            kodejurusan = (TextView) itemView.findViewById(R.id.kodejurusan);
-            imgsbaru = (ImageView) itemView.findViewById(R.id.imgsbaru);
+            kodekelas = (TextView) itemView.findViewById(R.id.kodekelass);
+            kodejurusan = (TextView) itemView.findViewById(R.id.kodejurusans);
+            nisn = (TextView) itemView.findViewById(R.id.nisns);
         }
     }
 

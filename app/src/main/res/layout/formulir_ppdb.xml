@@ -5,15 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FormulirPPDB">
-
+    tools:context=".FormulirPPDB"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    >
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarPPDB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"/>
-
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF"/>
     <TextView
+        android:textColor="#000000"
         android:gravity="center"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -21,10 +23,9 @@
         android:layout_below="@id/toolbarPPDB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Penerimaan Peserta Didik Baru Tahun Ajaran"/>
-
+        android:text="Penerimaan Peserta Didik \n Baru Tahun Ajaran"/>
     <TextView
-
+        android:textColor="#000000"
         android:id="@+id/tahunppdb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,27 +43,26 @@
         android:layout_below="@+id/tahunppdb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TableRow
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             >
             <TextView
+                android:textColor="#000000"
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="NISN "/>
-
             <TextView
+                android:textColor="#000000"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:text=" : " />
-
             <EditText
+                android:background="#242323"
                 android:id="@+id/ppdb_nisn"
                 android:layout_width="211dp"
                 android:layout_height="wrap_content"
-
                 android:hint="Nomor NISN"
                 android:inputType="textPersonName" />
         </TableRow>
@@ -72,21 +72,22 @@
             >
             <TextView
                 android:textSize="18dp"
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nama Lengkap "/>
-
             <TextView
                 android:layout_width="wrap_content"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <EditText
                 android:id="@+id/ppdb_namaLengkap"
+                android:background="#242323"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
                 android:hint="Nama Lengkap"/>
-
         </TableRow>
         <TableRow
             android:layout_height="match_parent"
@@ -94,16 +95,18 @@
             >
             <TextView
                 android:textSize="18dp"
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tempat Lahir "/>
-
             <TextView
                 android:layout_width="34dp"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <EditText
                 android:id="@+id/ppdb_tempatlahir"
+                android:background="#242323"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
@@ -114,38 +117,41 @@
             android:layout_width="wrap_content"
             >
             <TextView
+                android:textColor="#000000"
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tanggal Lahir "/>
-
             <TextView
                 android:layout_width="34dp"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <EditText
                 android:id="@+id/ppdb_tanggallahir"
+                android:background="#242323"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
                 android:hint="Tanggal Lahir"/>
         </TableRow>
-
         <TableRow
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             >
             <TextView
                 android:textSize="18dp"
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Jenis Kelamin"/>
-
             <TextView
                 android:layout_width="34dp"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <Spinner
+                android:background="#242323"
                 android:id="@+id/ppdbjk"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -158,15 +164,17 @@
             >
             <TextView
                 android:textSize="18dp"
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Program Keahlian "/>
-
             <TextView
                 android:layout_width="34dp"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <Spinner
+                android:background="#242323"
                 android:id="@+id/ppdb_jurusan"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -174,7 +182,6 @@
                 android:entries="@array/program_keahlian"
                 android:hint="  "/>
         </TableRow>
-
         <TableRow
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
@@ -183,15 +190,17 @@
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#000000"
                 android:text="Username "/>
-
             <TextView
                 android:layout_width="34dp"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <EditText
                 android:id="@+id/ppdb_username"
                 android:layout_height="wrap_content"
+                android:background="#242323"
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
                 android:hint="Username"/>
@@ -202,29 +211,30 @@
             >
             <TextView
                 android:textSize="18dp"
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Password "/>
-
             <TextView
                 android:layout_width="34dp"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:text=" : " />
             <EditText
                 android:id="@+id/ppdb_password"
                 android:layout_height="wrap_content"
+                android:background="#242323"
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
                 android:hint="Password"/>
         </TableRow>
-
     </TableLayout>
-<Button
-    android:textColor="@color/colorWhite"
-    android:layout_below="@+id/tablePPDB"
-    android:id="@+id/ppdbSimpan"
-    android:background="@drawable/btn_normal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Simpan"/>
+    <Button
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/tablePPDB"
+        android:id="@+id/ppdbSimpan"
+        android:background="@drawable/btn_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"/>
 </RelativeLayout>

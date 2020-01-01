@@ -26,9 +26,9 @@ import java.util.zip.Inflater;
 
 public class fragSiswa extends Fragment {
 
-    final String url = "http://152746201341.ip-dynamic.com/login/siswa.php";
+    final String url = Server.URL+"siswa.php";
 
-    TextView namaUser,ttlUser,kodeKelas,jurusan;
+    TextView namaUser,ttlUser,kodeKelas,jurusan, nisn,nipd,nik,jk,agama,kewarga,anakke,jmlsdrkandung;
     String id;
     SharedPreferences sharedpreferences;
     public final static String TAG="Profile";
@@ -44,6 +44,14 @@ public class fragSiswa extends Fragment {
         ttlUser = (TextView)  view_fragsiswa.findViewById(R.id.ttlUser);
         kodeKelas = (TextView)  view_fragsiswa.findViewById(R.id.kodeKelasUser);
         jurusan = (TextView)  view_fragsiswa.findViewById(R.id.jurusanUser);
+        nisn = (TextView)  view_fragsiswa.findViewById(R.id.nisnUser);
+        nipd = (TextView)  view_fragsiswa.findViewById(R.id.nipdUser);
+        nik = (TextView)  view_fragsiswa.findViewById(R.id.nikUser);
+        jk = (TextView)  view_fragsiswa.findViewById(R.id.jklUser);
+        agama = (TextView)  view_fragsiswa.findViewById(R.id.agmUser);
+        kewarga = (TextView)  view_fragsiswa.findViewById(R.id.wargaUser);
+        anakke = (TextView)  view_fragsiswa.findViewById(R.id.anakKeUser);
+        jmlsdrkandung = (TextView)  view_fragsiswa.findViewById(R.id.jmlsdrkanUser);
         RequestQueue  requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequests =
                 new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -69,6 +77,14 @@ public class fragSiswa extends Fragment {
                                     ttlUser.setText(tempatLahir +","+ tanggalLahir);
                                     kodeKelas.setText(kodekelas);
                                     jurusan.setText(jurusanS);
+                                    nisn.setText(obj.getString("nisn"));
+                                    nipd.setText(obj.getString("nipd"));
+                                    nik .setText(obj.getString("nik"));
+                                    jk .setText(obj.getString("id_jenis_kelamin"));
+                                    agama.setText(obj.getString("agama"));
+                                    kewarga.setText(obj.getString("kewarganegaraan"));
+                                    anakke.setText(obj.getString("anak_ke"));
+                                    jmlsdrkandung.setText(obj.getString("jml_sdrkandung"));
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);

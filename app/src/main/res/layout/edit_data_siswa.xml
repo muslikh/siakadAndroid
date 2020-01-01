@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbareddaata"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:titleTextColor="@color/colorWhite"/>
+        android:titleTextColor="#FFFFFF"/>
 
     <TableLayout
+
 android:layout_below="@+id/toolbareddaata"
         android:id="@+id/tabelProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+>
 
 
         <TableRow
+
             android:layout_gravity="center"
             android:padding="5dp">
 
             <TextView
+
+                android:textColor="#000000"
                 android:id="@+id/label_id"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="ID " />
+                android:text="NISN " />
 
             <TextView
+                android:textColor="#000000"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
             <TextView
-                android:id="@+id/idUser"
+                android:textColor="#000000"
+                android:id="@+id/nisnUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,17 +56,20 @@ android:layout_below="@+id/toolbareddaata"
             android:padding="5dp">
 
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/label_namaUser"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:text="Nama Lengkap" />
 
             <TextView
+                android:textColor="#000000"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
 
             <EditText
+                android:textColor="#000000"
                 android:id="@+id/namaUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -69,17 +81,20 @@ android:layout_below="@+id/toolbareddaata"
             android:padding="5dp">
 
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/label_tempatlahir"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:text="Tempat Lahir" />
 
             <TextView
+                android:textColor="#000000"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
 
             <EditText
+                android:textColor="#000000"
                 android:id="@+id/tmplahir"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -92,17 +107,20 @@ android:layout_below="@+id/toolbareddaata"
             android:padding="5dp">
 
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/label_tanggallahir"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:text="Tanggal Lahir" />
 
             <TextView
+                android:textColor="#000000"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
 
             <EditText
+                android:textColor="#000000"
                 android:id="@+id/tanggallahir"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -117,16 +135,19 @@ android:layout_below="@+id/toolbareddaata"
             android:padding="5dp">
 
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/label_kodeKelas"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:text="Kelas " />
 
             <TextView
+                android:textColor="#000000"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/kodeKelasUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
@@ -138,16 +159,19 @@ android:layout_below="@+id/toolbareddaata"
             android:padding="5dp">
 
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/label_jurusan"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:text="Jurusan" />
 
             <TextView
+                android:textColor="#000000"
                 android:layout_width="21dp"
                 android:layout_height="wrap_content"
                 android:text=":" />
             <TextView
+                android:textColor="#000000"
                 android:id="@+id/jurusanUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"

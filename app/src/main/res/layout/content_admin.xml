@@ -9,7 +9,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF" />
 
     <com.daimajia.slider.library.SliderLayout
         android:id="@+id/slider"
@@ -29,6 +30,79 @@
 
     </FrameLayout>
 
+    <TableLayout
+
+        android:id="@+id/tabelJadwal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slider"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp">
+
+        <TableRow
+            android:id="@+id/rowlay"
+            android:layout_height="86dp"
+            android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:padding="6dp">
+
+            <TextView
+                android:layout_width="197dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Pengumuman"
+                android:textAlignment="center"
+                android:textSize="18dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="No." />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Isi Pengumuman " />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:background="@android:color/darker_gray"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="1." />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tanpa Semangat Baru, Ilmu Baru, Karya Baru dan Manfaat Baru Bagi Sesama; 2020 Hanyalah Angka" />
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+               />
+        </TableRow>
+
+    </TableLayout>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/aksesMenu"
@@ -39,6 +113,6 @@
         android:background="@color/colorPrimaryDark"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
-        app:menu="@menu/menu_bawah" />
+        app:menu="@menu/menu_badmin" />
 
 </RelativeLayout>

@@ -5,48 +5,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DataSiswa">
+    tools:context=".DataSiswa"
+    android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF" />
     <LinearLayout
         android:layout_below="@+id/toolbar"
         android:id="@+id/MenuAksi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <Button
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:background="#4CAF50"
-            android:layout_width="wrap_content"
+
+        <EditText
+            android:textColor="#000000"
+            android:id="@+id/caridata"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:id="@+id/refreshdata"
-            android:text="Refresh Data"/>
+            android:hint="Cari Data.." />
 
         <Button
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:id="@+id/refreshdata"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/ic_refresh"
+            android:icon="@drawable/ic_refresh"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+        <Button
+            android:id="@+id/hpssiswa"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:id="@+id/hpssiswa"
-            android:background="#F30808"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hapus Data"/>
+            android:background="@drawable/ic_delete"
+            android:icon="@drawable/ic_delete"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvsbaru"
-
         android:layout_width="match_parent"
         android:layout_height="618dp"
         android:layout_above="@+id/aksesMenu"

@@ -61,12 +61,14 @@ public class AdminActivity extends AppCompatActivity
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
 
+    TextView nmuser;
     SharedPreferences sharedpreferences;
     DrawerLayout drawer;
     Boolean session = false;
     public static final String TAG_ID = "id";
     private static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
+    public static final String TAG_NAMA= "nama";
 
 
     @Override
@@ -82,7 +84,8 @@ public class AdminActivity extends AppCompatActivity
         toolbar.setSubtitle("SMK NEGERI PRIGEN");
         toolbar.setLogo(R.mipmap.ic_logo);
 
-
+//        nmuser = (TextView) findViewById(R.id.namaUser);
+//        nmuser.setText(getIntent().getStringExtra(TAG_NAMA));
 
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
@@ -108,8 +111,9 @@ public class AdminActivity extends AppCompatActivity
                         JSONObject json = dataArray.getJSONObject(i);
 
                         HashMap<String, String> url_maps = new HashMap();
-                        url_maps.put("Smkn Prigen", json.getString("gb1"));
-                        url_maps.put("Smkn Prigen", json.getString("gb2"));
+                        url_maps.put(json.getString("deskripsi"), json.getString("url"));
+                        url_maps.put(json.getString("deskripsi"), json.getString("url"));
+
 
 
                         //-- looping image stored
@@ -186,9 +190,9 @@ public class AdminActivity extends AppCompatActivity
 //                                .addToBackStack(null)
 //                                .commit();
                         break;
-                    case R.id.bukaMenu:
-                        findViewById(R.id.btn_isiFormulir).setEnabled(false);
-                        break;
+//                    case R.id.bukaMenu:
+//                        findViewById(R.id.btn_isiFormulir).setEnabled(false);
+//                        break;
 
                     case R.id.homeAdmin:
                         Intent homeAdmin = new Intent(AdminActivity.this,AdminActivity.class);

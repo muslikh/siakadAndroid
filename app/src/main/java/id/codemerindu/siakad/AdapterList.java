@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,6 +36,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
 //                //.crossFade()
 //                .placeholder(R.mipmap.ic_launcher)
 //                .into(holder.imgsbaru);
+        Picasso.with(context).load("http://smknprigen.sch.id/bkk/image/default.png").into(holder.imgsbaru);
         holder.namas.setText("Nama : "+list_data.get(position).get("nama"));
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));

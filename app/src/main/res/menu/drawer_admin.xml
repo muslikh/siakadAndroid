@@ -20,12 +20,12 @@
         android:icon="@drawable/ic_setting"
         android:title="Data Siswa"
         app:showAsAction="always" />
-            <item
-                android:id="@+id/bukaMenu"
-                android:enabled="true"
-                android:icon="@drawable/ic_setting"
-                android:title="Buka Menu Isi Formulir"
-                app:showAsAction="always" />
+            <!--<item-->
+                <!--android:id="@+id/bukaMenu"-->
+                <!--android:enabled="true"-->
+                <!--android:icon="@drawable/ic_setting"-->
+                <!--android:title="Buka Menu Isi Formulir"-->
+                <!--app:showAsAction="always" />-->
             <item
                 android:id="@+id/validasiSiswa"
                 android:enabled="true"

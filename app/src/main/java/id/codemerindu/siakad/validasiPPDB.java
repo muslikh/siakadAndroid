@@ -317,16 +317,16 @@ public class validasiPPDB extends AppCompatActivity {
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
 
-    String url_sbaru = "http://smknprigen.sch.id/siakad/api/siswabaru.php";
-    String url_pindah = "http://smknprigen.sch.id/siakad/api/pindah.php";
+    String url_sbaru = Server.URL+"siswabaru.php";
+    String url_pindah = Server.URL+"pindah.php";
     ArrayList<HashMap<String ,String>> list_data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validasi_ppdb);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarvalid);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Data Siswa");
+        getSupportActionBar().setTitle("Validasi Siswa Baru");
 
 
         validsemua = (Button) findViewById(R.id.validsemua);
@@ -360,8 +360,9 @@ public class validasiPPDB extends AppCompatActivity {
                         HashMap<String, String > map = new HashMap<String , String >();
                         map.put("id_siswaBaru", json.getString("id_siswaBaru"));
                         map.put("nama",json.getString("nama"));
-                        // map.put("nisn",json.getString("nisn"));
+                         map.put("kode_kelas",json.getString("kode_kelas"));
                         map.put("kode_jurusan",json.getString("kode_jurusan"));
+                        map.put("nisn",json.getString("nisn"));
                         list_data.add(map);
                         AdapterSbaru adapterSbaru = new AdapterSbaru(validasiPPDB.this, list_data);
                         lvsbaru.setAdapter(adapterSbaru);

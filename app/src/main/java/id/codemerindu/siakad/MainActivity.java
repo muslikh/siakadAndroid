@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
 
-    TextView namaUser, txt_id;
-    String id, username, idu,level,levelU;
+    TextView namaUser, txt_id,nmuser;
+    String id, username, idu,level,levelU,nama;
     SharedPreferences sharedpreferences;
     NavigationView navigationView;
 
@@ -65,10 +65,12 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_SUCCESS = "success";
     int success;
     private String url_slider = Server.URL + "slider.php";
+    private String url_siswa = Server.URL + "siswa.php";
     public static final String TAG_ID = "id";
     public static final String TAG_IDU = "idu";
     private static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
+    public static final String TAG_NAMA = "nama";
     String tag_json_obj = "json_obj_req";
 
     @Override
@@ -131,65 +133,8 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         menuKiri();
-
-
-        sliderShow = (SliderLayout) findViewById(R.id.slider);
-
-        requestQueue = Volley.newRequestQueue(MainActivity.this);
-        stringRequest = new StringRequest(Request.Method.GET, url_slider, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try{
-                    JSONArray dataArray= new JSONArray(response);
-
-                    for (int i =0; i<dataArray.length(); i++)
-                    {
-
-                        JSONObject json = dataArray.getJSONObject(i);
-
-                        HashMap<String, String> url_maps = new HashMap();
-                        url_maps.put("Smkn Prigen", json.getString("gb1"));
-                        url_maps.put("Smkn Prigen", json.getString("gb2"));
-
-
-                        //-- looping image stored
-                        for(String name : url_maps.keySet()){
-                            TextSliderView textSliderView = new TextSliderView(MainActivity.this);
-                            textSliderView
-                                    .description(name)
-                                    .image(url_maps.get(name))
-                                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                                    .setOnSliderClickListener(MainActivity.this);
-
-                            textSliderView.bundle(new Bundle());
-                            textSliderView.getBundle()
-                                    .putString("extra", name);
-
-                            sliderShow.addSlider(textSliderView);
-                        }
-                        sliderShow.setPresetTransformer(SliderLayout.Transformer.Accordion);
-                        sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-                        sliderShow.setCustomAnimation(new DescriptionAnimation());
-                        sliderShow.setDuration(3000);
-                        sliderShow.addOnPageChangeListener(MainActivity.this);
-
-
-                    }
-                } catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener()
-        {
-            public void onErrorResponse(VolleyError error)
-            {
-                Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-        requestQueue.add(stringRequest);
-
+        slider();
+        cekdatakosong();
 
 
         // Cek session login jika TRUE maka langsung buka Profile
@@ -197,9 +142,13 @@ public class MainActivity extends AppCompatActivity
         session = sharedpreferences.getBoolean(session_status, false);
         idu = sharedpreferences.getString(TAG_ID, null);
         levelU = sharedpreferences.getString(TAG_LEVEL, null);
+        nama = sharedpreferences.getString(TAG_NAMA, null);
 
         if(levelU.equals("siswa"))
         {
+
+//            nmuser = (TextView) findViewById(R.id.navnamaUser);
+//            nmuser.setText(nama);
 
         }else if(levelU.equals("admin"))
         {
@@ -207,6 +156,7 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra(TAG_ID, id);
             intent.putExtra(TAG_USERNAME, username);
             intent.putExtra(TAG_LEVEL, level);
+            intent.putExtra(TAG_NAMA,nama);
             startActivity(intent);
         }else if(levelU.equals("siswabaru"))
         {
@@ -353,6 +303,141 @@ public class MainActivity extends AppCompatActivity
 //        else { Toast.makeText(getBaseContext(), "Tekan Back Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show(); }
 //
 //        mBackPressed = System.currentTimeMillis();
+    }
+    public void slider()
+    {
+
+
+        sliderShow = (SliderLayout) findViewById(R.id.slider);
+
+        requestQueue = Volley.newRequestQueue(MainActivity.this);
+        stringRequest = new StringRequest(Request.Method.GET, url_slider, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try{
+                    JSONArray dataArray= new JSONArray(response);
+
+                    for (int i =0; i<dataArray.length(); i++)
+                    {
+
+                        JSONObject json = dataArray.getJSONObject(i);
+
+                        HashMap<String, String> url_maps = new HashMap();
+                        url_maps.put(json.getString("deskripsi"), json.getString("url"));
+                        url_maps.put(json.getString("deskripsi"), json.getString("url"));
+
+
+
+                        //-- looping image stored
+                        for(String name : url_maps.keySet()){
+                            TextSliderView textSliderView = new TextSliderView(MainActivity.this);
+                            textSliderView
+                                    .description(name)
+                                    .image(url_maps.get(name))
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(MainActivity.this);
+
+                            textSliderView.bundle(new Bundle());
+                            textSliderView.getBundle()
+                                    .putString("extra", name);
+
+                            sliderShow.addSlider(textSliderView);
+                        }
+                        sliderShow.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                        sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                        sliderShow.setCustomAnimation(new DescriptionAnimation());
+                        sliderShow.setDuration(3000);
+                        sliderShow.addOnPageChangeListener(MainActivity.this);
+
+
+                    }
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(stringRequest);
+
+    }
+    public void cekdatakosong()
+    {
+
+
+        sliderShow = (SliderLayout) findViewById(R.id.slider);
+
+        requestQueue = Volley.newRequestQueue(MainActivity.this);
+        stringRequest = new StringRequest(Request.Method.GET, url_siswa, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try{
+                    JSONArray dataArray= new JSONArray(response);
+
+                    for (int i =0; i<dataArray.length(); i++)
+                    {
+
+                        JSONObject obj = dataArray.getJSONObject(i);
+//                        int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
+//                        String nama = obj.getString("nama");
+//                        int id = obj.getInt("id_siswa");
+//                        String id_siswa = obj.getString("id_siswa");
+//                        String nisn = obj.getString("nisn");
+                        String tempatLahir = obj.getString("tempat_lahir");
+//                        String tanggalLahir = obj.getString("tanggal_lahir");
+//                        String kodekelas = obj.getString("kode_kelas");
+//                        String jurusanS = obj.getString("kode_jurusan");
+                        if (tempatLahir.isEmpty() )
+                        {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                            alert
+                                    .setMessage("Ada Data Yang masih kosong Nih, Lengkapi Yuukk !")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Siap", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                                            Intent intent = new Intent(MainActivity.this, EditDataSiswa.class);
+
+                                            startActivity(intent);
+
+                                        }
+                                    })
+                                    .setNegativeButton("Nanti Saja", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            AlertDialog keluar = alert.create();
+                            keluar.show();
+                        }
+
+
+                    }
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(stringRequest);
+
     }
 }
 

@@ -5,32 +5,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminActivity">
+    tools:context=".AdminActivity"
+    android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarvalid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF"/>
     <LinearLayout
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbarvalid"
         android:id="@+id/btnAksiValid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <Button
-            android:layout_width="wrap_content"
+
+        <EditText
+            android:id="@+id/caridata"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:id="@+id/refreshdata"
-            android:text="Refresh Data"
-            android:gravity="right"/>
+            android:hint="Cari Data.." />
 
         <Button
-            android:layout_below="@+id/toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/refreshdata"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/ic_refresh"
+            android:icon="@drawable/ic_refresh"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+        <Button
             android:id="@+id/validsemua"
-            android:text="Validasi semua"
-            android:layout_gravity="center_vertical"/>
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/ic_check_"
+            android:icon="@drawable/ic_check_"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvsbaru"

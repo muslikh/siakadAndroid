@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,7 @@ public class EditDataSiswa extends AppCompatActivity {
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
     EditText EdnamaUser,Edtmplahir,Edtgllahir;
-    TextView idUser,TvkodeKelas,Tvjurusan,Tvtgllahir;
+    TextView idUser,nisnUser,TvkodeKelas,Tvjurusan,Tvtgllahir;
     Button updateSiswa;
 
     @Override
@@ -51,12 +52,18 @@ public class EditDataSiswa extends AppCompatActivity {
         setContentView(R.layout.edit_data_siswa);
         editData(url);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbareddaata);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Ubah Data");
+
+
     }
 
     public void editData(String url)
     {
 
-        idUser = (TextView)  findViewById(R.id.idUser);
+        nisnUser = (TextView)  findViewById(R.id.nisnUser);
         EdnamaUser = (EditText) findViewById(R.id.namaUser);
         Edtmplahir = (EditText) findViewById(R.id.tmplahir);
         Edtgllahir = (EditText) findViewById(R.id.tanggallahir);
@@ -96,13 +103,14 @@ public class EditDataSiswa extends AppCompatActivity {
                                 String nama = obj.getString("nama");
                                 int id = obj.getInt("id_siswa");
                                 String id_siswa = obj.getString("id_siswa");
+                                String nisn = obj.getString("nisn");
                                 String tempatLahir = obj.getString("tempat_lahir");
                                 String tanggalLahir = obj.getString("tanggal_lahir");
                                 String kodekelas = obj.getString("kode_kelas");
                                 String jurusanS = obj.getString("kode_jurusan");
                                 if (extraId== id )
                                 {
-                                   idUser.setText(id_siswa);
+                                   nisnUser.setText(nisn);
                                     EdnamaUser.setText(nama);
                                     Edtmplahir.setText(tempatLahir);
                                     Edtgllahir.setText(tanggalLahir);
@@ -171,7 +179,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
                 Map<String,String> map = new HashMap<>();
 
-                map.put("id_siswa", idUser.getText().toString());
+                map.put("nisi", nisnUser.getText().toString());
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("tempat_lahir", Edtmplahir.getText().toString());
                 map.put("tanggal_lahir", Edtgllahir.getText().toString());

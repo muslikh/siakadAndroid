@@ -47,6 +47,7 @@ public class Login extends AppCompatActivity {
     private static final String TAG_LEVEL = "level";
     public final static String TAG_USERNAME = "username";
     public final static String TAG_ID = "id";
+    public static final String TAG_NAMA = "nama";
 
     String tag_json_obj = "json_obj_req";
 
@@ -158,6 +159,7 @@ public class Login extends AppCompatActivity {
                         String username = jObj.getString(TAG_USERNAME);
                         String id = jObj.getString(TAG_ID);
                         String level = jObj.getString(TAG_LEVEL);
+                        String nama = jObj.getString("nama");
 
                         Log.e("Successfully Login!", jObj.toString());
 
@@ -169,6 +171,7 @@ public class Login extends AppCompatActivity {
                         editor.putString(TAG_ID, id);
                         editor.putString(TAG_USERNAME, username);
                         editor.putString(TAG_LEVEL, level);
+                        editor.putString(TAG_NAMA, nama);
                         editor.commit();
 //                        if(level.equals("siswa")) {
                             // Memanggil main activity
@@ -176,6 +179,7 @@ public class Login extends AppCompatActivity {
                             intent.putExtra(TAG_ID, id);
                             intent.putExtra(TAG_USERNAME, username);
                             intent.putExtra(TAG_LEVEL, level);
+                            intent.putExtra(TAG_NAMA,nama);
                            // finish();
                             startActivity(intent);
 //                        }else if(level.equals("admin")){

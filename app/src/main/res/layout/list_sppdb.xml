@@ -23,29 +23,41 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:textColor="#000000"
                     android:id="@+id/namas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:text="nama siswa"
-                    android:textSize="25sp" />
+                    android:textSize="14sp" />
                 <TextView
-                    android:id="@+id/kodekelas"
+                    android:textColor="#000000"
+                    android:id="@+id/nisns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="nisn siswa"
+                    android:textSize="14sp" />
+                <TextView
+                    android:textColor="#000000"
+                    android:id="@+id/kodekelass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:text="Kelas"
-                    android:textSize="25sp" />
+                    android:textSize="14sp" />
                 <TextView
-                    android:id="@+id/kodejurusan"
+                    android:textColor="#000000"
+                    android:id="@+id/kodejurusans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:text="jurusan"
-                    android:textSize="25sp" />
+                    android:textSize="14sp"/>
             </LinearLayout>
 
         </LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/jadwal"
+        android:enabled="true"
+        android:icon="@drawable/ic_setting"
+        android:title="Data Siswa"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/grup"
+        android:enabled="true"
+        android:icon="@drawable/ic_setting"
+        android:title="PPDB"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/profil"
+        android:enabled="true"
+        android:icon="@drawable/ic_setting"
+        android:title="Profil"
+        app:showAsAction="always" />
+
+</menu>
