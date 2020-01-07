@@ -23,4 +23,13 @@
         <item>TATA BOGA</item>
         <item>TEKNIK SEPEDA MOTOR</item>
     </string-array>
+    <string-array name="agama">
+        <item>Pilih Agama</item>
+        <item>ISLAM</item>
+        <item>KRISTEN</item>
+        <item>KATOLIK</item>
+        <item>HINDU</item>
+        <item>BUDHA</item>
+        <item>KHONGHUCU</item>
+    </string-array>
 </resources>

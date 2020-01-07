@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +44,14 @@ public class EditDataSiswa extends AppCompatActivity {
     final String TAG ="Edit";
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
-    EditText EdnamaUser,Edtmplahir,Edtgllahir;
-    TextView idUser,nisnUser,TvkodeKelas,Tvjurusan,Tvtgllahir;
+    EditText EdnamaUser,Edtmplahir,EdtgllahirUser;
+    TextView idUser,nipd,nisnUser,TvkodeKelas,Tvjurusan,Tvtgllahir,kelasAwal,thnmasuk;
+    EditText namaUser,ttlUser,kodeKelas,jurusan,
+    nisn,nik,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
+    hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
+    tinggi,berat,lulusdari,noijasah,noskhun,nopeUser,pindahdari,alamatSsebelum;
+
+    Spinner agama,jk;
     Button updateSiswa;
 
     @Override
@@ -67,11 +74,11 @@ public class EditDataSiswa extends AppCompatActivity {
             }
         });
 
-        Edtgllahir.setOnClickListener(new View.OnClickListener() {
+        EdtgllahirUser = (EditText) findViewById(R.id.tanggallahirUser);
+        EdtgllahirUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDateDialog();
-
             }
         });
 
@@ -79,16 +86,44 @@ public class EditDataSiswa extends AppCompatActivity {
         nisnUser = (TextView)  findViewById(R.id.nisnUser);
         EdnamaUser = (EditText) findViewById(R.id.namaUser);
         Edtmplahir = (EditText) findViewById(R.id.tmplahir);
-        Edtgllahir = (EditText) findViewById(R.id.tanggallahir);
-        Tvtgllahir = (TextView) findViewById(R.id.tanggallahir);
+        Tvtgllahir = (TextView) findViewById(R.id.tanggallahirUser);
         TvkodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
         Tvjurusan = (TextView)  findViewById(R.id.jurusanUser);
+
+
+        nopeUser = ( EditText)  findViewById(R.id.nopeUser);
+        nipd = ( TextView)   findViewById(R.id.nipdUser);
+        nik = ( EditText)   findViewById(R.id.nikUser);
+        jk = (Spinner)   findViewById(R.id.jklUser);
+        agama = ( Spinner)   findViewById(R.id.agmUser);
+        kewarga = ( EditText)   findViewById(R.id.wargaUser);
+        anakke = ( EditText)   findViewById(R.id.anakKeUser);
+        jmlsdrkandung = ( EditText)   findViewById(R.id.jmlsdrkanUser);
+        jmlsdrtiri = ( EditText)   findViewById(R.id.jmlsdrtirUser);
+        hobi = ( EditText)  findViewById(R.id.hobiUser);
+        alamat = ( EditText)   findViewById(R.id.alamatUser);
+        rt = ( EditText)   findViewById(R.id.rtUser);
+        rw = ( EditText)  findViewById(R.id.rwUser);
+        dusun = ( EditText)   findViewById(R.id.dusunUser);
+        kab = ( EditText)   findViewById(R.id.kabUser);
+        prov = ( EditText)  findViewById(R.id.provUser);
+        stsTinggal = ( EditText)  findViewById(R.id.stsTinggalUser);
+        goldar = ( EditText)  findViewById(R.id.goldarUser);
+        penyakit = ( EditText)  findViewById(R.id.ketsakitUser);
+        tinggi = ( EditText)  findViewById(R.id.tgUser);
+        berat = ( EditText)  findViewById(R.id.bbUser);
+        lulusdari = ( EditText)  findViewById(R.id.lulusanUser);
+        noijasah = ( EditText)  findViewById(R.id.noijasahUser);
+        noskhun= ( EditText)  findViewById(R.id.noskhunUser);
+        pindahdari = ( EditText)  findViewById(R.id.pindahanUser);
+        alamatSsebelum = ( EditText)  findViewById(R.id.alamatsebelum);
+        kelasAwal = ( TextView)  findViewById(R.id.kelasawalUser);
+        thnmasuk= ( TextView)  findViewById(R.id.thnmskUser);
+
     }
 
     public void editData()
     {
-
-
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequests =
@@ -109,7 +144,6 @@ public class EditDataSiswa extends AppCompatActivity {
                                 String id_siswa = obj.getString("id_siswa");
                                 String nisn = obj.getString("nisn");
                                 String tempatLahir = obj.getString("tempat_lahir");
-                                String tanggalLahir = obj.getString("tanggal_lahir");
                                 String kodekelas = obj.getString("kode_kelas");
                                 String jurusanS = obj.getString("kode_jurusan");
                                 if (extraId== id )
@@ -118,7 +152,7 @@ public class EditDataSiswa extends AppCompatActivity {
                                     nisnUser.setText(nisn);
                                     EdnamaUser.setText(nama);
                                     Edtmplahir.setText(tempatLahir);
-                                    Edtgllahir.setText(tanggalLahir);
+                                    EdtgllahirUser.setText(obj.getString("tanggal_lahir"));
                                     TvkodeKelas.setText(kodekelas);
                                     Tvjurusan.setText(jurusanS);
 
@@ -187,7 +221,7 @@ public class EditDataSiswa extends AppCompatActivity {
                 map.put("id_siswa", idUser.getText().toString());
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("tempat_lahir", Edtmplahir.getText().toString());
-                map.put("tanggal_lahir", Edtgllahir.getText().toString());
+                map.put("tanggal_lahir", EdtgllahirUser.getText().toString());
                 // params.put("tahun_nmasuk", thnmasuk.getText().toString());
 
                 return map;

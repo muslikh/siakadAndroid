@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
+public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
 
     Context context;
     ArrayList<HashMap<String ,String >> list_data;
@@ -61,5 +62,12 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
             imgsbaru = (ImageView) itemView.findViewById(R.id.imgsbaru);
         }
     }
+
+//    void setFilter(ArrayList<HashMap<String ,String >>filter)
+//    {
+//        list_data = new ArrayList<>();
+//        list_data.addAll(filter);
+//        notifyDataSetChanged();
+//    }
 
 }

@@ -1,12 +1,14 @@
 package id.codemerindu.siakad;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -31,7 +33,9 @@ public class Profile extends AppCompatActivity {
     String idu;
     SharedPreferences sharedpreferences;
     public final static String TAG = "Profile";
+    public static final String TAG_ID = "id";
     public final static String TAG_IDU = "idu";
+    public static final String TAG_USERNAME = "username";
     PagerAdapter pagerAdapter;
     Button btneditdata,btnrefresh;
     ImageView fotoProfile;
@@ -43,6 +47,9 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedIntanceState);
         setContentView(R.layout.profile);
 
+
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
 
         btnrefresh = (Button) findViewById(R.id.btnrefreshData);
 
@@ -125,10 +132,42 @@ public class Profile extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.editDataSiswa) {
-
+        if (id == R.id.logout) {
+            alertKeluar();
         }
 
         return false;
+    }
+    public void alertKeluar()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert
+                .setMessage("Tekan Ya Untuk Keluar")
+                .setCancelable(false)
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putBoolean(session_status, false);
+                        editor.putString(TAG_ID, null);
+                        editor.putString(TAG_USERNAME, null);
+                        editor.commit();
+
+                        Intent intent = new Intent(Profile.this, Login.class);
+                        finish();
+                        startActivity(intent);
+
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog keluar = alert.create();
+        keluar.show();
+
     }
 }

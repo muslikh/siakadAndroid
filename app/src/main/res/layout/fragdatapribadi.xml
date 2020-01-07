@@ -347,22 +347,16 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/label_rtrw"
+                android:id="@+id/label_rt"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:hint=""/>
+                android:hint="RT "/>
 
             <TextView
-                android:id="@+id/label_rt"
                 android:layout_width="15dp"
                 android:layout_height="wrap_content"
-                android:text="RT"
-                android:hint=""/>
-
-            <TextView
-                android:layout_width="5dp"
-                android:layout_height="wrap_content"
-                android:text=":" />
+                android:hint=""
+                android:text=" :" />
 
             <TextView
                 android:id="@+id/rtUser"
@@ -370,25 +364,30 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/label_rw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:text="RW" />
 
-            <TextView
-                android:layout_width="5dp"
-                android:layout_height="wrap_content"
-                android:text=":" />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+        <TextView
+            android:id="@+id/label_rw"
+            android:layout_width="129dp"
+            android:layout_height="wrap_content"
+            android:hint="RW "/>
+
+        <TextView
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:hint=""
+            android:text=" :" />
 
 
-            <TextView
-                android:id="@+id/rwUser"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
+        <TextView
+            android:id="@+id/rwUser"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
         </TableRow>
         <TableRow
             android:layout_gravity="center"
@@ -579,25 +578,30 @@
                 android:layout_weight="1"
                 android:text=" " />
 
-            <TextView
-                android:id="@+id/label_TgBb2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Berat Badan " />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="wrap_content"
-                android:text=":"/>
-            <TextView
-                android:id="@+id/bbUser"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=" " />
         </TableRow>
 
 
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+        <TextView
+            android:id="@+id/label_TgBb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Berat Badan " />
+
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:text=":"/>
+        <TextView
+            android:id="@+id/bbUser"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" " />
+        </TableRow>
         <!--identitas pendididkan-->
         <TableRow
             android:layout_gravity="center"

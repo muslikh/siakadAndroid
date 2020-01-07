@@ -31,8 +31,8 @@ public class fragSiswa extends Fragment {
     TextView namaUser,ttlUser,kodeKelas,jurusan,
             nisn,nipd,nik,jk,agama,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
             hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
-            tinggi,berat,lulusdari,noijasah,noskhun,pindahdari,alamatSsebelum,kelasAwal,thnmasuk;
-                    ;
+            tinggi,berat,lulusdari,noijasah,noskhun,nopeUser,pindahdari,alamatSsebelum,kelasAwal,thnmasuk;
+
     String id;
     SharedPreferences sharedpreferences;
     public final static String TAG="Profile";
@@ -43,8 +43,11 @@ public class fragSiswa extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view_fragsiswa = inflater.inflate(R.layout.fragdatapribadi,container,false);
-        ambilData();
+
+
+
         namaUser = (TextView) view_fragsiswa.findViewById(R.id.namaUser);
+        nopeUser = (TextView) view_fragsiswa.findViewById(R.id.nopeUser);
         ttlUser = (TextView)  view_fragsiswa.findViewById(R.id.ttlUser);
         kodeKelas = (TextView)  view_fragsiswa.findViewById(R.id.kodeKelasUser);
         jurusan = (TextView)  view_fragsiswa.findViewById(R.id.jurusanUser);
@@ -75,9 +78,9 @@ public class fragSiswa extends Fragment {
         pindahdari = (TextView) view_fragsiswa.findViewById(R.id.pindahanUser);
         alamatSsebelum = (TextView) view_fragsiswa.findViewById(R.id.alamatsebelum);
         kelasAwal = (TextView) view_fragsiswa.findViewById(R.id.kelasawalUser);
-        thnmasuk= (TextView) view_fragsiswa.findViewById(R.id.tahunmasuk);
+        thnmasuk= (TextView) view_fragsiswa.findViewById(R.id.thnmskUser);
 
-
+        ambilData();
         return view_fragsiswa;
     }
 
@@ -99,47 +102,45 @@ public class fragSiswa extends Fragment {
 
                                 JSONObject obj = dataArray.getJSONObject(i);
                                 int extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
-                                String nama = obj.getString("nama");
+
                                 int id = obj.getInt("id_siswa");
                                 String tempatLahir = obj.getString("tempat_lahir");
                                 String tanggalLahir = obj.getString("tanggal_lahir");
-                                String kodekelas = obj.getString("kode_kelas");
-                                String jurusanS = obj.getString("kode_jurusan");
                                 if (extraId== id )
                                 {
-                                    namaUser.setText(nama);
+                                    namaUser.setText(obj.getString("nama"));
+                                    nopeUser.setText(obj.getString("hp"));
                                     ttlUser.setText(tempatLahir +","+ tanggalLahir);
-                                    kodeKelas.setText(kodekelas);
-                                    jurusan.setText(jurusanS);
+                                    kelasAwal.setText(obj.getString("kelas_awal"));
+                                    kodeKelas.setText(obj.getString("kode_kelas"));
+                                    thnmasuk.setText(obj.getString("tahun_masuk"));
+                                    jurusan.setText(obj.getString("kode_jurusan"));
                                     nisn.setText(obj.getString("nisn"));
                                     nipd.setText(obj.getString("nipd"));
                                     nik .setText(obj.getString("nik"));
                                     jk .setText(obj.getString("id_jenis_kelamin"));
-                                    agama.setText(obj.getString("agama"));
+                                    agama.setText(obj.getString("id_agama"));
                                     kewarga.setText(obj.getString("kewarganegaraan"));
                                     anakke.setText(obj.getString("anak_ke"));
                                     jmlsdrkandung.setText(obj.getString("jml_sdrkandung"));
-
-                                    jmlsdrtiri.setText(obj.getString("jml_sdrkandung"));
-                                    hobi.setText(obj.getString("jml_sdrkandung"));
-                                    alamat.setText(obj.getString("jml_sdrkandung"));
-                                    rt.setText(obj.getString("jml_sdrkandung"));
-                                    rw.setText(obj.getString("jml_sdrkandung"));
-                                    dusun.setText(obj.getString("jml_sdrkandung"));
-                                    kab.setText(obj.getString("jml_sdrkandung"));
-                                    prov.setText(obj.getString("jml_sdrkandung"));
-                                    stsTinggal.setText(obj.getString("jml_sdrkandung"));
-                                    goldar.setText(obj.getString("jml_sdrkandung"));
-                                    penyakit.setText(obj.getString("jml_sdrkandung"));
-                                    tinggi.setText(obj.getString("jml_sdrkandung"));
-                                    berat.setText(obj.getString("jml_sdrkandung"));
-                                    lulusdari.setText(obj.getString("jml_sdrkandung"));
-                                    noijasah.setText(obj.getString("jml_sdrkandung"));
-                                    noskhun.setText(obj.getString("jml_sdrkandung"));
-                                    pindahdari.setText(obj.getString("jml_sdrkandung"));
-                                    alamatSsebelum.setText(obj.getString("jml_sdrkandung"));
-                                    kelasAwal.setText(obj.getString("jml_sdrkandung"));
-                                    thnmasuk.setText(obj.getString("jml_sdrkandung"));
+                                    jmlsdrtiri.setText(obj.getString("jml_sdrtiri"));
+                                    hobi.setText(obj.getString("hobi"));
+                                    alamat.setText(obj.getString("alamat"));
+                                    rt.setText(obj.getString("rt"));
+                                    rw.setText(obj.getString("rw"));
+                                    dusun.setText(obj.getString("dusun"));
+                                    kab.setText(obj.getString("kabupaten"));
+                                    prov.setText(obj.getString("provinsi"));
+                                    stsTinggal.setText(obj.getString("jenis_tinggal"));
+                                    goldar.setText(obj.getString("goldarah"));
+                                    penyakit.setText(obj.getString("sakitygpernah"));
+                                    tinggi.setText(obj.getString("tinggi_badan"));
+                                    berat.setText(obj.getString("berat_badan"));
+                                    lulusdari.setText(obj.getString("darisekolah"));
+                                    noijasah.setText(obj.getString("no_ijasah"));
+                                    noskhun.setText(obj.getString("no_skhu"));
+                                    pindahdari.setText(obj.getString("pindahdari"));
+                                    alamatSsebelum.setText(obj.getString("alamatsekolah"));
 
                                 }
                             }

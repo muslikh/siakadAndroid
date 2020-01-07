@@ -246,27 +246,20 @@ public class AdminActivity extends AppCompatActivity
 
         return  true;
     }
-
     @Override
     public void onBackPressed()
     {
-        alertKeluar();
-//        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
-//        {
-//            super.onBackPressed();
-////            SharedPreferences.Editor editor = sharedpreferences.edit();
-////            editor.putBoolean(session_status, false);
-////            editor.putString(TAG_ID, null);
-////            editor.putString(TAG_USERNAME, null);
-////            editor.commit();
-////
-////            Intent intent = new Intent(AdminActivity.this,Login.class);
+
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
+        {
+            super.onBackPressed();
+////            Intent intent = new Intent(MainActivity.this,Login.class);
 ////            startActivity(intent);
-//            return;
-//        }
-//        else { Toast.makeText(getBaseContext(), "Tekan Back Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show(); }
+////            return;
+        }
+        else { Toast.makeText(getBaseContext(), "Tekan Back Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show(); }
 //
-//        mBackPressed = System.currentTimeMillis();
+        mBackPressed = System.currentTimeMillis();
     }
 
     @Override
