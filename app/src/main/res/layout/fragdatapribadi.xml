@@ -292,7 +292,7 @@
                 android:id="@+id/label_hobi"
                 android:layout_width="151dp"
                 android:layout_height="wrap_content"
-                android:text="Hobbi" />
+                android:text="Hobi" />
 
             <TextView
                 android:layout_width="10dp"
@@ -328,18 +328,133 @@
                 android:id="@+id/label_alamat"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="Alamat" />
+                android:text="Alamat"
+                android:hint=""/>
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text=":"/>
+
             <TextView
                 android:id="@+id/alamatUser"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Jl. Manngaa, Dusun Nanas Desa Pepaya Kecamatan Bengkuang Provinsi Bumbu Kacang Negara Rujak Manis "/>
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_rtrw"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:hint=""/>
+
+            <TextView
+                android:id="@+id/label_rt"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:text="RT"
+                android:hint=""/>
+
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/rtUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/label_rw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:text="RW" />
+
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+
+            <TextView
+                android:id="@+id/rwUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_dusun"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Dusun"
+                android:hint=""/>
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/dusunUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_kab"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Kabupaten"
+                android:hint=""/>
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/kabUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_prov"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Provinsi"
+                android:hint=""/>
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/provUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </TableRow>
         <TableRow
             android:layout_gravity="center"
@@ -558,7 +673,7 @@
                 android:id="@+id/label_noskhun"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="b). Tanggal dan Nomor Ijasah" />
+                android:text="b). Tanggal dan Nomor SKHUN" />
 
             <TextView
                 android:layout_width="10dp"
@@ -618,7 +733,7 @@
                 android:layout_height="wrap_content"
                 android:text=":"/>
             <TextView
-                android:id="@+id/almtskl"
+                android:id="@+id/alamatsebelum"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -684,10 +799,31 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/label_thnmsk"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="c). Tahun Masuk" />
+
+            <TextView
+                android:layout_width="21dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+            <TextView
+                android:id="@+id/thnmskUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
                 android:id="@+id/label_kodeKelas"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:text="c). Kelas Saat Ini" />
+                android:text="d). Kelas Saat Ini" />
 
             <TextView
                 android:layout_width="21dp"

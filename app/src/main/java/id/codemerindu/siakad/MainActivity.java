@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity
 //                        String tanggalLahir = obj.getString("tanggal_lahir");
 //                        String kodekelas = obj.getString("kode_kelas");
 //                        String jurusanS = obj.getString("kode_jurusan");
-                        if (tempatLahir.isEmpty() )
+                        if (tempatLahir.equals("null") || tempatLahir.isEmpty())
                         {
                             AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                             alert
@@ -405,9 +405,9 @@ public class MainActivity extends AppCompatActivity
                                         public void onClick(DialogInterface dialog, int which) {
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                                            Intent intent = new Intent(MainActivity.this, EditDataSiswa.class);
-
-                                            startActivity(intent);
+                                            Intent cek = new Intent(MainActivity.this, EditDataSiswa.class);
+                                            cek.putExtra(TAG_IDU, idu);
+                                            startActivity(cek);
 
                                         }
                                     })

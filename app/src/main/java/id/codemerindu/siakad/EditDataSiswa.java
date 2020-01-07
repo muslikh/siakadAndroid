@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class EditDataSiswa extends AppCompatActivity {
@@ -50,26 +51,14 @@ public class EditDataSiswa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data_siswa);
-        editData(url);
+        editData();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbareddaata);
         setSupportActionBar(toolbar);
 
+        dateFormat = new SimpleDateFormat("dd-MM-yyy", Locale.US);
         getSupportActionBar().setTitle("Ubah Data");
 
-
-    }
-
-    public void editData(String url)
-    {
-
-        nisnUser = (TextView)  findViewById(R.id.nisnUser);
-        EdnamaUser = (EditText) findViewById(R.id.namaUser);
-        Edtmplahir = (EditText) findViewById(R.id.tmplahir);
-        Edtgllahir = (EditText) findViewById(R.id.tanggallahir);
-        Tvtgllahir = (TextView) findViewById(R.id.tanggallahir);
-        TvkodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
-        Tvjurusan = (TextView)  findViewById(R.id.jurusanUser);
         updateSiswa = (Button)  findViewById(R.id.updateSiswa);
         updateSiswa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +74,21 @@ public class EditDataSiswa extends AppCompatActivity {
 
             }
         });
+
+        idUser = (TextView)  findViewById(R.id.idSiswa);
+        nisnUser = (TextView)  findViewById(R.id.nisnUser);
+        EdnamaUser = (EditText) findViewById(R.id.namaUser);
+        Edtmplahir = (EditText) findViewById(R.id.tmplahir);
+        Edtgllahir = (EditText) findViewById(R.id.tanggallahir);
+        Tvtgllahir = (TextView) findViewById(R.id.tanggallahir);
+        TvkodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
+        Tvjurusan = (TextView)  findViewById(R.id.jurusanUser);
+    }
+
+    public void editData()
+    {
+
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequests =
@@ -110,7 +114,8 @@ public class EditDataSiswa extends AppCompatActivity {
                                 String jurusanS = obj.getString("kode_jurusan");
                                 if (extraId== id )
                                 {
-                                   nisnUser.setText(nisn);
+                                    idUser.setText(id_siswa);
+                                    nisnUser.setText(nisn);
                                     EdnamaUser.setText(nama);
                                     Edtmplahir.setText(tempatLahir);
                                     Edtgllahir.setText(tanggalLahir);
@@ -178,8 +183,8 @@ public class EditDataSiswa extends AppCompatActivity {
             protected Map<String,String> getParams() throws AuthFailureError {
 
                 Map<String,String> map = new HashMap<>();
-
-                map.put("nisi", nisnUser.getText().toString());
+//
+                map.put("id_siswa", idUser.getText().toString());
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("tempat_lahir", Edtmplahir.getText().toString());
                 map.put("tanggal_lahir", Edtgllahir.getText().toString());
