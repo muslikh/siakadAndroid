@@ -156,14 +156,33 @@ public class EditDataSiswa extends AppCompatActivity {
                                     TvkodeKelas.setText(kodekelas);
                                     Tvjurusan.setText(jurusanS);
 
-                                    String code = obj.getString("code");
-                                    if (code.equals("sukses"))
-                                    {
-                                        ubahBerhasil();
-                                    }else if (code.equals("gagal"))
-                                    {
-                                        ubahGagal();
-                                    }
+                                    nopeUser.setText(obj.getString("hp"));
+                                    nipd.setText(obj.getString("nipd"));
+                                    nik.setText(obj.getString("nik"));
+                                    kewarga.setText(obj.getString("kewarganegaraan"));
+                                    anakke.setText(obj.getString("anak_ke"));
+                                    jmlsdrkandung.setText(obj.getString("jml_sdrkandung"));
+                                    jmlsdrtiri.setText(obj.getString("jml_sdrtiri"));
+                                    hobi.setText(obj.getString("hobi"));
+                                    alamat.setText(obj.getString("alamat"));
+                                    rt.setText(obj.getString("rt"));
+                                    rw.setText(obj.getString("rw"));
+                                    dusun.setText(obj.getString("dusun"));
+                                    kab.setText(obj.getString("kabupaten"));
+                                    prov.setText(obj.getString("provinsi"));
+                                    stsTinggal.setText(obj.getString("jenis_tinggal"));
+                                    goldar.setText(obj.getString("goldarah"));
+                                    penyakit.setText(obj.getString("sakitygpernah"));
+                                    tinggi.setText(obj.getString("tinggi_badan"));
+                                    berat.setText(obj.getString("berat_badan"));
+                                    lulusdari.setText(obj.getString("darisekolah"));
+                                    noijasah.setText(obj.getString("no_ijasah"));
+                                    noskhun.setText(obj.getString("no_skhu"));
+                                    pindahdari.setText(obj.getString("pindahdari"));
+                                    alamatSsebelum.setText(obj.getString("alamatsekolah"));
+                                    kelasAwal.setText(obj.getString("kelas_awal"));
+                                    thnmasuk.setText(obj.getString("tahun_masul"));
+
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);
@@ -197,6 +216,14 @@ public class EditDataSiswa extends AppCompatActivity {
 
                     // adapter.notifyDataSetChanged();
 
+                    String code = dataObj.getString("code");
+                    if (code.equals("sukses"))
+                    {
+                        ubahBerhasil();
+                    }else if (code.equals("gagal"))
+                    {
+                        ubahGagal();
+                    }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();

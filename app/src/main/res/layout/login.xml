@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:textAlignment="center"
     tools:context=".Login">
 
+
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="117dp"
-            android:layout_height="123dp"
+            android:layout_width="186dp"
+            android:layout_height="154dp"
             android:layout_gravity="center"
-            android:background="@mipmap/ic_logo" />
+            android:background="#00240606"
+            app:srcCompat="@mipmap/ic_smk" />
 
         <TextView
             android:id="@+id/tv_nama"
@@ -27,10 +28,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:text="Login Siakad"
             android:textSize="24sp"
             android:textStyle="bold"
             app:fontFamily="monospace" />
+
         <TextView
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
@@ -113,12 +121,12 @@
                 android:textStyle="bold"
                 app:fontFamily="monospace" />
         </LinearLayout>
+
         <TextView
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="By. Muhammad Muslikh"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Muhamamd Muslikh" />
     </LinearLayout>
-
 </RelativeLayout>
