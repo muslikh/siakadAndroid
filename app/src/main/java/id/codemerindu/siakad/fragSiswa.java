@@ -82,6 +82,7 @@ public class fragSiswa extends Fragment {
 
         ambilData();
         return view_fragsiswa;
+
     }
 
 
@@ -161,4 +162,9 @@ public class fragSiswa extends Fragment {
         requestQueue.add(stringRequests);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 }

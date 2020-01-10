@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity
 
     TextView namaUser, txt_id,nmuser;
     String id, username, idu,level,levelU,nama;
-    SharedPreferences sharedpreferences;
     NavigationView navigationView;
+    SharedPreferences sharedpreferences;
 
     Boolean session = false;
 
@@ -295,7 +295,8 @@ public class MainActivity extends AppCompatActivity
 
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
         {
-        super.onBackPressed();
+        //super.onBackPressed();
+            moveTaskToBack(true);
 ////            Intent intent = new Intent(MainActivity.this,Login.class);
 ////            startActivity(intent);
 ////            return;

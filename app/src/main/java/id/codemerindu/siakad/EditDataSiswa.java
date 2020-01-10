@@ -212,11 +212,9 @@ public class EditDataSiswa extends AppCompatActivity {
                     JSONObject dataObj = new JSONObject(response);
 
 
-                    Toast.makeText(EditDataSiswa.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-
                     // adapter.notifyDataSetChanged();
 
-                    String code = dataObj.getString("code");
+                    String code = dataObj.getString(TAG_MESSAGE);
                     if (code.equals("sukses"))
                     {
                         ubahBerhasil();
@@ -262,6 +260,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
     public void ubahBerhasil()
     {
+
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert
                 .setMessage("Perubahan Data Berhasil")
@@ -269,11 +268,9 @@ public class EditDataSiswa extends AppCompatActivity {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        Intent login = new Intent(EditDataSiswa.this, Profile.class);
-                        finish();
-                        startActivity(login);
-
+                        onBackPressed();
+                        onRestart();
+                        //moveTaskToBack(true);
                     }
                 });
 

@@ -252,7 +252,8 @@ public class AdminActivity extends AppCompatActivity
 
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
         {
-            super.onBackPressed();
+            //super.onBackPressed();
+            moveTaskToBack(true);
 ////            Intent intent = new Intent(MainActivity.this,Login.class);
 ////            startActivity(intent);
 ////            return;

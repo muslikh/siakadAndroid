@@ -247,16 +247,7 @@ public class Login extends AppCompatActivity {
     public void onBackPressed()
     {
 
-//        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
-//        {
-            super.onBackPressed();
-////            Intent intent = new Intent(MainActivity.this,Login.class);
-////            startActivity(intent);
-////            return;
-//        }
-//        else { Toast.makeText(getBaseContext(), "Tekan Back Sekali lagi untuk Keluar", Toast.LENGTH_SHORT).show(); }
-//
-//        mBackPressed = System.currentTimeMillis();
+        moveTaskToBack(true);
     }
 
 }
