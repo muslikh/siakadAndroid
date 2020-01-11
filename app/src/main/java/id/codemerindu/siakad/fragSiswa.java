@@ -31,7 +31,7 @@ public class fragSiswa extends Fragment {
     TextView namaUser,ttlUser,kodeKelas,jurusan,
             nisn,nipd,nik,jk,agama,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
             hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
-            tinggi,berat,lulusdari,noijasah,noskhun,nopeUser,pindahdari,alamatSsebelum,kelasAwal,thnmasuk;
+            tinggi,berat,lulusdari,noijasah,noskhun,nopeUser,pindahdari,alamatSsebelum,kelasAwal,thnmasuk,nounsmp;
 
     String id;
     SharedPreferences sharedpreferences;
@@ -79,6 +79,7 @@ public class fragSiswa extends Fragment {
         alamatSsebelum = (TextView) view_fragsiswa.findViewById(R.id.alamatsebelum);
         kelasAwal = (TextView) view_fragsiswa.findViewById(R.id.kelasawalUser);
         thnmasuk= (TextView) view_fragsiswa.findViewById(R.id.thnmskUser);
+        nounsmp= (TextView) view_fragsiswa.findViewById(R.id.nounUser);
 
         ambilData();
         return view_fragsiswa;
@@ -119,6 +120,7 @@ public class fragSiswa extends Fragment {
                                     nisn.setText(obj.getString("nisn"));
                                     nipd.setText(obj.getString("nipd"));
                                     nik .setText(obj.getString("nik"));
+                                    nounsmp.setText(obj.getString("no_unsmp"));
                                     jk .setText(obj.getString("id_jenis_kelamin"));
                                     agama.setText(obj.getString("id_agama"));
                                     kewarga.setText(obj.getString("kewarganegaraan"));

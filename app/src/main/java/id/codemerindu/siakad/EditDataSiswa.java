@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -49,7 +50,7 @@ public class EditDataSiswa extends AppCompatActivity {
     EditText namaUser,ttlUser,kodeKelas,jurusan,
     nisn,nik,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
     hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
-    tinggi,berat,lulusdari,noijasah,noskhun,nopeUser,pindahdari,alamatSsebelum;
+    tinggi,berat,lulusdari,noijasah,noskhun,nounsmp,nopeUser,pindahdari,alamatSsebelum;
 
     Spinner agama,jk;
     Button updateSiswa;
@@ -95,7 +96,29 @@ public class EditDataSiswa extends AppCompatActivity {
         nipd = ( TextView)   findViewById(R.id.nipdUser);
         nik = ( EditText)   findViewById(R.id.nikUser);
         jk = (Spinner)   findViewById(R.id.jklUser);
+        jk.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         agama = ( Spinner)   findViewById(R.id.agmUser);
+        agama.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         kewarga = ( EditText)   findViewById(R.id.wargaUser);
         anakke = ( EditText)   findViewById(R.id.anakKeUser);
         jmlsdrkandung = ( EditText)   findViewById(R.id.jmlsdrkanUser);
@@ -119,7 +142,7 @@ public class EditDataSiswa extends AppCompatActivity {
         alamatSsebelum = ( EditText)  findViewById(R.id.alamatsebelum);
         kelasAwal = ( TextView)  findViewById(R.id.kelasawalUser);
         thnmasuk= ( TextView)  findViewById(R.id.thnmskUser);
-
+        nounsmp = (EditText) findViewById(R.id.nounUser);
     }
 
     public void editData()
@@ -156,6 +179,7 @@ public class EditDataSiswa extends AppCompatActivity {
                                     TvkodeKelas.setText(kodekelas);
                                     Tvjurusan.setText(jurusanS);
 
+                                    nounsmp.setText(obj.getString("no_unsmp"));
                                     nopeUser.setText(obj.getString("hp"));
                                     nipd.setText(obj.getString("nipd"));
                                     nik.setText(obj.getString("nik"));
@@ -181,8 +205,15 @@ public class EditDataSiswa extends AppCompatActivity {
                                     pindahdari.setText(obj.getString("pindahdari"));
                                     alamatSsebelum.setText(obj.getString("alamatsekolah"));
                                     kelasAwal.setText(obj.getString("kelas_awal"));
-                                    thnmasuk.setText(obj.getString("tahun_masul"));
-
+                                    thnmasuk.setText(obj.getString("tahun_masuk"));
+//                    String code = dataObj.getString("code");
+//                    if (code.equals("sukses"))
+//                    {
+//                        ubahBerhasil();
+//                    }else if (code.equals("gagal"))
+//                    {
+//                        ubahGagal();
+//                    }
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);
@@ -214,6 +245,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
                     // adapter.notifyDataSetChanged();
 
+<<<<<<< HEAD
                     String code = dataObj.getString(TAG_MESSAGE);
                     if (code.equals("sukses"))
                     {
@@ -222,6 +254,9 @@ public class EditDataSiswa extends AppCompatActivity {
                     {
                         ubahGagal();
                     }
+=======
+
+>>>>>>> 81ac15c680644cd7cc78c470908f2cdd7d9692be
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
@@ -247,7 +282,36 @@ public class EditDataSiswa extends AppCompatActivity {
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("tempat_lahir", Edtmplahir.getText().toString());
                 map.put("tanggal_lahir", EdtgllahirUser.getText().toString());
-                // params.put("tahun_nmasuk", thnmasuk.getText().toString());
+                map.put("id_jenis_kelamin",String.valueOf(jk.getSelectedItem()));
+                map.put("id_agama",String.valueOf(agama.getSelectedItem()));
+                map.put("hp", nopeUser.getText().toString());
+                map.put("no_unsmp", nounsmp.getText().toString());
+                map.put("nipd", nipd.getText().toString());
+                map.put("nik", nik.getText().toString());
+                map.put("kewarganegaraan", kewarga.getText().toString());
+                map.put("anak_ke", anakke.getText().toString());
+                map.put("jml_sdrkandung", jmlsdrkandung.getText().toString());
+                map.put("jml_sdrtiri", jmlsdrtiri.getText().toString());
+                map.put("hobi", hobi.getText().toString());
+                map.put("alamat", alamat.getText().toString());
+                map.put("rt", rt.getText().toString());
+                map.put("rw", rw.getText().toString());
+                map.put("dusun", dusun.getText().toString());
+                map.put("kabupaten", kab.getText().toString());
+                map.put("provinsi", prov.getText().toString());
+                map.put("jenis_tinggal", stsTinggal.getText().toString());
+                map.put("goldarah", goldar.getText().toString());
+                map.put("sakitygpernah", penyakit.getText().toString());
+                map.put("tinggi_badan", tinggi.getText().toString());
+                map.put("berat_badan", berat.getText().toString());
+                map.put("darisekolah", lulusdari.getText().toString());
+                map.put("no_ijasah", noijasah.getText().toString());
+                map.put("no_skhu", noskhun.getText().toString());
+                map.put("pindahdari", pindahdari.getText().toString());
+                map.put("alamatsekolah", alamatSsebelum.getText().toString());
+                map.put("kelas_awal", kelasAwal.getText().toString());
+                map.put("tahun_masuk", thnmasuk.getText().toString());
+
 
                 return map;
             }

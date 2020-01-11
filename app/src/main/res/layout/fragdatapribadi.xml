@@ -100,6 +100,29 @@
                 android:layout_weight="1" />
 
         </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/label_nounUser"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor UN SMP" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/nounUser"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </TableRow>
         <TableRow
             android:layout_gravity="center"
             android:padding="5dp">
