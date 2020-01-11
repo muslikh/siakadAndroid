@@ -11,17 +11,32 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
@@ -30,16 +45,21 @@ import static id.codemerindu.siakad.Login.session_status;
 public class Profile extends AppCompatActivity {
 
     TextView namaUser, ttlUser, kodeKelas, jurusan;
-    String idu;
+    String idu,levelU;
     SharedPreferences sharedpreferences;
+    public final String deluser = Server.URL+"delperid.php";
     public final static String TAG = "Profile";
     public static final String TAG_ID = "id";
     public final static String TAG_IDU = "idu";
+    public static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
     PagerAdapter pagerAdapter;
     Button btneditdata,btnrefresh;
     ImageView fotoProfile;
     Boolean session = false;
+
+    private RequestQueue requestQueue;
+    private StringRequest stringRequest;
 
 
     @Override
@@ -129,11 +149,33 @@ public class Profile extends AppCompatActivity {
         return true;
     }
 
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        levelU = sharedpreferences.getString(TAG_LEVEL, null);
+        if(levelU.equals("admin"))
+        {
+            menu.findItem(R.id.logout).setEnabled(false).setVisible(false);
+            menu.findItem(R.id.hapus).setEnabled(true).setVisible(true);
+        }else if(levelU.equals("siswa"))
+        {
+            menu.findItem(R.id.logout).setEnabled(true).setVisible(true);
+            menu.findItem(R.id.hapus).setEnabled(false).setVisible(false);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.logout) {
             alertKeluar();
+        }else if (id== R.id.hapus)
+        {
+            alertHapus();
+
         }
 
         return false;
@@ -157,6 +199,77 @@ public class Profile extends AppCompatActivity {
                         finish();
                         startActivity(intent);
 
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog keluar = alert.create();
+        keluar.show();
+
+    }
+
+    public void alertHapus()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert
+                .setMessage("Yakin Hapus Data Siswa Ini ??")
+                .setCancelable(false)
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, deluser, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject dataObj = new JSONObject(response);
+
+
+                                    Toast.makeText(Profile.this, dataObj.getString("message"), Toast.LENGTH_LONG).show();
+                                    // adapter.notifyDataSetChanged();
+
+                                    if (dataObj.getString("message").equals("sukses"))
+                                    {
+                                        Intent kembali = new Intent(Profile.this,DataSiswa.class);
+                                        startActivity(kembali);
+                                        finish();
+                                    }else if(dataObj.getString("message").equals("gagal"))
+                                    {
+                                        recreate();
+                                    }
+                                } catch (JSONException e) {
+                                    // JSON error
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e(TAG, "Error: " + error.getMessage());
+                                Toast.makeText(Profile.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }) {
+
+                            @Override
+
+                            protected Map<String,String> getParams() throws AuthFailureError {
+
+                                idu = getIntent().getStringExtra(TAG_IDU);
+                                sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+                                Map<String,String> map = new HashMap<String, String>();
+                                map.put("id_siswa", idu);
+                                return map;
+                            }
+
+                        };
+
+                        AppController.getInstance().addToRequestQueue(stringRequest);
                     }
                 })
                 .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {

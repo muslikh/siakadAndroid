@@ -2,9 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:title="Logout"
         android:id="@+id/logout"
         android:enabled="true"
         android:icon="@drawable/ic_logout"
         android:visible="true"
         app:showAsAction="always" />
+    <item
+    android:title="hapus"
+    android:id="@+id/hapus"
+    android:enabled="true"
+    android:icon="@drawable/ic_delete"
+    android:visible="true"
+    app:showAsAction="always" />
 </menu>

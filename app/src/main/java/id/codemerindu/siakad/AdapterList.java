@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,17 +16,23 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
+import static id.codemerindu.siakad.Login.my_shared_preferences;
+import static id.codemerindu.siakad.Login.session_status;
+
+public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> implements Filterable {
 
     Context context;
     public static final String TAG_IDU = "idu";
     ArrayList<HashMap<String ,String >> list_data;
-
+    List<AdapterList> filter;
+//https://github.com/larntech/recyclerview-with-search-and-clicklistener/blob/master/app/src/main/java/net/larntech/recyclerview/UsersAdapter.java tutore ndek kene
     public AdapterList(DataSiswa dataSiswa, ArrayList<HashMap<String ,String >>list_data)
     {
         this.context = dataSiswa;
         this.list_data = list_data;
+        this.filter = list_data;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,6 +42,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+
 //        Glide.with(context)
 //                .load("http://192.168.95.77/app_blogvolley/img/" + list_data.get(position).get("gambar"))
 //                //.crossFade()
@@ -48,11 +56,10 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int idu = Integer.parseInt(list_data.get(position).get("id_siswa"));
+                String  idu = list_data.get(position).get("id_siswa");
                 Intent pindah=new Intent(context,Profile.class);
                 pindah.putExtra(TAG_IDU,idu);
                 context.startActivity(pindah);
-                Toast.makeText(context, "Recycle Click" + position, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -60,6 +67,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
     @Override
     public int getItemCount() {
         return list_data.size();
+        return filter.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,11 +84,44 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
         }
     }
 
-//    void setFilter(ArrayList<HashMap<String ,String >>filter)
-//    {
-//        list_data = new ArrayList<>();
-//        list_data.addAll(filter);
-//        notifyDataSetChanged();
-//    }
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults filterResults = new FilterResults();
+
+                if(charSequence == null | charSequence.length() == 0){
+                    filterResults.count = getUserModelListFiltered.size();
+                    filterResults.values = getUserModelListFiltered;
+
+                }else{
+                    String searchChr = charSequence.toString().toLowerCase();
+
+                    List<UserModel> resultData = new ArrayList<>();
+
+                    for(UserModel userModel: getUserModelListFiltered){
+                        if(userModel.getUserName().toLowerCase().contains(searchChr)){
+                            resultData.add(userModel);
+                        }
+                    }
+                    filterResults.count = resultData.size();
+                    filterResults.values = resultData;
+
+                }
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+                userModelList = (List<UserModel>) filterResults.values;
+                notifyDataSetChanged();
+
+            }
+        };
+        return filter;
+    }
 
 }
