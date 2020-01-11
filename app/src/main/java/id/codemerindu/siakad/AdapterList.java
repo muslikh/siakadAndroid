@@ -1,6 +1,7 @@
 package id.codemerindu.siakad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,6 +19,7 @@ import java.util.HashMap;
 public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
 
     Context context;
+    public static final String TAG_IDU = "idu";
     ArrayList<HashMap<String ,String >> list_data;
 
     public AdapterList(DataSiswa dataSiswa, ArrayList<HashMap<String ,String >>list_data)
@@ -31,7 +34,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 //        Glide.with(context)
 //                .load("http://192.168.95.77/app_blogvolley/img/" + list_data.get(position).get("gambar"))
 //                //.crossFade()
@@ -42,6 +45,16 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> {
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));
        // holder.nisn.setText(list_data.get(position).get("nisn"));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int idu = Integer.parseInt(list_data.get(position).get("id_siswa"));
+                Intent pindah=new Intent(context,Profile.class);
+                pindah.putExtra(TAG_IDU,idu);
+                context.startActivity(pindah);
+                Toast.makeText(context, "Recycle Click" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

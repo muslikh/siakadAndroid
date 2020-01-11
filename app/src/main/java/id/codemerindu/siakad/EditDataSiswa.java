@@ -245,7 +245,6 @@ public class EditDataSiswa extends AppCompatActivity {
 
                     // adapter.notifyDataSetChanged();
 
-<<<<<<< HEAD
                     String code = dataObj.getString(TAG_MESSAGE);
                     if (code.equals("sukses"))
                     {
@@ -254,9 +253,7 @@ public class EditDataSiswa extends AppCompatActivity {
                     {
                         ubahGagal();
                     }
-=======
 
->>>>>>> 81ac15c680644cd7cc78c470908f2cdd7d9692be
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
