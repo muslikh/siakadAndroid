@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,51 +40,74 @@ public class DataSiswa extends AppCompatActivity {
     String url_sbaru = "http://smknprigen.sch.id/siakad/api/siswa.php";
     String url_hpus = "http://smknprigen.sch.id/siakad/api/delete.php";
     ArrayList<HashMap<String ,String>> list_data;
+    private SearchView cari;
 
-    ArrayAdapter<String> adapter;
+    AdapterList adapterList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_siswa);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Data Siswa");
 
-        hpsiswa = (Button) findViewById(R.id.hpssiswa);
-        hpsiswa.setOnClickListener(new View.OnClickListener() {
+
+        cari = (SearchView) findViewById(R.id.cari);
+        if (cari.performClick())
+        {
+            setTitle("  ");
+        }else{
+
+           setTitle("Data Siswa");
+        }
+        cari.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(DataSiswa.this);
-                alert
-                        .setMessage("Yakin Hapus Semua Data")
-                        .setCancelable(false)
-                        .setPositiveButton("Iyya", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                hpsiswa();
-                                recreate();
-                            }
-                        })
-                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-                                recreate();
-                            }
-                        });
-
-                AlertDialog hpus = alert.create();
-                hpus.show();
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapterList.filter(newText);
+                adapterList.notifyDataSetChanged();
+                return false;
             }
         });
-        refreshdata = (Button) findViewById(R.id.refreshdata);
-        refreshdata.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                refresh();
-                recreate();
-            }
-        });
+
+//        hpsiswa = (Button) findViewById(R.id.hpssiswa);
+//        hpsiswa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder alert = new AlertDialog.Builder(DataSiswa.this);
+//                alert
+//                        .setMessage("Yakin Hapus Semua Data")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Iyya", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                hpsiswa();
+//                                recreate();
+//                            }
+//                        })
+//                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                                recreate();
+//                            }
+//                        });
+//
+//                AlertDialog hpus = alert.create();
+//                hpus.show();
+//            }
+//        });
+//        refreshdata = (Button) findViewById(R.id.refreshdata);
+//        refreshdata.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                refresh();
+//                recreate();
+//            }
+//        });
         lvsbaru = (RecyclerView) findViewById(R.id.lvsbaru);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -129,7 +151,7 @@ public class DataSiswa extends AppCompatActivity {
                         map.put("kode_kelas",json.getString("kode_kelas"));
                         map.put("kode_jurusan",json.getString("kode_jurusan"));
                         list_data.add(map);
-                        AdapterList adapterList = new AdapterList(DataSiswa.this, list_data);
+                       adapterList = new AdapterList(DataSiswa.this, list_data);
                         lvsbaru.setAdapter(adapterList);
 
                     }

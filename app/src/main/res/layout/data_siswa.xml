@@ -14,53 +14,81 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:titleTextColor="#FFFFFF" />
-    <LinearLayout
-        android:layout_below="@+id/toolbar"
-        android:id="@+id/MenuAksi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-        <EditText
-            android:textColor="#000000"
-            android:id="@+id/caridata"
-            android:layout_width="280dp"
+        <TableLayout
+            android:id="@+id/tabelmnu"
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cari Data.." />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+            <TableRow android:gravity="center"
+                android:padding="6dp">
 
-        <Button
-            android:id="@+id/refreshdata"
-            android:layout_width="50px"
-            android:layout_height="50px"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
+                <android.support.v7.widget.SearchView
 
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_refresh"
-            android:icon="@drawable/ic_refresh"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+                    android:id="@+id/cari"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_span="3"
+                    android:background="#333333"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Cari Data" />
+            </TableRow>
 
-        <Button
-            android:id="@+id/hpssiswa"
-            android:layout_width="50px"
-            android:layout_height="50px"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_delete"
-            android:icon="@drawable/ic_delete"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            <TableRow android:gravity="center"
+            android:padding="6dp">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tambahsiswa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/btn_normal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Tambah Data" />
+
+                <TextView
+                    android:id="@+id/refreshdata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/btn_normal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Perbarui" />
+
+                <TextView
+                    android:id="@+id/hpssiswa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/btn_normal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Haous" />
+            </TableRow>
+        </TableLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvsbaru"
         android:layout_width="match_parent"
         android:layout_height="618dp"
         android:layout_above="@+id/aksesMenu"
-        android:layout_below="@+id/MenuAksi"
+        android:layout_below="@+id/tabelmnu"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"/>
 

@@ -17,22 +17,23 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
 
-public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> implements Filterable {
+public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
 
     Context context;
     public static final String TAG_IDU = "idu";
     ArrayList<HashMap<String ,String >> list_data;
-    List<AdapterList> filter;
+    ArrayList<HashMap<String ,String >>  filterL;
 //https://github.com/larntech/recyclerview-with-search-and-clicklistener/blob/master/app/src/main/java/net/larntech/recyclerview/UsersAdapter.java tutore ndek kene
     public AdapterList(DataSiswa dataSiswa, ArrayList<HashMap<String ,String >>list_data)
     {
         this.context = dataSiswa;
         this.list_data = list_data;
-        this.filter = list_data;
+        this.filterL = list_data;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,7 +68,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> im
     @Override
     public int getItemCount() {
         return list_data.size();
-        return filter.size();
+//        return filter.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -84,44 +85,96 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder> im
         }
     }
 
-    @Override
-    public Filter getFilter() {
-        Filter filter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                FilterResults filterResults = new FilterResults();
-
-                if(charSequence == null | charSequence.length() == 0){
-                    filterResults.count = getUserModelListFiltered.size();
-                    filterResults.values = getUserModelListFiltered;
-
-                }else{
-                    String searchChr = charSequence.toString().toLowerCase();
-
-                    List<UserModel> resultData = new ArrayList<>();
-
-                    for(UserModel userModel: getUserModelListFiltered){
-                        if(userModel.getUserName().toLowerCase().contains(searchChr)){
-                            resultData.add(userModel);
-                        }
-                    }
-                    filterResults.count = resultData.size();
-                    filterResults.values = resultData;
-
+    public void filter(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        list_data = new ArrayList<HashMap<String, String>>();
+        if (charText.length() == 0)
+        {
+            list_data.addAll(filterL);
+        }else {
+            for (HashMap<String, String> item : filterL)
+            {
+                if(item.toString().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    list_data.add(item);
                 }
-
-                return filterResults;
             }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
-                userModelList = (List<UserModel>) filterResults.values;
-                notifyDataSetChanged();
-
-            }
-        };
-        return filter;
+        }
     }
+//
+//    @Override
+//    protected FilterResults performFiltering(CharSequence charSequence)
+//    {
+//        filter.clear();
+//        final FilterResults results = new FilterResults();
+//        if (charSequence.length() == 0)
+//        {
+//            filter.addAll(list_data);
+//        }else {
+//            final String filterPattern = charSequence.toString().toLowerCase().trim();
+//            for (HashMap<String ,String > item : list_data)
+//            {
+//                if(item.toString().toLowerCase().contains(filterPattern))
+//                {
+//                    filter.add(item);
+//                }
+//            }
+//        }
+//        results.values = filter;
+//        results.count = filter.size();
+//        return results;
+//    }
+//
+//    @SuppressWarnings("unchecked")
+//    @Override
+//    protected void publishResults(CharSequence charSequence, FilterResults filterResults)
+//    {
+//            list_data.clear();
+//            list_data.add(filterResults.values);
+//            notifyDataSetChanged();
+//    }
+
+//    @Override
+//    public Filter getFilter() {
+//        Filter filter = new Filter() {
+//            @Override
+//            protected FilterResults performFiltering(CharSequence charSequence) {
+//                FilterResults filterResults = new FilterResults();
+//
+//                if(charSequence == null | charSequence.length() == 0){
+//                    filterResults.count = getUserModelListFiltered.size();
+//                    filterResults.values = getUserModelListFiltered;
+//
+//                }else{
+//                    String searchChr = charSequence.toString().toLowerCase();
+//
+//                    List<UserModel> resultData = new ArrayList<>();
+//
+//                    for(UserModel userModel: getUserModelListFiltered){
+//                        if(userModel.getUserName().toLowerCase().contains(searchChr)){
+//                            resultData.add(userModel);
+//                        }
+//                    }
+//                    filterResults.count = resultData.size();
+//                    filterResults.values = resultData;
+//
+//                }
+//
+//                return filterResults;
+//            }
+//
+//            @Override
+//            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//
+//                userModelList = (List<UserModel>) filterResults.values;
+//                notifyDataSetChanged();
+//
+//            }
+//        };
+//        return filter;
+//    }
+
+
 
 }
