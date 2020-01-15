@@ -348,7 +348,6 @@ public class validasiPPDB extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pindah();
-                recreate();
             }
         });
         aksibnt = (TextView) findViewById(R.id.aksibtn);

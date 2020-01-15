@@ -53,7 +53,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
         holder.namas.setText("Nama : "+list_data.get(position).get("nama"));
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));
-       // holder.nisn.setText(list_data.get(position).get("nisn"));
+        holder.thnmsk.setText("Tahun Masuk : "+list_data.get(position).get("tahun_masuk"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView namas,kodekelas,kodejurusan;
+        TextView namas,kodekelas,kodejurusan,thnmsk;
         ImageView imgsbaru;
 
         public ViewHolder(View itemView) {
@@ -82,6 +82,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
             kodekelas = (TextView) itemView.findViewById(R.id.kodekelas);
             kodejurusan = (TextView) itemView.findViewById(R.id.kodejurusan);
             imgsbaru = (ImageView) itemView.findViewById(R.id.imgsbaru);
+            thnmsk = (TextView) itemView.findViewById(R.id.tahunmasuk);
         }
     }
 

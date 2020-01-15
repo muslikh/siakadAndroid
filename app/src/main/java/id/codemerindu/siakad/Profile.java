@@ -4,13 +4,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +41,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +56,7 @@ import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
 
 
-public class Profile extends AppCompatActivity {
+public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     TextView namaUser, ttlUser, kodeKelas, jurusan;
     String idu,levelU;
@@ -54,9 +68,12 @@ public class Profile extends AppCompatActivity {
     public static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
     PagerAdapter pagerAdapter;
-    Button btneditdata,btnrefresh;
+    Button btneditdata,btnrefresh,bntgantifoto;
     ImageView fotoProfile;
     Boolean session = false;
+    final String gantifoto = Server.URL+"gantifotosiswa.php";
+
+    private String Document_img1="";
 
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
@@ -70,7 +87,19 @@ public class Profile extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
+        levelU = sharedpreferences.getString(TAG_LEVEL, null);
+        idu = sharedpreferences.getString(TAG_IDU, null);
 
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+
+        bntgantifoto = (Button)  findViewById(R.id.btngantifoto);
+        bntgantifoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gantifoto();
+            }
+        });
         btnrefresh = (Button) findViewById(R.id.btnrefreshData);
 
         btnrefresh.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +112,12 @@ public class Profile extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         fotoProfile = (ImageView) findViewById(R.id.fotoProfile);
+        fotoProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pilihgambar();
+            }
+        });
 
 
         Picasso.with(this).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
@@ -152,11 +187,13 @@ public class Profile extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu)
     {
 
-        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-        session = sharedpreferences.getBoolean(session_status, false);
-        levelU = sharedpreferences.getString(TAG_LEVEL, null);
         if(levelU.equals("admin"))
         {
+
+
+//                Intent pindah = new Intent(Profile.this,AdminActivity.class);
+//                startActivity(pindah);
+
             menu.findItem(R.id.logout).setEnabled(false).setVisible(false);
             menu.findItem(R.id.hapus).setEnabled(true).setVisible(true);
         }else if(levelU.equals("siswa"))
@@ -283,4 +320,193 @@ public class Profile extends AppCompatActivity {
         keluar.show();
 
     }
+
+
+    @Override
+    public void onBackPressed()
+    {
+        if(levelU.equals("admin")) {
+            Intent pindah = new Intent(Profile.this, DataSiswa.class);
+            startActivity(pindah);
+        } else
+        {
+            Intent pindah = new Intent(Profile.this, MainActivity.class);
+            startActivity(pindah);
+        }
+    }
+    private void gantifoto()
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, gantifoto, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject dataObj = new JSONObject(response);
+
+
+                    // adapter.notifyDataSetChanged();
+
+
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Error: " + error.getMessage());
+                Toast.makeText(Profile.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+
+            protected Map<String,String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<>();
+//
+                map.put("id_siswa", idu);
+                map.put("foto", Document_img1);
+//                map.put("tempat_lahir", Edtmplahir.getText().toString());
+
+                return map;
+            }
+
+        };
+
+        AppController.getInstance().addToRequestQueue(stringRequest);
+    }
+
+    private void pilihgambar() {
+        final CharSequence[] options = { "Ambil Foto", "Pilih Dari Gallery","Batal" };
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Profile.this);
+        builder.setTitle("Ganti Foto!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo"))
+                {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, 1);
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                File f = new File(Environment.getExternalStorageDirectory().toString());
+                for (File temp : f.listFiles()) {
+                    if (temp.getName().equals("temp.jpg")) {
+                        f = temp;
+                        break;
+                    }
+                }
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
+                    bitmap=getResizedBitmap(bitmap, 400);
+                    fotoProfile.setImageBitmap(bitmap);
+                    BitMapToString(bitmap);
+                    String path = android.os.Environment
+                            .getExternalStorageDirectory()
+                            + File.separator
+                            + "Phoenix" + File.separator + "default";
+                    f.delete();
+                    OutputStream outFile = null;
+                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    try {
+                        outFile = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
+                        outFile.flush();
+                        outFile.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (requestCode == 2) {
+                Uri selectedImage = data.getData();
+                String[] filePath = { MediaStore.Images.Media.DATA };
+                Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePath[0]);
+                String picturePath = c.getString(columnIndex);
+                c.close();
+                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                thumbnail=getResizedBitmap(thumbnail, 400);
+                Log.w("path", picturePath+"");
+                fotoProfile.setImageBitmap(thumbnail);
+                BitMapToString(thumbnail);
+            }
+        }
+    }
+    public String BitMapToString(Bitmap userImage1) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        userImage1.compress(Bitmap.CompressFormat.PNG, 60, baos);
+        byte[] b = baos.toByteArray();
+        Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
+        return Document_img1;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    public void onClick(View v) {
+        if (Document_img1.equals("") || Document_img1.equals(null)) {
+            ContextThemeWrapper ctw = new ContextThemeWrapper( Profile.this, R.style.AppTheme);
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctw);
+            alertDialogBuilder.setTitle("Id Prof Can't Empty ");
+            alertDialogBuilder.setMessage("Id Prof Can't empty please select any one document");
+            alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                }
+            });
+            alertDialogBuilder.show();
+            return;
+        }
+        else{
+
+                gantifoto();
+
+        }
+    }
+
 }

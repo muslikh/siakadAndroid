@@ -1,6 +1,7 @@
 package id.codemerindu.siakad;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -144,6 +145,7 @@ public class DataSiswa extends AppCompatActivity {
                         map.put("nama",json.getString("nama"));
                         map.put("kode_kelas",json.getString("kode_kelas"));
                         map.put("kode_jurusan",json.getString("kode_jurusan"));
+                        map.put("tahun_masuk",json.getString("tahun_masuk"));
                         list_data.add(map);
                        adapterList = new AdapterList(DataSiswa.this, list_data);
                         lvsbaru.setAdapter(adapterList);
@@ -190,6 +192,7 @@ public class DataSiswa extends AppCompatActivity {
                 });
         requestQueue.add(stringRequests);
     }
+
 
 
 }

@@ -177,6 +177,7 @@ public class FormulirPPDB extends AppCompatActivity {
                 map.put("id_jenis_kelamin", String.valueOf(ppdbjk.getSelectedItem()));
                 map.put("kode_jurusan", String.valueOf(jurusan.getSelectedItem()));
                 map.put("kode_kelas", "X " + String.valueOf(jurusan.getSelectedItem()));
+                map.put("kelas_awal", "X " + String.valueOf(jurusan.getSelectedItem()));
                 map.put("nisn", nisn.getText().toString());
                   //  params.put("tahun_nmasuk", thnmasuk.getText().toString());
                 //}
