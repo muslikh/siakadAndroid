@@ -286,16 +286,24 @@
 
 package id.codemerindu.siakad;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -309,14 +317,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import static id.codemerindu.siakad.Login.my_shared_preferences;
+import static id.codemerindu.siakad.Login.session_status;
 
 public class validasiPPDB extends AppCompatActivity {
 
     private RecyclerView lvsbaru;
-    Button validsemua;
+    TextView validsemua,aksibnt;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
-
+    SearchView cari;
+    String url_setting = Server.URL+"setting.php";
+    AdapterSbaru adapterSbaru;
     String url_sbaru = Server.URL+"siswabaru.php";
     String url_pindah = Server.URL+"pindah.php";
     ArrayList<HashMap<String ,String>> list_data;
@@ -329,7 +343,7 @@ public class validasiPPDB extends AppCompatActivity {
         getSupportActionBar().setTitle("Validasi Siswa Baru");
 
 
-        validsemua = (Button) findViewById(R.id.validsemua);
+        validsemua = (TextView) findViewById(R.id.validasisemua);
         validsemua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -337,6 +351,7 @@ public class validasiPPDB extends AppCompatActivity {
                 recreate();
             }
         });
+        aksibnt = (TextView) findViewById(R.id.aksibtn);
 
 
         lvsbaru = (RecyclerView) findViewById(R.id.lvsbaru);
@@ -344,6 +359,22 @@ public class validasiPPDB extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         lvsbaru.setLayoutManager(llm);
         list_data = new ArrayList<HashMap<String, String>>();
+
+        cari = (SearchView) findViewById(R.id.cari);
+
+        cari.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapterSbaru.filter(newText);
+                adapterSbaru.notifyDataSetChanged();
+                return false;
+            }
+        });
 
         requestQueue = Volley.newRequestQueue(validasiPPDB.this);
         stringRequest = new StringRequest(Request.Method.GET, url_sbaru, new Response.Listener<String>() {
@@ -364,7 +395,7 @@ public class validasiPPDB extends AppCompatActivity {
                         map.put("kode_jurusan",json.getString("kode_jurusan"));
                         map.put("nisn",json.getString("nisn"));
                         list_data.add(map);
-                        AdapterSbaru adapterSbaru = new AdapterSbaru(validasiPPDB.this, list_data);
+                        adapterSbaru = new AdapterSbaru(validasiPPDB.this, list_data);
                         lvsbaru.setAdapter(adapterSbaru);
 
                     }
@@ -419,4 +450,89 @@ public class validasiPPDB extends AppCompatActivity {
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_ppdb, menu);
+
+        return true;
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+
+        menu.findItem(R.id.Aktifkan);
+
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+
+
+       // final View login = LayoutInflater.from(this).inflate(R.layout.login,null);
+
+
+        if (id == R.id.Aktifkan) {
+
+            aksibnt.setText("Aktif");
+            Setting();
+//            TextView isiForm = (TextView) login.findViewById(R.id.btn_isiFormulir);
+//            isiForm.setCursorVisible(false);
+        }else if (id == R.id.Matikan)
+        {
+
+            aksibnt.setText("Mati");
+            Setting();
+        }
+
+        return false;
+    }
+    private void Setting()
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_setting, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject dataObj = new JSONObject(response);
+
+
+
+
+                    //Toast.makeText(FormulirPPDB.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                    // adapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Log.e(TAG, "Error: " + error.getMessage());
+                //Toast.makeText(FormulirPPDB.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+
+            protected Map<String,String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<String, String>();
+//                    params.put("id_siswaBaru", id_siswaBaru);
+                map.put("id_setting","1");
+                map.put("aksimenu", aksibnt.getText().toString());
+                map.put("tahun_ajaran", "2020/2021");
+                //  params.put("tahun_nmasuk", thnmasuk.getText().toString());
+                //}
+                return map;
+            }
+
+        };
+
+        AppController.getInstance().addToRequestQueue(stringRequest);
+    }
 }

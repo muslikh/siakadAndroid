@@ -10,16 +10,20 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
 
     Context context;
     ArrayList<HashMap<String ,String >> list_data;
+    ArrayList<HashMap<String ,String >>  filterL;
+
 
     public AdapterSbaru(validasiPPDB validasiPPDB, ArrayList<HashMap<String ,String >>list_data)
     {
         this.context = validasiPPDB;
         this.list_data = list_data;
+        this.filterL = list_data;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,11 +33,6 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        Glide.with(context)
-//                .load("http://192.168.95.77/app_blogvolley/img/" + list_data.get(position).get("gambar"))
-//                //.crossFade()
-//                .placeholder(R.mipmap.ic_launcher)
-//                .into(holder.imgsbaru);
         holder.namas.setText("Nama : "+list_data.get(position).get("nama"));
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));
@@ -56,6 +55,23 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
             kodekelas = (TextView) itemView.findViewById(R.id.kodekelass);
             kodejurusan = (TextView) itemView.findViewById(R.id.kodejurusans);
             nisn = (TextView) itemView.findViewById(R.id.nisns);
+        }
+    }
+    public void filter(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        list_data = new ArrayList<HashMap<String, String>>();
+        if (charText.length() == 0)
+        {
+            list_data.addAll(filterL);
+        }else {
+            for (HashMap<String, String> item : filterL)
+            {
+                if(item.toString().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    list_data.add(item);
+                }
+            }
         }
     }
 

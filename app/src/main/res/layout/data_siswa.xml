@@ -29,8 +29,8 @@
                 <android.support.v7.widget.SearchView
 
                     android:id="@+id/cari"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="269dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_span="3"
                     android:background="#333333"
@@ -42,7 +42,7 @@
             android:padding="6dp">
 
                 <TextView
-                    android:id="@+id/tambahsiswa"
+                    android:id="@+id/validasisemua"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -52,7 +52,7 @@
                     android:background="@drawable/btn_normal"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:text="Tambah Data" />
+                    android:text="Tambah" />
 
                 <TextView
                     android:id="@+id/refreshdata"
@@ -69,7 +69,7 @@
 
                 <TextView
                     android:id="@+id/hpssiswa"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
@@ -78,7 +78,20 @@
                     android:background="@drawable/btn_normal"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:text="Haous" />
+                    android:text="Hapus Semua" />
+
+                <TextView
+                    android:id="@+id/hpspilsiswa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/btn_normal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Hapus Sebagian" />
             </TableRow>
         </TableLayout>
 

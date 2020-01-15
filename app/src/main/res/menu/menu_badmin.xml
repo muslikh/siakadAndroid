@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/jadwal"
+        android:id="@+id/datasiswa"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
         android:title="Data Siswa"
         app:showAsAction="always" />
     <item
-        android:id="@+id/grup"
+        android:id="@+id/ppdb"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
         android:title="PPDB"

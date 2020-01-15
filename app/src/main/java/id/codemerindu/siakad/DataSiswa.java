@@ -52,13 +52,7 @@ public class DataSiswa extends AppCompatActivity {
 
 
         cari = (SearchView) findViewById(R.id.cari);
-        if (cari.performClick())
-        {
-            setTitle("  ");
-        }else{
 
-           setTitle("Data Siswa");
-        }
         cari.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

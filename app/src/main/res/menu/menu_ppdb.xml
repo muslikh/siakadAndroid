@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Aktifkan Isi Form"
+        android:id="@+id/Aktifkan"
+        android:enabled="true"
+        android:visible="true"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:title="Matikan Isi Form"
+        android:id="@+id/Matikan"
+        android:enabled="true"
+        android:visible="true"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:title="Tahun Ajaran"
+        android:id="@+id/tahunajaran"
+        android:enabled="true"
+        android:visible="true"
+        app:showAsAction="collapseActionView"/>
+</menu>

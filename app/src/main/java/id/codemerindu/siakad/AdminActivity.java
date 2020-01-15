@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -93,7 +94,7 @@ public class AdminActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         menuKiriAdmin();
-
+        menuBottom();
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
 
@@ -154,6 +155,37 @@ public class AdminActivity extends AppCompatActivity
         requestQueue.add(stringRequest);
     }
 
+    public void menuBottom()
+    {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.aksesMenu);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId())
+                {
+                    case  R.id.datasiswa:
+                        Intent datasiswa = new Intent(AdminActivity.this,DataSiswa.class);
+                        startActivity(datasiswa);
+                        break;
+                    case  R.id.ppdb:
+
+                        Intent validasi = new Intent(AdminActivity.this, validasiPPDB.class);
+                        finish();
+                        startActivity(validasi);
+
+                        break;
+                    case  R.id.profil:
+
+
+
+
+                }
+                return false;
+            }
+        });
+
+    }
 
     public void menuKiriAdmin()
     {
@@ -169,10 +201,6 @@ public class AdminActivity extends AppCompatActivity
                         break;
                     case R.id.validasiSiswa:
 
-                        Intent validasi = new Intent(AdminActivity.this, validasiPPDB.class);
-                        finish();
-                        startActivity(validasi);
-
 //                        Fragment fragment = new validasiPPDB();
 //                        getSupportFragmentManager().beginTransaction()
 //                                .replace(R.id.Fragment
@@ -181,8 +209,7 @@ public class AdminActivity extends AppCompatActivity
 //                                .commit();
                         break;
                     case R.id.dataSiswa:
-                        Intent datasiswa = new Intent(AdminActivity.this,DataSiswa.class);
-                        startActivity(datasiswa);
+
 //                        Fragment dataSiswa = new DataSiswa();
 //                        getSupportFragmentManager().beginTransaction()
 //                                .replace(R.id.Fragment
