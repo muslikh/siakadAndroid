@@ -81,6 +81,8 @@ public class EditDataSiswa extends AppCompatActivity {
         dateFormat = new SimpleDateFormat("dd-MM-yyy", Locale.US);
         getSupportActionBar().setTitle("Ubah Data");
 
+
+
         updateSiswa = (Button)  findViewById(R.id.updateSiswa);
         updateSiswa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,15 +106,6 @@ public class EditDataSiswa extends AppCompatActivity {
         Tvtgllahir = (TextView) findViewById(R.id.tanggallahirUser);
         TvkodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
         Tvjurusan = (TextView)  findViewById(R.id.jurusanUser);
-        textfoto = (TextView)  findViewById(R.id.textfoto);
-        textfoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pilihgambar();
-            }
-        });
-
-
         nopeUser = ( EditText)  findViewById(R.id.nopeUser);
         nipd = ( TextView)   findViewById(R.id.nipdUser);
         nik = ( EditText)   findViewById(R.id.nikUser);
@@ -138,13 +131,6 @@ public class EditDataSiswa extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-        fotoProfile = (ImageView) findViewById(R.id.EfotoProfile);
-        fotoProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pilihgambar();
             }
         });
 
@@ -177,6 +163,9 @@ public class EditDataSiswa extends AppCompatActivity {
 
     public void editData()
     {
+        progressDialog = new ProgressDialog(EditDataSiswa.this);
+        progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
+        progressDialog.show();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequests =
@@ -186,6 +175,7 @@ public class EditDataSiswa extends AppCompatActivity {
                         try {
                             JSONArray dataArray= new JSONArray(response);
 
+                            progressDialog.dismiss();
                             for (int i =0; i<dataArray.length(); i++)
                             {
 
@@ -199,19 +189,10 @@ public class EditDataSiswa extends AppCompatActivity {
                                 String tempatLahir = obj.getString("tempat_lahir");
                                 String kodekelas = obj.getString("kode_kelas");
                                 String jurusanS = obj.getString("kode_jurusan");
+
                                 if (extraId== id )
                                 {
-                                    String fotobase64 = obj.getString("foto");
-                                    byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
-                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                                    if (fotobase64.isEmpty()){
-
-                                        Picasso.with(getApplication()).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
-                                    }else{
-
-                                    fotoProfile.setImageBitmap(decodedByte);
-                                      }
                                     idUser.setText(id_siswa);
                                     nisnUser.setText(nisn);
                                     EdnamaUser.setText(nama);
@@ -247,14 +228,7 @@ public class EditDataSiswa extends AppCompatActivity {
                                     alamatSsebelum.setText(obj.getString("alamatsekolah"));
                                     kelasAwal.setText(obj.getString("kelas_awal"));
                                     thnmasuk.setText(obj.getString("tahun_masuk"));
-//                    String code = dataObj.getString("code");
-//                    if (code.equals("sukses"))
-//                    {
-//                        ubahBerhasil();
-//                    }else if (code.equals("gagal"))
-//                    {
-//                        ubahGagal();
-//                    }
+
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);
@@ -291,7 +265,7 @@ public class EditDataSiswa extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject dataObj = new JSONObject(response);
-
+                    progressDialog.dismiss();
 
                     // adapter.notifyDataSetChanged();
 
@@ -326,7 +300,6 @@ public class EditDataSiswa extends AppCompatActivity {
                 Map<String,String> map = new HashMap<>();
 //
                 map.put("id_siswa", idUser.getText().toString());
-                map.put("foto",imageString);
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("tempat_lahir", Edtmplahir.getText().toString());
                 map.put("tanggal_lahir", EdtgllahirUser.getText().toString());
@@ -398,9 +371,9 @@ public class EditDataSiswa extends AppCompatActivity {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        onBackPressed();
-                        onRestart();
-                        //moveTaskToBack(true);
+
+                        Intent back = new Intent(EditDataSiswa.this,Profile.class);
+                        startActivity(back);
                     }
                 });
 

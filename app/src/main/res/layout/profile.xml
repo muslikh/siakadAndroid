@@ -15,85 +15,132 @@
         android:layout_height="wrap_content"
         android:titleTextColor="@color/colorWhite"
         android:background="@color/colorPrimaryDark" />
-
-    <ImageView
-        android:id="@+id/fotoProfile"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_below="@id/profileToolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/btnrefreshData"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_below="@id/fotoProfile"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="13dp"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/btn_normal"
-        android:text="Refresh"
-        android:textColor="#ffffff"
-        android:textSize="13dp" />
-
-
-    <Button
-        android:id="@+id/btneditData"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_below="@id/fotoProfile"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="13dp"
-        android:background="@drawable/btncustom"
-        android:text="Edit Data"
-        android:textColor="#ffffff"
-        android:textSize="13dp" />
-
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+    <LinearLayout
+        android:id="@+id/linearFoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btneditData"
-        android:layout_marginTop="5dp"
-        app:tabTextColor="#000000">
+        android:layout_below="@+id/profileToolbar"
+        android:orientation="horizontal">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tab_datasiswa"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="242dp"
+            android:layout_below="@+id/linearFoto">
+
+            <TableLayout
+
+                android:id="@+id/tabelFoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profileToolbar"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/fotoProfile"
+                        android:layout_width="338dp"
+                        android:layout_height="150dp"
+                        android:layout_below="@id/profileToolbar"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:layout_span="3"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/textfoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*Klik Pada Gambah Untuk Pilih Foto\n kemudian tekan ganti Foto"
+                        android:textColor="#000000" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp">
+
+                    <Button
+                        android:id="@+id/btngantifoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_below="@id/textfoto"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/btn_normal"
+                        android:text="Ganti Foto"
+                        android:textColor="#ffffff"
+                        android:textSize="13dp" />
+
+
+                    <Button
+                        android:id="@+id/btneditData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_below="@id/textfoto"
+                        android:background="@drawable/btncustom"
+                        android:text="Edit Data"
+                        android:textColor="#ffffff"
+                        android:textSize="13dp" />
+                </TableRow>
+
+            </TableLayout>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data Siswa"
-            android:textColor="#000000" />
+            android:layout_below="@id/linearFoto"
+            android:layout_marginTop="5dp"
+            app:tabTextColor="#000000">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tab_dataortu"
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_datasiswa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data Siswa"
+                android:textColor="#000000" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_dataortu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data Ortu / Wali"
+                android:textColor="#000000" />
+        </android.support.design.widget.TabLayout>
+
+        <android.support.v4.view.ViewPager
+            android:layout_below="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data Ortu / Wali"
-            android:textColor="#000000" />
-    </android.support.design.widget.TabLayout>
+            android:id="@+id/view_pager">
 
-    <android.support.v4.view.ViewPager
-        android:layout_below="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/view_pager">
-
-    </android.support.v4.view.ViewPager>
-
-
+        </android.support.v4.view.ViewPager>
 </RelativeLayout>

@@ -1,7 +1,9 @@
 package id.codemerindu.siakad;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,7 +38,7 @@ public class DataSiswa extends AppCompatActivity {
     Button refreshdata,hpsiswa;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
-//    EditText caridata;
+    ProgressDialog progressDialog;
 
     String url_sbaru = "http://smknprigen.sch.id/siakad/api/siswa.php";
     String url_hpus = "http://smknprigen.sch.id/siakad/api/delete.php";
@@ -67,42 +69,14 @@ public class DataSiswa extends AppCompatActivity {
                 return false;
             }
         });
-
-//        hpsiswa = (Button) findViewById(R.id.hpssiswa);
-//        hpsiswa.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder alert = new AlertDialog.Builder(DataSiswa.this);
-//                alert
-//                        .setMessage("Yakin Hapus Semua Data")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Iyya", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                hpsiswa();
-//                                recreate();
-//                            }
-//                        })
-//                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//                                recreate();
-//                            }
-//                        });
-//
-//                AlertDialog hpus = alert.create();
-//                hpus.show();
-//            }
-//        });
-//        refreshdata = (Button) findViewById(R.id.refreshdata);
-//        refreshdata.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                refresh();
-//                recreate();
-//            }
-//        });
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recreate(); // your code
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         lvsbaru = (RecyclerView) findViewById(R.id.lvsbaru);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -110,23 +84,9 @@ public class DataSiswa extends AppCompatActivity {
         list_data = new ArrayList<HashMap<String, String>>();
 
 
-//        caridata = (EditText) findViewById(R.id.caridata);
-//
-//        caridata.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void onTextChanged(CharSequence cs, int arg1, int arg2,
-//                                      int arg3) {
-//                DataSiswa.this.adapter.getFilter().filter(cs);
-//            }
-//            @Override
-//            public void beforeTextChanged(CharSequence arg0, int arg1,
-//                                          int arg2, int arg3) {
-//            }
-//            @Override
-//            public void afterTextChanged(Editable arg0) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
+        progressDialog = new ProgressDialog(DataSiswa.this);
+        progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
+        progressDialog.show();
 
         requestQueue = Volley.newRequestQueue(DataSiswa.this);
         stringRequest = new StringRequest(Request.Method.GET, url_sbaru, new Response.Listener<String>() {
@@ -135,7 +95,7 @@ public class DataSiswa extends AppCompatActivity {
 
                 try{
                     JSONArray dataArray= new JSONArray(response);
-
+                    progressDialog.dismiss();
                     for (int i =0; i<dataArray.length(); i++)
                     {
 

@@ -1,8 +1,12 @@
 package id.codemerindu.siakad;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +53,19 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
 //                //.crossFade()
 //                .placeholder(R.mipmap.ic_launcher)
 //                .into(holder.imgsbaru);
-        Picasso.with(context).load("http://smknprigen.sch.id/bkk/image/default.png").into(holder.imgsbaru);
+        String fotobase64 = list_data.get(position).get("foto");
+        byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (fotobase64.isEmpty()) {
+
+            Picasso.with(context).load("http://smknprigen.sch.id/bkk/image/default.png").into(holder.imgsbaru);
+        } else if (fotobase64.equals("null")) {
+
+            Picasso.with(context).load("http://smknprigen.sch.id/bkk/image/default.png").into(holder.imgsbaru);
+        } else {
+
+            holder.imgsbaru.setImageBitmap(decodedByte);
+        }
         holder.namas.setText("Nama : "+list_data.get(position).get("nama"));
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));
@@ -57,10 +73,29 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String  idu = list_data.get(position).get("id_siswa");
-                Intent pindah=new Intent(context,Profile.class);
-                pindah.putExtra(TAG_IDU,idu);
-                context.startActivity(pindah);
+                final CharSequence[] options = { "Detail Data", "Hapus","Batal" };
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+                builder.setTitle("!");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (options[item].equals("Detail Data"))
+                        {
+                            String  idu = list_data.get(position).get("id_siswa");
+                            Intent pindah=new Intent(context,Profile.class);
+                            pindah.putExtra(TAG_IDU,idu);
+                            context.startActivity(pindah);
+                        }
+                        else if (options[item].equals("Hapus"))
+                        {
+
+                        }
+                        else if (options[item].equals("Batal")) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
             }
         });
     }
@@ -103,79 +138,5 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
             }
         }
     }
-//
-//    @Override
-//    protected FilterResults performFiltering(CharSequence charSequence)
-//    {
-//        filter.clear();
-//        final FilterResults results = new FilterResults();
-//        if (charSequence.length() == 0)
-//        {
-//            filter.addAll(list_data);
-//        }else {
-//            final String filterPattern = charSequence.toString().toLowerCase().trim();
-//            for (HashMap<String ,String > item : list_data)
-//            {
-//                if(item.toString().toLowerCase().contains(filterPattern))
-//                {
-//                    filter.add(item);
-//                }
-//            }
-//        }
-//        results.values = filter;
-//        results.count = filter.size();
-//        return results;
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//    @Override
-//    protected void publishResults(CharSequence charSequence, FilterResults filterResults)
-//    {
-//            list_data.clear();
-//            list_data.add(filterResults.values);
-//            notifyDataSetChanged();
-//    }
-
-//    @Override
-//    public Filter getFilter() {
-//        Filter filter = new Filter() {
-//            @Override
-//            protected FilterResults performFiltering(CharSequence charSequence) {
-//                FilterResults filterResults = new FilterResults();
-//
-//                if(charSequence == null | charSequence.length() == 0){
-//                    filterResults.count = getUserModelListFiltered.size();
-//                    filterResults.values = getUserModelListFiltered;
-//
-//                }else{
-//                    String searchChr = charSequence.toString().toLowerCase();
-//
-//                    List<UserModel> resultData = new ArrayList<>();
-//
-//                    for(UserModel userModel: getUserModelListFiltered){
-//                        if(userModel.getUserName().toLowerCase().contains(searchChr)){
-//                            resultData.add(userModel);
-//                        }
-//                    }
-//                    filterResults.count = resultData.size();
-//                    filterResults.values = resultData;
-//
-//                }
-//
-//                return filterResults;
-//            }
-//
-//            @Override
-//            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-//
-//                userModelList = (List<UserModel>) filterResults.values;
-//                notifyDataSetChanged();
-//
-//            }
-//        };
-//        return filter;
-//    }
-
-
 
 }

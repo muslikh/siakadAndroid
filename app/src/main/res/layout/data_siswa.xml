@@ -15,15 +15,23 @@
         android:background="@color/colorPrimaryDark"
         android:titleTextColor="#FFFFFF" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:layout_below="@+id/toolbar">
+
         <TableLayout
             android:id="@+id/tabelmnu"
-            android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp">
-            <TableRow android:gravity="center"
+
+            <TableRow
+                android:gravity="center"
                 android:padding="6dp">
 
                 <android.support.v7.widget.SearchView
@@ -38,8 +46,9 @@
                     app:queryHint="Cari Data" />
             </TableRow>
 
-            <TableRow android:gravity="center"
-            android:padding="6dp">
+            <TableRow
+                android:gravity="center"
+                android:padding="6dp">
 
                 <TextView
                     android:id="@+id/validasisemua"
@@ -94,14 +103,14 @@
                     android:text="Hapus Sebagian" />
             </TableRow>
         </TableLayout>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvsbaru"
         android:layout_width="match_parent"
         android:layout_height="618dp"
         android:layout_above="@+id/aksesMenu"
-        android:layout_below="@+id/tabelmnu"
+        android:layout_below="@+id/pullToRefresh"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"/>
 

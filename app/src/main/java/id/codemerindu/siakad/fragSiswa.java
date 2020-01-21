@@ -1,5 +1,6 @@
 package id.codemerindu.siakad;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,9 @@ import org.json.JSONObject;
 
 import java.util.zip.Inflater;
 
+import static id.codemerindu.siakad.Login.my_shared_preferences;
+import static id.codemerindu.siakad.Login.session_status;
+
 public class fragSiswa extends Fragment {
 
     final String url = Server.URL+"siswa.php";
@@ -34,6 +38,7 @@ public class fragSiswa extends Fragment {
             tinggi,berat,lulusdari,noijasah,noskhun,nopeUser,pindahdari,alamatSsebelum,kelasAwal,thnmasuk,nounsmp;
 
     String id;
+    Boolean session = false;
     SharedPreferences sharedpreferences;
     public final static String TAG="Profile";
     public final static String TAG_IDU = "idu";
@@ -44,7 +49,9 @@ public class fragSiswa extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view_fragsiswa = inflater.inflate(R.layout.fragdatapribadi,container,false);
 
-
+        sharedpreferences = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        id =  sharedpreferences.getString(TAG_IDU, null);
 
         namaUser = (TextView) view_fragsiswa.findViewById(R.id.namaUser);
         nopeUser = (TextView) view_fragsiswa.findViewById(R.id.nopeUser);
@@ -103,6 +110,8 @@ public class fragSiswa extends Fragment {
                             {
 
                                 JSONObject obj = dataArray.getJSONObject(i);
+                               // int extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
+
                                 int extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
 
                                 int id = obj.getInt("id_siswa");

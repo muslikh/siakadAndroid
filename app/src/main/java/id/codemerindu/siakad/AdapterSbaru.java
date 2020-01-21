@@ -1,6 +1,8 @@
 package id.codemerindu.siakad;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,27 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));
         holder.nisn.setText("NSN : "+list_data.get(position).get("nisn"));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final CharSequence[] options = {"Detail Data", "Hapus", "Batal"};
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+                builder.setTitle("!");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (options[item].equals("Detail Data")) {
+
+                        } else if (options[item].equals("Hapus")) {
+
+                        } else if (options[item].equals("Batal")) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     @Override

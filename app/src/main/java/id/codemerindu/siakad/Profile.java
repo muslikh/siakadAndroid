@@ -21,6 +21,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
@@ -85,10 +86,11 @@ public class Profile extends AppCompatActivity {
 
     public  static final int RequestPermissionCode  = 1 ;
     PagerAdapter pagerAdapter;
-    Button btneditdata,btnrefresh,bntgantifoto;
+    Button btneditdata,btnrefresh,btngantifoto;
     ImageView fotoProfile;
     Boolean session = false;
     final String ambilfoto = Server.URL+"siswa.php";
+    final String gantifoto = Server.URL+"gantifoto.php";
 
     private String Document_img1="";
     Bitmap bitmap;
@@ -113,18 +115,31 @@ public class Profile extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
 
-
-        btnrefresh = (Button) findViewById(R.id.btnrefreshData);
-
-        btnrefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recreate();
-            }
-        });
         Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
         setSupportActionBar(toolbar);
         fotoProfile = (ImageView) findViewById(R.id.fotoProfile);
+        fotoProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pilihgambar();
+            }
+        });
+        btngantifoto = (Button) findViewById(R.id.btngantifoto);
+        btngantifoto.setEnabled(false);
+        btngantifoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gantifoto();
+            }
+        });
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recreate(); // your code
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         EnableRuntimePermissionToAccessCamera();
 
         Picasso.with(this).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
@@ -347,17 +362,16 @@ public class Profile extends AppCompatActivity {
     }
     private void ambilfoto()
     {
+        progressDialog = new ProgressDialog(Profile.this);
+        progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
+        progressDialog.show();
 
-        //converting image to base64 string
-
-
-        //sending image to server
         StringRequest request = new StringRequest(Request.Method.GET, ambilfoto, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 try {
                     JSONArray dataArray= new JSONArray(response);
-
+                    progressDialog.dismiss();
                     for (int i =0; i<dataArray.length(); i++) {
 
                         JSONObject obj = dataArray.getJSONObject(i);
@@ -369,7 +383,19 @@ public class Profile extends AppCompatActivity {
                             byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
                             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                            fotoProfile.setImageBitmap(decodedByte);
+                            if (extraId== id ) {
+
+                                if (fotobase64.isEmpty()) {
+
+                                    Picasso.with(getApplication()).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
+                                } else if (fotobase64.equals("null")) {
+
+                                    Picasso.with(getApplication()).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
+                                } else {
+
+                                    fotoProfile.setImageBitmap(decodedByte);
+                                }
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -410,11 +436,9 @@ public class Profile extends AppCompatActivity {
                 if (options[item].equals("Ambil Foto"))
                 {
                     Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(i, 100);
-//                    File f = new File(Environment.getExternalStorageDirectory()+"/");
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 100);
+
+                    btngantifoto.setEnabled(true);
 
                 }
                 else if (options[item].equals("Pilih Dari Gallery"))
@@ -423,8 +447,8 @@ public class Profile extends AppCompatActivity {
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_PICK);
                     startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
-//                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(intent, 2);
+
+                    btngantifoto.setEnabled(true);
                 }
                 else if (options[item].equals("Batal")) {
                     dialog.dismiss();
@@ -432,6 +456,78 @@ public class Profile extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+
+    private void gantifoto()
+    {
+        progressDialog = new ProgressDialog(Profile.this);
+        progressDialog.setMessage("Proses Simpan, Mohon Tunggu...");
+        progressDialog.show();
+
+        //converting image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, gantifoto, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject dataObj = new JSONObject(response);
+                    progressDialog.dismiss();
+
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Error: " + error.getMessage());
+                Toast.makeText(Profile.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+
+            protected Map<String,String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<>();
+
+                map.put("id_siswa", getIntent().getStringExtra(TAG_IDU));
+                map.put("foto",imageString);
+
+                return map;
+            }
+
+        };
+
+        AppController.getInstance().addToRequestQueue(stringRequest);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+
+            try {
+                //getting image from gallery
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
+                //Setting image to ImageView
+                fotoProfile.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
