@@ -193,6 +193,12 @@ public class DataSiswa extends AppCompatActivity {
         requestQueue.add(stringRequests);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+            Intent pindah = new Intent(DataSiswa.this, AdminActivity.class);
+            startActivity(pindah);
 
+    }
 
 }

@@ -88,7 +88,7 @@ public class Profile extends AppCompatActivity {
     Button btneditdata,btnrefresh,bntgantifoto;
     ImageView fotoProfile;
     Boolean session = false;
-    final String gantifoto = Server.URL+"gantifoto.php";
+    final String ambilfoto = Server.URL+"siswa.php";
 
     private String Document_img1="";
     Bitmap bitmap;
@@ -103,6 +103,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedIntanceState);
         setContentView(R.layout.profile);
 
+        ambilfoto();
 
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
@@ -123,20 +124,7 @@ public class Profile extends AppCompatActivity {
         });
         Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
         setSupportActionBar(toolbar);
-        bntgantifoto = (Button)  findViewById(R.id.btngantifoto);
-        bntgantifoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gantifoto();
-            }
-        });
         fotoProfile = (ImageView) findViewById(R.id.fotoProfile);
-        fotoProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pilihgambar();
-            }
-        });
         EnableRuntimePermissionToAccessCamera();
 
         Picasso.with(this).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
@@ -357,36 +345,33 @@ public class Profile extends AppCompatActivity {
             startActivity(pindah);
         }
     }
-    private void gantifoto()
+    private void ambilfoto()
     {
-        progressDialog = new ProgressDialog(Profile.this);
-        progressDialog.setMessage("Uploading, please wait...");
-        progressDialog.show();
 
         //converting image to base64 string
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-       bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
 
         //sending image to server
-        StringRequest request = new StringRequest(Request.Method.POST, gantifoto, new Response.Listener<String>(){
+        StringRequest request = new StringRequest(Request.Method.GET, ambilfoto, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject dataObj = new JSONObject(response);
+                    JSONArray dataArray= new JSONArray(response);
 
+                    for (int i =0; i<dataArray.length(); i++) {
 
-                    // adapter.notifyDataSetChanged();
+                        JSONObject obj = dataArray.getJSONObject(i);
+                        int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
 
-                    String code = dataObj.getString("code");
-                progressDialog.dismiss();
-                if(code.equals("1")){
-                    Toast.makeText(Profile.this, "Uploaded Successful", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(Profile.this, "Some error occurred!", Toast.LENGTH_LONG).show();
-                }
+                        int id = obj.getInt("id_siswa");
+                        if (extraId == id) {
+                            String fotobase64 = obj.getString("foto");
+                            byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
+                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                            fotoProfile.setImageBitmap(decodedByte);
+                        }
+                    }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
@@ -405,33 +390,13 @@ public class Profile extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("foto", imageString);
-                parameters.put("id_siswa",getIntent().getStringExtra(TAG_IDU));
+
                 return parameters;
             }
         };
 
         RequestQueue rQueue = Volley.newRequestQueue(Profile.this);
         rQueue.add(request);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-
-            try {
-                //getting image from gallery
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-
-                //Setting image to ImageView
-                fotoProfile.setImageBitmap(bitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 
@@ -444,12 +409,13 @@ public class Profile extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Ambil Foto"))
                 {
-//                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(i, 100);
+                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(i, 100);
 //                    File f = new File(Environment.getExternalStorageDirectory()+"/");
 //                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                    startActivityForResult(intent, 1);
+                    startActivityForResult(intent, 100);
+
                 }
                 else if (options[item].equals("Pilih Dari Gallery"))
                 {

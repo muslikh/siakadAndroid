@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -54,7 +55,7 @@ public class EditDataSiswa extends AppCompatActivity {
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
     EditText EdnamaUser,Edtmplahir,EdtgllahirUser;
-    TextView idUser,nipd,nisnUser,TvkodeKelas,Tvjurusan,Tvtgllahir,kelasAwal,thnmasuk;
+    TextView idUser,nipd,nisnUser,TvkodeKelas,Tvjurusan,Tvtgllahir,kelasAwal,thnmasuk,textfoto;
     EditText namaUser,ttlUser,kodeKelas,jurusan,
     nisn,nik,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
     hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
@@ -103,6 +104,13 @@ public class EditDataSiswa extends AppCompatActivity {
         Tvtgllahir = (TextView) findViewById(R.id.tanggallahirUser);
         TvkodeKelas = (TextView) findViewById(R.id.kodeKelasUser);
         Tvjurusan = (TextView)  findViewById(R.id.jurusanUser);
+        textfoto = (TextView)  findViewById(R.id.textfoto);
+        textfoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pilihgambar();
+            }
+        });
 
 
         nopeUser = ( EditText)  findViewById(R.id.nopeUser);
@@ -139,7 +147,6 @@ public class EditDataSiswa extends AppCompatActivity {
                 pilihgambar();
             }
         });
-        Picasso.with(this).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
 
 
         kewarga = ( EditText)   findViewById(R.id.wargaUser);
@@ -194,6 +201,17 @@ public class EditDataSiswa extends AppCompatActivity {
                                 String jurusanS = obj.getString("kode_jurusan");
                                 if (extraId== id )
                                 {
+                                    String fotobase64 = obj.getString("foto");
+                                    byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
+                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                                    if (fotobase64.isEmpty()){
+
+                                        Picasso.with(getApplication()).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
+                                    }else{
+
+                                    fotoProfile.setImageBitmap(decodedByte);
+                                      }
                                     idUser.setText(id_siswa);
                                     nisnUser.setText(nisn);
                                     EdnamaUser.setText(nama);
