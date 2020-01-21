@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
@@ -30,6 +32,38 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
 >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/EfotoProfile"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_below="@id/profileToolbar"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/label_foto"
+                android:layout_width="197dp"
+                android:layout_height="99dp"
+                android:layout_span="2"
+                android:text="Klik Gambar Untuk merubah"
+                android:textColor="#000000" />
+        </TableRow>
+
         <TableRow
 
             android:layout_gravity="center"

@@ -1,18 +1,24 @@
 package id.codemerindu.siakad;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,11 +30,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -54,6 +62,11 @@ public class EditDataSiswa extends AppCompatActivity {
 
     Spinner agama,jk;
     Button updateSiswa;
+    ImageView fotoProfile;
+
+    Bitmap bitmap;
+    ProgressDialog progressDialog;
+    int PICK_IMAGE_REQUEST = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +132,16 @@ public class EditDataSiswa extends AppCompatActivity {
 
             }
         });
+        fotoProfile = (ImageView) findViewById(R.id.EfotoProfile);
+        fotoProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pilihgambar();
+            }
+        });
+        Picasso.with(this).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
+
+
         kewarga = ( EditText)   findViewById(R.id.wargaUser);
         anakke = ( EditText)   findViewById(R.id.anakKeUser);
         jmlsdrkandung = ( EditText)   findViewById(R.id.jmlsdrkanUser);
@@ -235,6 +258,15 @@ public class EditDataSiswa extends AppCompatActivity {
 
     private void simpan()
     {
+        progressDialog = new ProgressDialog(EditDataSiswa.this);
+        progressDialog.setMessage("Proses Simpan, Mohon Tunggu...");
+        progressDialog.show();
+
+        //converting image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url_update, new Response.Listener<String>() {
             @Override
@@ -276,6 +308,7 @@ public class EditDataSiswa extends AppCompatActivity {
                 Map<String,String> map = new HashMap<>();
 //
                 map.put("id_siswa", idUser.getText().toString());
+                map.put("foto",imageString);
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("tempat_lahir", Edtmplahir.getText().toString());
                 map.put("tanggal_lahir", EdtgllahirUser.getText().toString());
@@ -318,6 +351,24 @@ public class EditDataSiswa extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(stringRequest);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+
+            try {
+                //getting image from gallery
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
+                //Setting image to ImageView
+                fotoProfile.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void ubahBerhasil()
     {
@@ -370,5 +421,39 @@ public class EditDataSiswa extends AppCompatActivity {
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),newCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
+    }
+
+
+    private void pilihgambar() {
+        final CharSequence[] options = { "Ambil Foto", "Pilih Dari Gallery","Batal" };
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(EditDataSiswa.this);
+        builder.setTitle("Ganti Foto!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Ambil Foto"))
+                {
+//                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, 100);
+//                    File f = new File(Environment.getExternalStorageDirectory()+"/");
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                    startActivityForResult(intent, 1);
+                }
+                else if (options[item].equals("Pilih Dari Gallery"))
+                {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_PICK);
+                    startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+//                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(intent, 2);
+                }
+                else if (options[item].equals("Batal")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 }

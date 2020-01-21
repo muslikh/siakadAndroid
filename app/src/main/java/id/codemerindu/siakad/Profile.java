@@ -1,18 +1,25 @@
 package id.codemerindu.siakad;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,9 +36,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -56,7 +71,7 @@ import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
 
 
-public class Profile extends AppCompatActivity implements View.OnClickListener {
+public class Profile extends AppCompatActivity {
 
     TextView namaUser, ttlUser, kodeKelas, jurusan;
     String idu,levelU;
@@ -67,14 +82,18 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     public final static String TAG_IDU = "idu";
     public static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
+
+    public  static final int RequestPermissionCode  = 1 ;
     PagerAdapter pagerAdapter;
     Button btneditdata,btnrefresh,bntgantifoto;
     ImageView fotoProfile;
     Boolean session = false;
-    final String gantifoto = Server.URL+"gantifotosiswa.php";
+    final String gantifoto = Server.URL+"gantifoto.php";
 
     private String Document_img1="";
-
+    Bitmap bitmap;
+    ProgressDialog progressDialog;
+    int PICK_IMAGE_REQUEST = 111;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
 
@@ -93,13 +112,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
 
-        bntgantifoto = (Button)  findViewById(R.id.btngantifoto);
-        bntgantifoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gantifoto();
-            }
-        });
+
         btnrefresh = (Button) findViewById(R.id.btnrefreshData);
 
         btnrefresh.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +123,13 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         });
         Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
         setSupportActionBar(toolbar);
-
+        bntgantifoto = (Button)  findViewById(R.id.btngantifoto);
+        bntgantifoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gantifoto();
+            }
+        });
         fotoProfile = (ImageView) findViewById(R.id.fotoProfile);
         fotoProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +137,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 pilihgambar();
             }
         });
-
+        EnableRuntimePermissionToAccessCamera();
 
         Picasso.with(this).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
 
@@ -174,6 +193,15 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:" + getPackageName()));
+            finish();
+            startActivity(intent);
+            return;
+        }
 
     }
 
@@ -189,11 +217,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
         if(levelU.equals("admin"))
         {
-
-
-//                Intent pindah = new Intent(Profile.this,AdminActivity.class);
-//                startActivity(pindah);
-
             menu.findItem(R.id.logout).setEnabled(false).setVisible(false);
             menu.findItem(R.id.hapus).setEnabled(true).setVisible(true);
         }else if(levelU.equals("siswa"))
@@ -336,8 +359,18 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
     private void gantifoto()
     {
+        progressDialog = new ProgressDialog(Profile.this);
+        progressDialog.setMessage("Uploading, please wait...");
+        progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, gantifoto, new Response.Listener<String>() {
+        //converting image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+       bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //sending image to server
+        StringRequest request = new StringRequest(Request.Method.POST, gantifoto, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 try {
@@ -346,8 +379,14 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
                     // adapter.notifyDataSetChanged();
 
-
-
+                    String code = dataObj.getString("code");
+                progressDialog.dismiss();
+                if(code.equals("1")){
+                    Toast.makeText(Profile.this, "Uploaded Successful", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(Profile.this, "Some error occurred!", Toast.LENGTH_LONG).show();
+                }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
@@ -362,24 +401,39 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 Toast.makeText(Profile.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
-
+            //adding parameters to send
             @Override
-
-            protected Map<String,String> getParams() throws AuthFailureError {
-
-                Map<String,String> map = new HashMap<>();
-//
-                map.put("id_siswa", idu);
-                map.put("foto", Document_img1);
-//                map.put("tempat_lahir", Edtmplahir.getText().toString());
-
-                return map;
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("foto", imageString);
+                parameters.put("id_siswa",getIntent().getStringExtra(TAG_IDU));
+                return parameters;
             }
-
         };
 
-        AppController.getInstance().addToRequestQueue(stringRequest);
+        RequestQueue rQueue = Volley.newRequestQueue(Profile.this);
+        rQueue.add(request);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+
+            try {
+                //getting image from gallery
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
+                //Setting image to ImageView
+                fotoProfile.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private void pilihgambar() {
         final CharSequence[] options = { "Ambil Foto", "Pilih Dari Gallery","Batal" };
@@ -388,19 +442,25 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
+                if (options[item].equals("Ambil Foto"))
                 {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
+//                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, 100);
+//                    File f = new File(Environment.getExternalStorageDirectory()+"/");
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                    startActivityForResult(intent, 1);
                 }
-                else if (options[item].equals("Choose from Gallery"))
+                else if (options[item].equals("Pilih Dari Gallery"))
                 {
-                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_PICK);
+                    startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+//                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(intent, 2);
                 }
-                else if (options[item].equals("Cancel")) {
+                else if (options[item].equals("Batal")) {
                     dialog.dismiss();
                 }
             }
@@ -408,103 +468,20 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         builder.show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                File f = new File(Environment.getExternalStorageDirectory().toString());
-                for (File temp : f.listFiles()) {
-                    if (temp.getName().equals("temp.jpg")) {
-                        f = temp;
-                        break;
-                    }
-                }
-                try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
-                    bitmap=getResizedBitmap(bitmap, 400);
-                    fotoProfile.setImageBitmap(bitmap);
-                    BitMapToString(bitmap);
-                    String path = android.os.Environment
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
-                    f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    try {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (requestCode == 2) {
-                Uri selectedImage = data.getData();
-                String[] filePath = { MediaStore.Images.Media.DATA };
-                Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
-                c.moveToFirst();
-                int columnIndex = c.getColumnIndex(filePath[0]);
-                String picturePath = c.getString(columnIndex);
-                c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                thumbnail=getResizedBitmap(thumbnail, 400);
-                Log.w("path", picturePath+"");
-                fotoProfile.setImageBitmap(thumbnail);
-                BitMapToString(thumbnail);
-            }
-        }
-    }
-    public String BitMapToString(Bitmap userImage1) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        userImage1.compress(Bitmap.CompressFormat.PNG, 60, baos);
-        byte[] b = baos.toByteArray();
-        Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
-        return Document_img1;
-    }
 
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
+    // Requesting runtime permission to access camera.
+    public void EnableRuntimePermissionToAccessCamera(){
 
-        float bitmapRatio = (float)width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
+        if (ActivityCompat.shouldShowRequestPermissionRationale(Profile.this,
+                Manifest.permission.CAMERA))
+        {
+
+            // Printing toast message after enabling runtime permission.
+            Toast.makeText(Profile.this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
+
         } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        return Bitmap.createScaledBitmap(image, width, height, true);
-    }
 
-    public void onClick(View v) {
-        if (Document_img1.equals("") || Document_img1.equals(null)) {
-            ContextThemeWrapper ctw = new ContextThemeWrapper( Profile.this, R.style.AppTheme);
-            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctw);
-            alertDialogBuilder.setTitle("Id Prof Can't Empty ");
-            alertDialogBuilder.setMessage("Id Prof Can't empty please select any one document");
-            alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-
-                }
-            });
-            alertDialogBuilder.show();
-            return;
-        }
-        else{
-
-                gantifoto();
+            ActivityCompat.requestPermissions(Profile.this,new String[]{Manifest.permission.CAMERA}, RequestPermissionCode);
 
         }
     }
