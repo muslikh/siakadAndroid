@@ -48,7 +48,7 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
-                        if (options[item].equals("Detail Data")) {
+                        if (options[item].equals("Validasi")) {
 
                         } else if (options[item].equals("Hapus")) {
 

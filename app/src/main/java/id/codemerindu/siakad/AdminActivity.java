@@ -199,7 +199,7 @@ public class AdminActivity extends AppCompatActivity
                     case R.id.keluarAdmin:
                         alertKeluar();
                         break;
-                    case R.id.validasiSiswa:
+//                    case R.id.validasiSiswa:
 
 //                        Fragment fragment = new validasiPPDB();
 //                        getSupportFragmentManager().beginTransaction()
@@ -207,8 +207,8 @@ public class AdminActivity extends AppCompatActivity
 //                                        , fragment, fragment.getClass().getSimpleName())
 //                                .addToBackStack(null)
 //                                .commit();
-                        break;
-                    case R.id.dataSiswa:
+//                        break;
+//                    case R.id.dataSiswa:
 
 //                        Fragment dataSiswa = new DataSiswa();
 //                        getSupportFragmentManager().beginTransaction()
@@ -216,15 +216,15 @@ public class AdminActivity extends AppCompatActivity
 //                                        , dataSiswa, dataSiswa.getClass().getSimpleName())
 //                                .addToBackStack(null)
 //                                .commit();
-                        break;
+//                        break;
 //                    case R.id.bukaMenu:
 //                        findViewById(R.id.btn_isiFormulir).setEnabled(false);
 //                        break;
 
-                    case R.id.homeAdmin:
-                        Intent homeAdmin = new Intent(AdminActivity.this,AdminActivity.class);
-                        startActivity(homeAdmin);
-                        break;
+//                    case R.id.homeAdmin:
+//                        Intent homeAdmin = new Intent(AdminActivity.this,AdminActivity.class);
+//                        startActivity(homeAdmin);
+//                        break;
 
                 }
 

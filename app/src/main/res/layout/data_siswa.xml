@@ -63,18 +63,6 @@
                     android:paddingRight="5dp"
                     android:text="Tambah" />
 
-                <TextView
-                    android:id="@+id/refreshdata"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/btn_normal"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="Perbarui" />
 
                 <TextView
                     android:id="@+id/hpssiswa"
@@ -88,19 +76,6 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="Hapus Semua" />
-
-                <TextView
-                    android:id="@+id/hpspilsiswa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/btn_normal"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="Hapus Sebagian" />
             </TableRow>
         </TableLayout>
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -2,31 +2,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/home"
-        android:enabled="true"
-        android:icon="@drawable/ic_setting"
-        android:title="Beranda"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/home"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_setting"-->
+<!--        android:title="Beranda"-->
+<!--        app:showAsAction="always" />-->
 
-    <item
-        android:id="@+id/tugas"
-        android:enabled="true"
-        android:icon="@drawable/ic_setting"
-        android:title="Daftar Tugas"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/nilai"
-        android:enabled="true"
-        android:icon="@drawable/ic_setting"
-        android:title="Daftar Nilai"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/inbox"
-        android:enabled="true"
-        android:icon="@drawable/ic_setting"
-        android:title="Pesan"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/tugas"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_setting"-->
+<!--        android:title="Daftar Tugas"-->
+<!--        app:showAsAction="always" />-->
+<!--    <item-->
+<!--        android:id="@+id/nilai"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_setting"-->
+<!--        android:title="Daftar Nilai"-->
+<!--        app:showAsAction="always" />-->
+<!--    <item-->
+<!--        android:id="@+id/inbox"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_setting"-->
+<!--        android:title="Pesan"-->
+<!--        app:showAsAction="always" />-->
     <item
         android:id="@+id/logout"
         android:enabled="true"

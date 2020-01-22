@@ -40,8 +40,8 @@ public class DataSiswa extends AppCompatActivity {
     private StringRequest stringRequest;
     ProgressDialog progressDialog;
 
-    String url_sbaru = "http://smknprigen.sch.id/siakad/api/siswa.php";
-    String url_hpus = "http://smknprigen.sch.id/siakad/api/delete.php";
+    String url_sbaru = Server.URL+"siswa.php";
+    String url_hpus = Server.URL+"delete.php";
     ArrayList<HashMap<String ,String>> list_data;
     private SearchView cari;
 
@@ -73,7 +73,9 @@ public class DataSiswa extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recreate(); // your code
+
+                Intent refresh=new Intent(DataSiswa.this,DataSiswa.class);
+                startActivity(refresh);
                 pullToRefresh.setRefreshing(false);
             }
         });
@@ -95,7 +97,7 @@ public class DataSiswa extends AppCompatActivity {
 
                 try{
                     JSONArray dataArray= new JSONArray(response);
-                    progressDialog.dismiss();
+                    progressDialog.cancel();
                     for (int i =0; i<dataArray.length(); i++)
                     {
 
@@ -106,6 +108,7 @@ public class DataSiswa extends AppCompatActivity {
                         map.put("kode_kelas",json.getString("kode_kelas"));
                         map.put("kode_jurusan",json.getString("kode_jurusan"));
                         map.put("tahun_masuk",json.getString("tahun_masuk"));
+                        map.put("foto",json.getString("foto"));
                         list_data.add(map);
                        adapterList = new AdapterList(DataSiswa.this, list_data);
                         lvsbaru.setAdapter(adapterList);

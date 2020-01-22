@@ -437,6 +437,9 @@ public class validasiPPDB extends AppCompatActivity {
 
                     }
                 });
+
+        Intent refresh=new Intent(validasiPPDB.this,DataSiswa.class);
+        startActivity(refresh);
         requestQueue.add(stringRequests);
     }
 
