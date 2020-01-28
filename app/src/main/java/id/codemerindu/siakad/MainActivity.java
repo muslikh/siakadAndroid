@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -37,7 +36,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileOutputStream;
 import java.util.HashMap;
 
 import static id.codemerindu.siakad.Login.my_shared_preferences;
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,17 +97,30 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
+                sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+                session = sharedpreferences.getBoolean(session_status, false);
                 switch (menuItem.getItemId())
                 {
                     case  R.id.jadwal:
 
+                        if (session) {
+                            Intent jadwal = new Intent(MainActivity.this, jadwal.class);
+//                            jadwal.putExtra(TAG_IDU, idu);
+                            startActivity(jadwal);
+
+                        }
                         break;
                     case  R.id.grup:
+
+                        if (session) {
+                        Intent diskusi = new Intent(MainActivity.this, Diskusi.class);
+                            diskusi.putExtra(TAG_IDU, idu);
+                        startActivity(diskusi);
+                        }
                         break;
+
                     case  R.id.profil:
 
-                        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-                        session = sharedpreferences.getBoolean(session_status, false);
                         if (session) {
                             Intent profil = new Intent(MainActivity.this, Profile.class);
                             profil.putExtra(TAG_IDU, idu);
@@ -120,9 +131,9 @@ public class MainActivity extends AppCompatActivity
 //                                            , fragment, fragment.getClass().getSimpleName())
 //                                    .addToBackStack(null)
 //                                    .commit();
-//                            break;
                         }
 
+                        break;
 
                 }
                 return false;
@@ -130,9 +141,9 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        menuKiri();
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        menuKiri();
         slider();
         cekdatakosong();
 
@@ -183,61 +194,62 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+//
+//    public void alertKeluar()
+//    {
+//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+//        alert
+//                .setMessage("Tekan Ya Untuk Keluar")
+//                .setCancelable(false)
+//                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        SharedPreferences.Editor editor = sharedpreferences.edit();
+//                        editor.putBoolean(session_status, false);
+//                        editor.putString(TAG_ID, null);
+//                        editor.putString(TAG_USERNAME, null);
+//                        editor.commit();
+//
+//                        Intent intent = new Intent(MainActivity.this, Login.class);
+//                        finish();
+//                        startActivity(intent);
+//
+//                    }
+//                })
+//                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//        AlertDialog keluar = alert.create();
+//        keluar.show();
+//
+//    }
 
-    public void alertKeluar()
-    {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert
-                .setMessage("Tekan Ya Untuk Keluar")
-                .setCancelable(false)
-                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putBoolean(session_status, false);
-                        editor.putString(TAG_ID, null);
-                        editor.putString(TAG_USERNAME, null);
-                        editor.commit();
-
-                        Intent intent = new Intent(MainActivity.this, Login.class);
-                        finish();
-                        startActivity(intent);
-
-                    }
-                })
-                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog keluar = alert.create();
-        keluar.show();
-
-    }
-
-    public void menuKiri()
-    {
-        NavigationView navigationView = findViewById(R.id.drawer);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId())
-                {
-                    case R.id.logout:
-
-                        // update login session ke FALSE dan mengosongkan nilai id dan username
-                   alertKeluar();
-                        break;
-
-                }
-
-                return false;
-            }
-        });
-    }
+//    public void menuKiri()
+//    {
+//        NavigationView navigationView = findViewById(R.id.drawer);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//
+//                switch (menuItem.getItemId())
+//                {
+//                    case R.id.logout:
+//
+//                        Toast.makeText(MainActivity.this,"PRoses",Toast.LENGTH_LONG).show();
+//                        // update login session ke FALSE dan mengosongkan nilai id dan username
+////                   alertKeluar();
+//                        break;
+//
+//                }
+//
+//                return false;
+//            }
+//        });
+//    }
 
     public boolean onCreateOptionsMenu(Menu menu)
     {

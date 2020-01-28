@@ -60,14 +60,13 @@ public class EditDataSiswa extends AppCompatActivity {
     nisn,nik,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
     hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
     tinggi,berat,lulusdari,noijasah,noskhun,nounsmp,nopeUser,pindahdari,alamatSsebelum;
-
+    int extraId;
     Spinner agama,jk;
     Button updateSiswa;
     ImageView fotoProfile;
 
-    Bitmap bitmap;
+    
     ProgressDialog progressDialog;
-    int PICK_IMAGE_REQUEST = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +180,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
 
                                 JSONObject obj = dataArray.getJSONObject(i);
-                                int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
+                                extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
                                 String nama = obj.getString("nama");
                                 int id = obj.getInt("id_siswa");
                                 String id_siswa = obj.getString("id_siswa");
@@ -254,12 +253,6 @@ public class EditDataSiswa extends AppCompatActivity {
         progressDialog.setMessage("Proses Simpan, Mohon Tunggu...");
         progressDialog.show();
 
-        //converting image to base64 string
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url_update, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -267,7 +260,6 @@ public class EditDataSiswa extends AppCompatActivity {
                     JSONObject dataObj = new JSONObject(response);
                     progressDialog.dismiss();
 
-                    // adapter.notifyDataSetChanged();
 
                     String code = dataObj.getString(TAG_MESSAGE);
                     if (code.equals("sukses"))
@@ -342,24 +334,6 @@ public class EditDataSiswa extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(stringRequest);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-
-            try {
-                //getting image from gallery
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-
-                //Setting image to ImageView
-                fotoProfile.setImageBitmap(bitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void ubahBerhasil()
     {
@@ -373,6 +347,7 @@ public class EditDataSiswa extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         Intent back = new Intent(EditDataSiswa.this,Profile.class);
+                        back.putExtra(TAG_IDU,Integer.toString(extraId));
                         startActivity(back);
                     }
                 });
@@ -414,37 +389,4 @@ public class EditDataSiswa extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-
-    private void pilihgambar() {
-        final CharSequence[] options = { "Ambil Foto", "Pilih Dari Gallery","Batal" };
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(EditDataSiswa.this);
-        builder.setTitle("Ganti Foto!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Ambil Foto"))
-                {
-//                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(i, 100);
-//                    File f = new File(Environment.getExternalStorageDirectory()+"/");
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                    startActivityForResult(intent, 1);
-                }
-                else if (options[item].equals("Pilih Dari Gallery"))
-                {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_PICK);
-                    startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
-//                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(intent, 2);
-                }
-                else if (options[item].equals("Batal")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
 }

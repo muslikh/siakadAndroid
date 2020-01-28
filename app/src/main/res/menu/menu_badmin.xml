@@ -14,10 +14,10 @@
         android:title="PPDB"
         app:showAsAction="always" />
     <item
-        android:id="@+id/profil"
+        android:id="@+id/diskusi"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
-        android:title="Profil"
+        android:title="Lihat Diskusi"
         app:showAsAction="always" />
 
 </menu>

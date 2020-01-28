@@ -7,14 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.design.widget.TabLayout;
@@ -24,7 +21,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
@@ -37,17 +33,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -58,13 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,7 +66,7 @@ public class Profile extends AppCompatActivity {
     public static final String TAG_USERNAME = "username";
 
     public  static final int RequestPermissionCode  = 1 ;
-    PagerAdapter pagerAdapter;
+    PagerAdapterData pagerAdapter;
     Button btneditdata,btnrefresh,btngantifoto;
     ImageView fotoProfile;
     Boolean session = false;
@@ -115,8 +96,6 @@ public class Profile extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
-        setSupportActionBar(toolbar);
         fotoProfile = (ImageView) findViewById(R.id.fotoProfile);
         fotoProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,13 +139,15 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Detail Profil");
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        //Memanggil dan Memasukan Value pada Class PagerAdapter(FragmentManager dan JumlahTab)
-        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        //Memanggil dan Memasukan Value pada Class PagerAdapterData(FragmentManager dan JumlahTab)
+        PagerAdapterData pagerAdapter = new PagerAdapterData(getSupportFragmentManager(), tabLayout.getTabCount());
 
         //Memasang Adapter pada ViewPager
         viewPager.setAdapter(pagerAdapter);

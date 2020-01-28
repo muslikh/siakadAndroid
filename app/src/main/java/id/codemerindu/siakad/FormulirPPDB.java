@@ -2,6 +2,7 @@ package id.codemerindu.siakad;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +39,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
 
 public class FormulirPPDB extends AppCompatActivity {
@@ -50,11 +52,17 @@ public class FormulirPPDB extends AppCompatActivity {
     private Spinner ppdbjk,jurusan;
     private EditText username,password,nisn,nama,thnmasuk,tmplahir,edtlahir;
     private Button simpan;
-    private String TAG = "tag";
+    private String TAG_LEVEL = "level";
     private String TAG_SUCCESSS = "success";
     private String TAG_MESSAGE = "message";
     private static String url = Server.URL+"insert.php";
     private static String url_update = Server.URL + "update.php";
+    String levelU;
+
+    public static final String TAG_IDU = "idu";
+    SharedPreferences sharedpreferences;
+
+    Boolean session = false;
 
 
     @Override
@@ -62,6 +70,10 @@ public class FormulirPPDB extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulir_ppdb);
 
+
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        levelU = sharedpreferences.getString(TAG_LEVEL, null);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarPPDB);
         setSupportActionBar(toolbar);
 
@@ -157,7 +169,7 @@ public class FormulirPPDB extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Error: " + error.getMessage());
+//                Log.e(TAG, "Error: " + error.getMessage());
                 Toast.makeText(FormulirPPDB.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
@@ -241,4 +253,12 @@ public class FormulirPPDB extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    @Override
+    public void onBackPressed()
+    {
+            Intent data = new Intent(FormulirPPDB.this, Login.class);
+            startActivity(data);
+
+
+    }
 }

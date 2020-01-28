@@ -22,24 +22,25 @@
     <TableLayout
 
         android:id="@+id/tabelJadwal"
+        android:layout_below="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/slider"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp">
 
         <TableRow
-            android:gravity="center"
             android:id="@+id/rowlay"
+            android:layout_height="86dp"
             android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
             android:padding="6dp">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="197dp"
                 android:layout_height="wrap_content"
-                android:layout_span="5"
-                android:text="Jadwal Pejalaran"
+                android:layout_span="3"
+                android:text="Pengumuman"
                 android:textAlignment="center"
                 android:textSize="18dp" />
         </TableRow>
@@ -58,25 +59,15 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Hari " />
+                android:text="Isi Pengumuman " />
 
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Jam Ke " />
+                android:text="" />
 
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nama Guru." />
 
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nama Pelajaran" />
         </TableRow>
 
         <TableRow
@@ -92,29 +83,14 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Senin  " />
+                android:text="Tanpa Semangat Baru, Ilmu Baru, Karya Baru dan Manfaat Baru Bagi Sesama; 2020 Hanyalah Angka" />
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1 - 10 " />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Aku" />
-
-            <TextView
-                android:id="@+id/txt_id"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ngoding" />
+                />
         </TableRow>
 
     </TableLayout>
-
 
     <!--<TextView-->
     <!--android:id="@+id/txt_id"-->

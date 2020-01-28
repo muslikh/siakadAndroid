@@ -1,14 +1,15 @@
 package id.codemerindu.siakad;
 
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class PagerAdapter extends FragmentStatePagerAdapter{
+public class PagerAdapterJadwal extends FragmentStatePagerAdapter {
 
     private int number_tabs;
 
-    public PagerAdapter(FragmentManager fm, int number_tabs) {
+    public PagerAdapterJadwal(FragmentManager fm, int number_tabs) {
         super(fm);
         this.number_tabs = number_tabs;
     }
@@ -18,9 +19,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new fragSiswa();
+                return new fragJadwalPelajaran();
             case 1:
-                return new fragOrtu();
+                return new fragJadwalUjian();
             default:
                 return null;
         }

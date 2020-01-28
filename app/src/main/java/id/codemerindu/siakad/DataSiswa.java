@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,11 +36,12 @@ public class DataSiswa extends AppCompatActivity {
 
     private RecyclerView lvsbaru;
 
-    Button refreshdata,hpsiswa;
+    Button tambah;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
     ProgressDialog progressDialog;
 
+    AlertDialog dialog;
     String url_sbaru = Server.URL+"siswa.php";
     String url_hpus = Server.URL+"delete.php";
     ArrayList<HashMap<String ,String>> list_data;
@@ -53,6 +55,14 @@ public class DataSiswa extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+//        tambah = (Button) findViewById(R.id.tambahDatasiswa);
+//        tambah.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent tmbhData = new Intent(DataSiswa.this,FormulirPPDB.class);
+//                startActivity(tmbhData);
+//            }
+//        });
 
         cari = (SearchView) findViewById(R.id.cari);
 
@@ -130,7 +140,7 @@ public class DataSiswa extends AppCompatActivity {
     }
 
 
-    public void hpsiswa()
+    public void hpssemua()
     {
         RequestQueue requestQueue = Volley.newRequestQueue(DataSiswa.this);
         StringRequest stringRequests =
@@ -163,5 +173,6 @@ public class DataSiswa extends AppCompatActivity {
             startActivity(pindah);
 
     }
+
 
 }

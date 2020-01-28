@@ -51,7 +51,7 @@ public class fragSiswa extends Fragment {
 
         sharedpreferences = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
-        id =  sharedpreferences.getString(TAG_IDU, null);
+//        id =  sharedpreferences.getString(TAG_IDU, null);
 
         namaUser = (TextView) view_fragsiswa.findViewById(R.id.namaUser);
         nopeUser = (TextView) view_fragsiswa.findViewById(R.id.nopeUser);

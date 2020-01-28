@@ -286,7 +286,6 @@
 
 package id.codemerindu.siakad;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -294,12 +293,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -318,9 +314,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static id.codemerindu.siakad.Login.my_shared_preferences;
-import static id.codemerindu.siakad.Login.session_status;
 
 public class validasiPPDB extends AppCompatActivity {
 
@@ -343,11 +336,12 @@ public class validasiPPDB extends AppCompatActivity {
         getSupportActionBar().setTitle("Validasi Siswa Baru");
 
 
-        validsemua = (TextView) findViewById(R.id.validasisemua);
+        validsemua = (TextView) findViewById(R.id.validasiSemua);
         validsemua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pindah();
+                recreate();
             }
         });
         aksibnt = (TextView) findViewById(R.id.aksibtn);

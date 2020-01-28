@@ -62,12 +62,12 @@ public class AdminActivity extends AppCompatActivity
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
 
+    DrawerLayout drawer;
     TextView nmuser;
     SharedPreferences sharedpreferences;
-    DrawerLayout drawer;
     Boolean session = false;
-    public static final String TAG_ID = "id";
     private static final String TAG_LEVEL = "level";
+    public static final String TAG_ID = "id";
     public static final String TAG_USERNAME = "username";
     public static final String TAG_NAMA= "nama";
 
@@ -75,7 +75,7 @@ public class AdminActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.content_admin);
 
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -90,10 +90,10 @@ public class AdminActivity extends AppCompatActivity
 
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_admin);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-        menuKiriAdmin();
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_admin);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//
+//        menuKiriAdmin();
         menuBottom();
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
@@ -175,63 +175,68 @@ public class AdminActivity extends AppCompatActivity
                         startActivity(validasi);
 
                         break;
-                    case  R.id.profil:
+                    case  R.id.diskusi:
 
-
-
-
-                }
-                return false;
-            }
-        });
-
-    }
-
-    public void menuKiriAdmin()
-    {
-        NavigationView navigationView = findViewById(R.id.drawer);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId())
-                {
-                    case R.id.keluarAdmin:
-                        alertKeluar();
+                        Intent diskusi = new Intent(AdminActivity.this, Diskusi.class);
+                        finish();
+                        startActivity(diskusi);
                         break;
-//                    case R.id.validasiSiswa:
 
-//                        Fragment fragment = new validasiPPDB();
-//                        getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.Fragment
-//                                        , fragment, fragment.getClass().getSimpleName())
-//                                .addToBackStack(null)
-//                                .commit();
-//                        break;
-//                    case R.id.dataSiswa:
 
-//                        Fragment dataSiswa = new DataSiswa();
-//                        getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.Fragment
-//                                        , dataSiswa, dataSiswa.getClass().getSimpleName())
-//                                .addToBackStack(null)
-//                                .commit();
-//                        break;
-//                    case R.id.bukaMenu:
-//                        findViewById(R.id.btn_isiFormulir).setEnabled(false);
-//                        break;
 
-//                    case R.id.homeAdmin:
-//                        Intent homeAdmin = new Intent(AdminActivity.this,AdminActivity.class);
-//                        startActivity(homeAdmin);
-//                        break;
 
                 }
-
                 return false;
             }
         });
+
     }
+
+//    public void menuKiriAdmin()
+//    {
+//        NavigationView navigationView = findViewById(R.id.drawer);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//
+//                switch (menuItem.getItemId())
+//                {
+//                    case R.id.keluarAdmin:
+//                        alertKeluar();
+//                        break;
+////                    case R.id.validasiSiswa:
+//
+////                        Fragment fragment = new validasiPPDB();
+////                        getSupportFragmentManager().beginTransaction()
+////                                .replace(R.id.Fragment
+////                                        , fragment, fragment.getClass().getSimpleName())
+////                                .addToBackStack(null)
+////                                .commit();
+////                        break;
+////                    case R.id.dataSiswa:
+//
+////                        Fragment dataSiswa = new DataSiswa();
+////                        getSupportFragmentManager().beginTransaction()
+////                                .replace(R.id.Fragment
+////                                        , dataSiswa, dataSiswa.getClass().getSimpleName())
+////                                .addToBackStack(null)
+////                                .commit();
+////                        break;
+////                    case R.id.bukaMenu:
+////                        findViewById(R.id.btn_isiFormulir).setEnabled(false);
+////                        break;
+//
+////                    case R.id.homeAdmin:
+////                        Intent homeAdmin = new Intent(AdminActivity.this,AdminActivity.class);
+////                        startActivity(homeAdmin);
+////                        break;
+//
+//                }
+//
+//                return false;
+//            }
+//        });
+//    }
 
     public void alertKeluar()
     {
@@ -269,7 +274,7 @@ public class AdminActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
 //
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return  true;
     }
@@ -315,5 +320,22 @@ public class AdminActivity extends AppCompatActivity
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.logout) {
+            alertKeluar();
+        }
+
+        return false;
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".AppController"
@@ -16,9 +16,12 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DataSiswa"/>
-        <!--android:parentActivityName=".AdminActivity"-->
-        <activity android:name=".validasiPPDB"/>
+        <activity android:name=".Diskusi"></activity>
+        <activity android:name=".fragJadwalPelajaran" />
+        <activity android:name=".fragJadwalUjian" />
+        <activity android:name=".jadwal" />
+        <activity android:name=".DataSiswa" /> <!-- android:parentActivityName=".AdminActivity" -->
+        <activity android:name=".validasiPPDB" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".Profile" />
         <activity android:name=".FormulirPPDB" />
@@ -31,11 +34,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.your.package.fileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />

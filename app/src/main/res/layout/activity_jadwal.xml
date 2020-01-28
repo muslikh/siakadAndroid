@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarJadwal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF"/>
+
+    <FrameLayout
+        android:id="@+id/frame_layout_jadwal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout_jadwal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarJadwal"
+        android:layout_marginTop="5dp"
+        app:tabTextColor="#000000">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_jadwalpelajaran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jadwal Pelajaran"
+            android:textColor="#000000" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_jadwalujian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jadwal Ujian"
+            android:textColor="#000000" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/tab_layout_jadwal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_pager_jadwal">
+
+    </android.support.v4.view.ViewPager>
+
+
+</RelativeLayout>
