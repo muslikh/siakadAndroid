@@ -59,7 +59,10 @@ public class EditDataSiswa extends AppCompatActivity {
     EditText namaUser,ttlUser,kodeKelas,jurusan,
     nisn,nik,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
     hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
-    tinggi,berat,lulusdari,noijasah,noskhun,nounsmp,nopeUser,pindahdari,alamatSsebelum;
+    tinggi,berat,lulusdari,noijasah,noskhun,nounsmp,nopeUser,pindahdari,alamatSsebelum,
+            namaAyah,ttlAyah,agamaAyah,KewargaAyah,pendidikanAyah,kerjaAyah,pengeluaranAyah,AlamatAyah,nohpAyah,
+            namaIbu,ttlIbu,agamaIbu,KewargaIbu,pendidikanIbu,kerjaIbu,pengeluaranIbu,AlamatIbu,nohpIbu,
+            namaWali,ttlWali,agamaWali,KewargaWali,pendidikanWali,kerjaWali,pengeluaranWali,AlamatWali,nohpWali;
     int extraId;
     Spinner agama,jk;
     Button updateSiswa;
@@ -158,6 +161,34 @@ public class EditDataSiswa extends AppCompatActivity {
         kelasAwal = ( TextView)  findViewById(R.id.kelasawalUser);
         thnmasuk= ( TextView)  findViewById(R.id.thnmskUser);
         nounsmp = (EditText) findViewById(R.id.nounUser);
+
+        namaAyah = (EditText) findViewById(R.id.ednamaAyah);
+        ttlAyah = (EditText) findViewById(R.id.edttlAyah);
+        agamaAyah = (EditText) findViewById(R.id.edagamaAyah);
+        KewargaAyah= (EditText) findViewById(R.id.edKewargaAyah);
+        pendidikanAyah = (EditText) findViewById(R.id.edpendidikanAyah);
+        kerjaAyah= (EditText) findViewById(R.id.edkerjaAyah);
+        pengeluaranAyah =(EditText) findViewById(R.id.edpengeluaranAyah);
+        AlamatAyah = (EditText) findViewById(R.id.edAlamatAyah);
+        nohpAyah = (EditText) findViewById(R.id.ednohpAyah);
+        namaIbu = (EditText) findViewById(R.id.ednamaIbu);
+        ttlIbu= (EditText) findViewById(R.id.edttlIbu);
+        agamaIbu = (EditText) findViewById(R.id.edagamaIbu);
+        KewargaIbu = (EditText) findViewById(R.id.edKewargaIbu);
+        pendidikanIbu= (EditText) findViewById(R.id.edpendidikanIbu);
+        kerjaIbu= (EditText) findViewById(R.id.edkerjaIbu);
+        pengeluaranIbu= (EditText) findViewById(R.id.edpengeluaranIbu);
+        AlamatIbu= (EditText) findViewById(R.id.edAlamatIbu);
+        nohpIbu= (EditText) findViewById(R.id.ednohpIbu);
+        namaWali= (EditText) findViewById(R.id.ednamaWali);
+        ttlWali= (EditText) findViewById(R.id.edttlWali);
+        agamaWali= (EditText) findViewById(R.id.edagamaWali);
+        KewargaWali= (EditText) findViewById(R.id.edKewargaWali);
+        pendidikanWali= (EditText) findViewById(R.id.edpendidikanWali);
+        kerjaWali= (EditText) findViewById(R.id.edkerjaWali);
+        pengeluaranWali= (EditText) findViewById(R.id.edpengeluaranWali);
+        AlamatWali= (EditText)  findViewById(R.id.edAlamatWali);
+        nohpWali= (EditText) findViewById(R.id.ednohpWali);
     }
 
     public void editData()
@@ -228,6 +259,33 @@ public class EditDataSiswa extends AppCompatActivity {
                                     kelasAwal.setText(obj.getString("kelas_awal"));
                                     thnmasuk.setText(obj.getString("tahun_masuk"));
 
+                                    namaAyah.setText(obj.getString("nama_ayah"));
+                                    ttlAyah.setText(obj.getString("tanggal_lahir_ayah"));
+                                    agamaAyah.setText(obj.getString("agama_ayah"));
+                                    KewargaAyah.setText(obj.getString("kewarga_ayah"));
+                                    pendidikanAyah.setText(obj.getString("pendidikan_ayah"));
+                                    kerjaAyah.setText(obj.getString("pekerjaan_ayah"));
+                                    pengeluaranAyah.setText(obj.getString("pengeluaran_ayah"));
+                                    AlamatAyah.setText(obj.getString("alamat_ayah"));
+                                    nohpAyah.setText(obj.getString("no_telpon_ayah"));
+                                    namaIbu.setText(obj.getString("nama_ibu"));
+                                    ttlIbu.setText(obj.getString("tanggal_lahir_ibu"));
+                                    agamaIbu.setText(obj.getString("agama_ibu"));
+                                    KewargaIbu.setText(obj.getString("kewarga_ibu"));
+                                    pendidikanIbu.setText(obj.getString("pendidikan_ibu"));
+                                    kerjaIbu.setText(obj.getString("pekerjaan_ibu"));
+                                    pengeluaranIbu.setText(obj.getString("pengeluaran_ibu"));
+                                    AlamatIbu.setText(obj.getString("alamat_ibu"));
+                                    nohpIbu.setText(obj.getString("no_telpon_ibu"));
+                                    namaWali.setText(obj.getString("nama_wali"));
+                                    ttlWali.setText(obj.getString("tanggal_lahir_wali"));
+                                    agamaWali.setText(obj.getString("agama_wali"));
+                                    KewargaWali.setText(obj.getString("kewarga_wali"));
+                                    pendidikanWali.setText(obj.getString("pendidikan_wali"));
+                                    kerjaWali.setText(obj.getString("pekerjaan_wali"));
+                                    pengeluaranWali.setText(obj.getString("pengeluaran_wali"));
+                                    AlamatWali.setText(obj.getString("alamat_wali"));
+                                    nohpWali.setText(obj.getString("no_telpon_wali"));
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);
@@ -324,6 +382,34 @@ public class EditDataSiswa extends AppCompatActivity {
                 map.put("alamatsekolah", alamatSsebelum.getText().toString());
                 map.put("kelas_awal", kelasAwal.getText().toString());
                 map.put("tahun_masuk", thnmasuk.getText().toString());
+
+                map.put("nama_ayah",namaAyah.getText().toString());
+                map.put("tanggal_lahir_ayah",ttlAyah.getText().toString());
+                 map.put("agama_ayah",agamaAyah.getText().toString());
+                 map.put("kewarga_ayah",KewargaAyah.getText().toString());
+                 map.put("pendidikan_ayah",pendidikanAyah.getText().toString());
+                 map.put("pekerjaan_ayah",kerjaAyah.getText().toString());
+                 map.put("pengeluaran_ayah",pengeluaranAyah.getText().toString());
+                 map.put("alamat_ayah",AlamatAyah.getText().toString());
+                 map.put("no_telpon_ayah",nohpAyah.getText().toString());
+                 map.put("nama_ibu",namaIbu.getText().toString());
+                 map.put("tanggal_lahir_ibu",ttlIbu.getText().toString());
+                 map.put("agama_ibu",agamaIbu.getText().toString());
+                  map.put("kewarga_ibu",KewargaIbu.getText().toString());
+                  map.put("pendidikan_ibu",pendidikanIbu.getText().toString());
+                  map.put("pekerjaan_ibu",kerjaIbu.getText().toString());
+                  map.put("pengeluaran_ibu",pengeluaranIbu.getText().toString());
+                  map.put("alamat_ibu",AlamatIbu.getText().toString());
+                  map.put("no_telpon_ibu",nohpIbu.getText().toString());
+                  map.put("nama_wali",namaWali.getText().toString());
+                  map.put("tanggal_lahir_wali",ttlWali.getText().toString());
+                  map.put("agama_wali",agamaWali.getText().toString());
+                  map.put("kewarga_wali",KewargaWali.getText().toString());
+                  map.put("pendidikan_wali",pendidikanWali.getText().toString());
+                  map.put("pekerjaan_wali",kerjaWali.getText().toString());
+                  map.put("pengeluaran_wali",pengeluaranWali.getText().toString());
+                  map.put("alamat_wali",AlamatWali.getText().toString());
+                  map.put("no_telpon_wali",nohpWali.getText().toString());
 
 
                 return map;

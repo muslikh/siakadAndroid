@@ -40,7 +40,6 @@ public class fragSiswa extends Fragment {
     String id;
     Boolean session = false;
     SharedPreferences sharedpreferences;
-    public final static String TAG="Profile";
     public final static String TAG_IDU = "idu";
     RequestQueue  requestQueue;
 
@@ -156,7 +155,6 @@ public class fragSiswa extends Fragment {
 
                                 }
                             }
-                            Log.d(TAG, "onResponse:" + response);
                         }  catch(
                                 JSONException e)
 

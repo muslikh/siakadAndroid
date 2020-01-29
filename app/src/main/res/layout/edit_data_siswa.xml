@@ -1003,6 +1003,782 @@
                 android:text=" " />
 
         </TableRow>
+        <!--Indentitas Ayah-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <EditText
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:textColor="#000000"
+                android:text="Keterangan Tentang Ayah :"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_namaayah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Ayah" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000" android:id="@+id/ednamaAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_ttlBapak"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:text="Tempat, Tanggal Lahir" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edttlAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_AgamaAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Agama" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edagamaAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_KewargaAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Kewarganegaraan" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edKewargaAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_pendAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pendidikan" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edpendidikanAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_kerjaAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pekerjaan " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edkerjaAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_pengeluaranAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pengeluaran Perbulan " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edpengeluaranAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_alamtAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Alamat  Rumah " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edAlamatAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_nohpAyah"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor HP " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/ednohpAyah"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;    -->
+
+        <!--Indentitas Ibu-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Tentang Ibu:"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_namaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Ibu" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/ednamaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_ttlIbu"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:text="Tempat, Tanggal Lahir" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edttlIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_AgamaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Agama" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/edagamaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_KewargaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Kewarganegaraan" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/edKewargaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"  android:id="@+id/edlabel_pendIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pendidikan" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/edpendidikanIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_kerjaIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pekerjaan " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edkerjaIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_pengeluaranIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pengeluaran Perbulan " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000" android:id="@+id/edpengeluaranIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_alamtIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Alamat  Rumah " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/edAlamatIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/edlabel_nohpIbu"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor HP " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:id="@+id/ednohpIbu"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <!--Indentitas Wali-->
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Keterangan Tentang Wali  :"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"  android:id="@+id/edlabel_namaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Ibu" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/ednamaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_ttlWali"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:text="Tempat, Tanggal Lahir" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/edttlWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_AgamaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Agama" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000" android:id="@+id/edagamaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"  android:id="@+id/edlabel_KewargaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Kewarganegaraan" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"   android:id="@+id/edKewargaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"  android:id="@+id/edlabel_pendWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pendidikan" />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/edpendidikanWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000"  android:id="@+id/edlabel_kerjaWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pekerjaan " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/edkerjaWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_pengeluaranWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Pengeluaran Perbulan " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000" android:id="@+id/edpengeluaranWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_alamtWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Alamat  Rumah " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000" android:id="@+id/edAlamatWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+
+            <TextView
+                android:textColor="#000000" android:id="@+id/edlabel_nohpWali"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="Nomor HP " />
+
+
+            <TextView
+                android:textColor="#000000"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:textColor="#000000"  android:id="@+id/ednohpWali"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " />
+        </TableRow>
 
         <Button
             android:id="@+id/updateSiswa"

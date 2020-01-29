@@ -75,7 +75,7 @@
                 android:text=":" />
 
             <TextView
-                android:id="@+id/ttlBapak"
+                android:id="@+id/ttlAyah"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
