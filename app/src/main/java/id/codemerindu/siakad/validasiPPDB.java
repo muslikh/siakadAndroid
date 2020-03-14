@@ -341,7 +341,6 @@ public class validasiPPDB extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pindah();
-                recreate();
             }
         });
         aksibnt = (TextView) findViewById(R.id.aksibtn);
@@ -432,7 +431,7 @@ public class validasiPPDB extends AppCompatActivity {
                     }
                 });
 
-        Intent refresh=new Intent(validasiPPDB.this,DataSiswa.class);
+        Intent refresh = new Intent(validasiPPDB.this,validasiPPDB.class);
         startActivity(refresh);
         requestQueue.add(stringRequests);
     }
