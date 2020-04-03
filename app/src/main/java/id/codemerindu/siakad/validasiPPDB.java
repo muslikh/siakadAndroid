@@ -324,8 +324,7 @@ public class validasiPPDB extends AppCompatActivity {
     SearchView cari;
     String url_setting = Server.URL+"setting.php";
     AdapterSbaru adapterSbaru;
-    String url_sbaru = Server.URL+"siswabaru.php";
-    String url_pindah = Server.URL+"pindah.php";
+    String url_sbaru = Server.URL+"siswa.php?aksi=siswa_baru";
     ArrayList<HashMap<String ,String>> list_data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -333,16 +332,16 @@ public class validasiPPDB extends AppCompatActivity {
         setContentView(R.layout.activity_validasi_ppdb);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarvalid);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Validasi Siswa Baru");
+        getSupportActionBar().setTitle("Siswa Baru");
 
 
-        validsemua = (TextView) findViewById(R.id.validasiSemua);
-        validsemua.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pindah();
-            }
-        });
+//        validsemua = (TextView) findViewById(R.id.validasiSemua);
+//        validsemua.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                pindah();
+//            }
+//        });
         aksibnt = (TextView) findViewById(R.id.aksibtn);
 
 
@@ -381,7 +380,7 @@ public class validasiPPDB extends AppCompatActivity {
 
                         JSONObject json = dataArray.getJSONObject(i);
                         HashMap<String, String > map = new HashMap<String , String >();
-                        map.put("id_siswaBaru", json.getString("id_siswaBaru"));
+                        map.put("id_siswa", json.getString("id_siswa"));
                         map.put("nama",json.getString("nama"));
                          map.put("kode_kelas",json.getString("kode_kelas"));
                         map.put("kode_jurusan",json.getString("kode_jurusan"));
@@ -407,34 +406,34 @@ public class validasiPPDB extends AppCompatActivity {
     }
 
 
-    public void pindah()
-    {
-        RequestQueue requestQueue = Volley.newRequestQueue(validasiPPDB.this);
-        StringRequest stringRequests =
-                new StringRequest(Request.Method.POST, url_pindah, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray dataArray= new JSONArray(response);
-
-                        }  catch(
-                                JSONException e)
-
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-
-        Intent refresh = new Intent(validasiPPDB.this,validasiPPDB.class);
-        startActivity(refresh);
-        requestQueue.add(stringRequests);
-    }
+//    public void pindah()
+//    {
+//        RequestQueue requestQueue = Volley.newRequestQueue(validasiPPDB.this);
+//        StringRequest stringRequests =
+//                new StringRequest(Request.Method.POST, url_validasi, new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONArray dataArray= new JSONArray(response);
+//
+//                        }  catch(
+//                                JSONException e)
+//
+//                        {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//
+//        Intent refresh = new Intent(validasiPPDB.this,validasiPPDB.class);
+//        startActivity(refresh);
+//        requestQueue.add(stringRequests);
+//    }
 
     public void onBackPressed()
     {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/pesan"-->
+<!--        android:gravity="center"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Kode Salah Silahkan Periksa WA atau Email"-->
+<!--        android:textColor="@android:color/holo_red_dark"-->
+
+<!--        />-->
+
+    <EditText
+        android:id="@+id/TulisKode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tulis Kode Disini"
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+<!--    <TextView-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_below="@id/TulisKode"-->
+<!--        android:id="@+id/reqKode"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Minta Kode ??"-->
+<!--        android:textColor="@android:color/black"-->
+
+<!--        />-->
+
+</RelativeLayout>

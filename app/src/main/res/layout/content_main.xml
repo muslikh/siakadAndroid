@@ -12,85 +12,13 @@
         android:background="@color/colorPrimaryDark"
         android:titleTextColor="#FFFFFF"/>
 
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="0dp" />
+<!--    <com.daimajia.slider.library.SliderLayout-->
+<!--        android:id="@+id/slider"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_below="@+id/toolbar"-->
+<!--        android:layout_marginTop="0dp" />-->
 
-    <TableLayout
-
-        android:id="@+id/tabelJadwal"
-        android:layout_below="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp">
-
-        <TableRow
-            android:id="@+id/rowlay"
-            android:layout_height="86dp"
-            android:background="@android:color/holo_blue_dark"
-            android:gravity="center"
-            android:padding="6dp">
-
-            <TextView
-                android:layout_width="197dp"
-                android:layout_height="wrap_content"
-                android:layout_span="3"
-                android:text="Pengumuman"
-                android:textAlignment="center"
-                android:textSize="18dp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_gravity="center"
-            android:background="@android:color/holo_blue_dark"
-            android:padding="5dp">
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="No." />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Isi Pengumuman " />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="" />
-
-
-        </TableRow>
-
-        <TableRow
-            android:background="@android:color/darker_gray"
-            android:padding="5dp">
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="1." />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tanpa Semangat Baru, Ilmu Baru, Karya Baru dan Manfaat Baru Bagi Sesama; 2020 Hanyalah Angka" />
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                />
-        </TableRow>
-
-    </TableLayout>
 
     <!--<TextView-->
     <!--android:id="@+id/txt_id"-->
@@ -108,16 +36,403 @@
     <!--android:layout_margin="10dp"-->
     <!--android:text="Username" />-->
 
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/aksesMenu"
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+        android:id="@+id/bnve"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
         android:background="@color/colorPrimaryDark"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
         app:menu="@menu/menu_bsiswa" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabProfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_account"
+        android:tint="@color/colorGray"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:borderWidth="0dp"
+        app:elevation="9dp" />
+
+    <LinearLayout
+        android:id="@+id/welcome"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selamat Datang"
+            android:textColor="#000000"
+            />
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/welcomeNama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            />
+
+<!--        <TextView-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Rekap Kehadiranmu Di Kelas"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:layout_gravity="center"-->
+<!--            android:id="@+id/welcomeKelas"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+<!--            android:text="Kelas Saat Ini"-->
+<!--            />-->
+
+    </LinearLayout>
+    <GridLayout
+        android:id="@+id/kehadiran"
+        android:layout_below="@id/welcome"
+        android:rowCount = "2"
+        android:background="@color/colorWhite"
+        android:columnCount = "2"
+        android:alignmentMode = "alignMargins"
+        android:columnOrderPreserved = "false"
+        android:layout_weight = "5"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:padding = "10dp"
+
+        >
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelHadir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Jumlah Hadir"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/jmlHadir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="0"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14dp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/labelSakit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="Jumlah Sakit" />
+
+                <TextView
+                    android:id="@+id/jmlSakit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginTop="10dp"
+                    android:text="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/labelIjin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:text="Jumlah Ijin"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"/>
+
+                <TextView
+                    android:id="@+id/jmlIjin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelAlpha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:text="Jumlah Alpha"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"/>
+
+                <TextView
+                    android:id="@+id/jmlAlpha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </GridLayout>
+
+
+    <TableLayout
+
+        android:id="@+id/tablePengumuman"
+        android:layout_below="@+id/kehadiran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp">
+
+        <TableRow
+            android:id="@+id/rowPengumuman"
+            android:layout_height="86dp"
+            android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:padding="6dp">
+
+            <TextView
+                android:layout_width="197dp"
+                android:layout_height="wrap_content"
+                android:text="Pengumuman"
+                android:textAlignment="center"
+                android:textSize="18dp" />
+        </TableRow>
+
+
+        <TableRow
+            android:background="@android:color/darker_gray"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tanpa Semangat Baru, Ilmu Baru, Karya Baru dan Manfaat Baru Bagi Sesama; 2020 Hanyalah Angka" />
+        </TableRow>
+
+
+        <TableRow
+            android:background="@android:color/darker_gray"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/lihatSemuaPengumuman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:layout_span="3"
+                android:layout_marginLeft="15dp"
+                android:text="Lihat Semua Pengumuman"/>
+        </TableRow>
+    </TableLayout>
+
+        <TableLayout
+
+            android:id="@+id/tabelJadwal"
+            android:layout_below="@+id/tablePengumuman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <TableRow
+                android:id="@+id/rowlay"
+                android:textAlignment="center"
+                android:layout_height="86dp"
+                android:background="@android:color/holo_blue_dark"
+                android:gravity="center"
+                android:padding="6dp">
+
+                <TextView
+                    android:layout_width="197dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:text="Jadwal Hari Ini "
+                    android:textAlignment="center"
+                    android:textSize="18dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_gravity="center"
+                android:background="@android:color/holo_blue_dark"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:text="Jam Ke" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="Nama Pelajaran" />
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="Nama Guru" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:background="@android:color/darker_gray"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:text="1 - 10 " />
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="Ngoding" />
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="Penjual Kopi" />
+            </TableRow>
+
+            <TableRow
+                android:background="@android:color/darker_gray"
+                android:padding="5dp">
+
+            <TextView
+                android:id="@+id/lihatJadwal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:layout_span="3"
+                android:layout_marginLeft="15dp"
+                android:text="Lihat Semua Jadwal"/>
+            </TableRow>
+        </TableLayout>
 
 </RelativeLayout>

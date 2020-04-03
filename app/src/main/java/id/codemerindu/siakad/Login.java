@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +35,10 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
 
     ProgressDialog pDialog;
-    Button  btn_login;
+    Button  btn_login, btn_pemberitahuan;
     EditText txt_username, txt_password;
     Intent intent;
+    CheckBox lihatpass;
 
     int success;
     ConnectivityManager conMgr;
@@ -49,6 +54,7 @@ public class Login extends AppCompatActivity {
     public final static String TAG_ID = "id";
     public static final String TAG_NAMA = "nama";
 
+
     String tag_json_obj = "json_obj_req";
 
     SharedPreferences sharedpreferences;
@@ -62,14 +68,27 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        TextView lupaPass = (TextView) findViewById(R.id.btn_lupaPass);
-        TextView isiForm = (TextView) findViewById(R.id.btn_isiFormulir);
-        lupaPass.setOnClickListener(new View.OnClickListener() {
+        TextView lupaPass = (TextView) findViewById(R.id.btn_lupaPass);lupaPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Prosee Pengembangan",Toast.LENGTH_LONG).show();
+//                Intent launchWhatsApp = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+//                startActivity(launchWhatsApp);
+                Intent webIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                webIntent.setData(Uri.parse("https://api.whatsapp.com/send?phone=6285369000323&text=Assalamu'alaikum, Saya Lupa Password Login Saya, Bisa Minta Bantuannya"));
+                startActivity(webIntent);
+
             }
         });
+        TextView daftarUlang = (TextView)  findViewById(R.id.daftarUlang);
+        daftarUlang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent isiForm = new Intent(Login.this,daftarUlang.class);
+                startActivity(isiForm);
+            }
+        });
+        TextView isiForm = (TextView) findViewById(R.id.btn_isiFormulir);
+
         isiForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +96,18 @@ public class Login extends AppCompatActivity {
                 startActivity(isiForm);
             }
         });
-
+        lihatpass = (CheckBox) findViewById(R.id.lihatpass);
+        lihatpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(lihatpass.isChecked())
+                {
+                    txt_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    txt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
@@ -91,6 +121,16 @@ public class Login extends AppCompatActivity {
         }
 
         btn_login = (Button) findViewById(R.id.btn_login);
+        btn_pemberitahuan = (Button)  findViewById(R.id.btn_pengumuman);
+        btn_pemberitahuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pengumuman = new Intent(Login.this, Pengumuman.class);
+
+                finish();
+                startActivity(pengumuman);
+            }
+        });
         txt_username = (EditText) findViewById(R.id.txt_username);
         txt_password = (EditText) findViewById(R.id.txt_password);
 
@@ -140,7 +180,7 @@ public class Login extends AppCompatActivity {
     private void checkLogin(final String username, final String password) {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        pDialog.setMessage("Logging in ...");
+        pDialog.setMessage("Mohon Tunggu...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

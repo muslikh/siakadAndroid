@@ -2,8 +2,10 @@ package id.codemerindu.siakad;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -44,13 +46,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static id.codemerindu.siakad.Login.my_shared_preferences;
+import static id.codemerindu.siakad.Login.session_status;
+
 public class EditDataSiswa extends AppCompatActivity {
 
 
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormat;
-    String url = Server.URL +"siswa.php";
-    String url_update  = Server.URL+"update.php";
+    String url = Server.URL +"siswa.php?aksi=tampil_siswa";
+    String url_update  = Server.URL+"siswa.php?aksi=editDataSiswa";
     final String TAG ="Edit";
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
@@ -62,12 +67,16 @@ public class EditDataSiswa extends AppCompatActivity {
     tinggi,berat,lulusdari,noijasah,noskhun,nounsmp,nopeUser,pindahdari,alamatSsebelum,
             namaAyah,ttlAyah,agamaAyah,KewargaAyah,pendidikanAyah,kerjaAyah,pengeluaranAyah,AlamatAyah,nohpAyah,
             namaIbu,ttlIbu,agamaIbu,KewargaIbu,pendidikanIbu,kerjaIbu,pengeluaranIbu,AlamatIbu,nohpIbu,
-            namaWali,ttlWali,agamaWali,KewargaWali,pendidikanWali,kerjaWali,pengeluaranWali,AlamatWali,nohpWali;
+            namaWali,ttlWali,agamaWali,KewargaWali,pendidikanWali,kerjaWali,pengeluaranWali,AlamatWali,nohpWali,
+            password,username;
     int extraId;
     Spinner agama,jk;
     Button updateSiswa;
     ImageView fotoProfile;
 
+    SharedPreferences sharedpreferences;
+
+    Boolean session = false;
     
     ProgressDialog progressDialog;
 
@@ -189,6 +198,8 @@ public class EditDataSiswa extends AppCompatActivity {
         pengeluaranWali= (EditText) findViewById(R.id.edpengeluaranWali);
         AlamatWali= (EditText)  findViewById(R.id.edAlamatWali);
         nohpWali= (EditText) findViewById(R.id.ednohpWali);
+        username= (EditText) findViewById(R.id.edUsername);
+        password= (EditText) findViewById(R.id.edPassword);
     }
 
     public void editData()
@@ -286,6 +297,20 @@ public class EditDataSiswa extends AppCompatActivity {
                                     pengeluaranWali.setText(obj.getString("pengeluaran_wali"));
                                     AlamatWali.setText(obj.getString("alamat_wali"));
                                     nohpWali.setText(obj.getString("no_telpon_wali"));
+
+
+                                    username.setText(obj.getString("username"));
+                                    password.setText(obj.getString("password"));
+
+//                                    String cekUsername = obj.getString("username");
+//                                    String cekPassword = obj.getString("password");
+//                                    if(cekUsername.isEmpty())
+//                                    {
+//                                        username.setEnabled(true);
+//                                    }else if(cekPassword.isEmpty())
+//                                    {
+//                                        username.setEnabled(true);
+//                                    }
                                 }
                             }
                             Log.d(TAG, "onResponse:" + response);
@@ -410,6 +435,8 @@ public class EditDataSiswa extends AppCompatActivity {
                   map.put("pengeluaran_wali",pengeluaranWali.getText().toString());
                   map.put("alamat_wali",AlamatWali.getText().toString());
                   map.put("no_telpon_wali",nohpWali.getText().toString());
+                  map.put("username",username.getText().toString());
+                  map.put("password",password.getText().toString());
 
 
                 return map;
@@ -424,6 +451,8 @@ public class EditDataSiswa extends AppCompatActivity {
     public void ubahBerhasil()
     {
 
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert
                 .setMessage("Perubahan Data Berhasil")
@@ -432,9 +461,16 @@ public class EditDataSiswa extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Intent back = new Intent(EditDataSiswa.this,Profile.class);
-                        back.putExtra(TAG_IDU,Integer.toString(extraId));
-                        startActivity(back);
+                        if(session){
+
+                            Intent back = new Intent(EditDataSiswa.this,Profile.class);
+                            back.putExtra(TAG_IDU,Integer.toString(extraId));
+                            startActivity(back);
+                        }else{
+                            pesan(
+                                    "Daftar Ulang Berhasil, Silahkan Login Dan dapatkan Info Terbaru Dari Aplikasi");
+
+                        }
                     }
                 });
 
@@ -475,4 +511,20 @@ public class EditDataSiswa extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    public void pesan(final String isiPesan)
+    {  android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(this);
+        alert
+                .setMessage(isiPesan)
+                .setCancelable(false)
+                .setNegativeButton("Okke", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent backD = new Intent(EditDataSiswa.this,Login.class);
+                        startActivity(backD);
+                    }
+                });
+
+        android.app.AlertDialog kodesalah = alert.create();
+        kodesalah.show();
+    }
 }

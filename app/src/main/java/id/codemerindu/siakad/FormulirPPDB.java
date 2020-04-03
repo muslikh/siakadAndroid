@@ -50,12 +50,12 @@ public class FormulirPPDB extends AppCompatActivity {
     private String firstItem;
     private TextView txtjk,tgllahir,thnajaran;
     private Spinner ppdbjk,jurusan;
-    private EditText username,password,nisn,nama,thnmasuk,tmplahir,edtlahir;
+    private EditText email,nohp,nisn,nama,thnmasuk,tmplahir,edtlahir;
     private Button simpan;
     private String TAG_LEVEL = "level";
     private String TAG_SUCCESSS = "success";
     private String TAG_MESSAGE = "message";
-    private static String url = Server.URL+"insert.php";
+    private static String url = Server.URL+"siswa.php?aksi=daftar";
     private static String url_update = Server.URL + "update.php";
     String levelU;
 
@@ -76,8 +76,9 @@ public class FormulirPPDB extends AppCompatActivity {
         levelU = sharedpreferences.getString(TAG_LEVEL, null);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarPPDB);
         setSupportActionBar(toolbar);
-
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         getSupportActionBar().setTitle("Formulir Peserta Didik Baru");
+
 
         dateFormat = new SimpleDateFormat("dd-MM-yyy", Locale.US);
         ppdbjk = (Spinner) findViewById(R.id.ppdbjk);
@@ -108,10 +109,11 @@ public class FormulirPPDB extends AppCompatActivity {
 
             }
         });
+
         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
         thnajaran = (TextView) findViewById(R.id.tahunppdb);
-        username = (EditText) findViewById(R.id.ppdb_username);
-        password = (EditText) findViewById(R.id.ppdb_password);
+        email = (EditText) findViewById(R.id.ppdb_email);
+        nohp = (EditText) findViewById(R.id.ppdb_nohp);
         nisn = (EditText) findViewById(R.id.ppdb_nisn);
         tmplahir = (EditText) findViewById(R.id.ppdb_tempatlahir);
         nama = (EditText) findViewById(R.id.ppdb_namaLengkap);
@@ -148,15 +150,21 @@ public class FormulirPPDB extends AppCompatActivity {
 
 
                     int code = Integer.parseInt(dataObj.getString("code"));
-                    if (code == 1)
+                    if(
+                     nisn.getText().toString().trim().length() > 0 && email.getText().toString().trim().length() > 0
+                     && nohp.getText().toString().trim().length() > 0 && tmplahir.getText().toString().trim().length() > 0
+                     && nama.getText().toString().trim().length() > 0 && edtlahir.getText().toString().trim().length() > 0
+                    )
                     {
                         daftarBerhasil();
-                    }else if(code == 0)
-                    {
-                        daftarGAgal();
+                    }else {
+
+                        daftarGAgal("Pendaftaran Gagal, Pastikan Semua Sudah Terisi  ");
+
                     }
 
-                        Toast.makeText(FormulirPPDB.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+                        //Toast.makeText(FormulirPPDB.this, dataObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
                        // adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
@@ -180,8 +188,8 @@ public class FormulirPPDB extends AppCompatActivity {
 
                     Map<String,String> map = new HashMap<String, String>();
 //                    params.put("id_siswaBaru", id_siswaBaru);
-                map.put("username", username.getText().toString());
-                map.put("password", password.getText().toString());
+                map.put("email", email.getText().toString());
+                map.put("hp", nohp.getText().toString());
                 map.put("tempat_lahir", tmplahir.getText().toString());
                 map.put("tanggal_lahir", tgllahir.getText().toString());
                 map.put("nama", nama.getText().toString());
@@ -205,9 +213,9 @@ public class FormulirPPDB extends AppCompatActivity {
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert
-                .setMessage("Pendaftaran Berhasil")
+                .setMessage("Pendaftaran Berhasil, Tunggu Informasi Berikutnya di Aplikasi atau Email Kalian")
                 .setCancelable(false)
-                .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OKK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -221,11 +229,11 @@ public class FormulirPPDB extends AppCompatActivity {
         AlertDialog berhasil = alert.create();
         berhasil.show();
     }
-    public void daftarGAgal()
+    public void daftarGAgal(final String isiPesan)
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert
-                .setMessage("Pendaftaran Gagal")
+                .setMessage(isiPesan)
                 .setCancelable(false)
                 .setNegativeButton("Ulangi", new DialogInterface.OnClickListener() {
                     @Override

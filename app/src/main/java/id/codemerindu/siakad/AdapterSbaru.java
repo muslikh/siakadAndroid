@@ -4,15 +4,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
 
@@ -20,6 +32,8 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
     ArrayList<HashMap<String ,String >> list_data;
     ArrayList<HashMap<String ,String >>  filterL;
 
+    String url_validasi = Server.URL+"siswa.php?aksi=validasi";
+    String url_hapus= Server.URL+"siswa.php?aksi=hapusSbaru";
 
     public AdapterSbaru(validasiPPDB validasiPPDB, ArrayList<HashMap<String ,String >>list_data)
     {
@@ -35,29 +49,96 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final String idu = list_data.get(position).get("id_siswa");
         holder.namas.setText("Nama : "+list_data.get(position).get("nama"));
         holder.kodejurusan.setText("Prodi : "+list_data.get(position).get("kode_jurusan"));
         holder.kodekelas.setText("Kelas : "+list_data.get(position).get("kode_kelas"));
         holder.nisn.setText("NSN : "+list_data.get(position).get("nisn"));
-////        holder.itemView.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v) {
-////                final CharSequence[] options = {"Hapus", "Batal"};
-////                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
-////                builder.setTitle("!");
-////                builder.setItems(options, new DialogInterface.OnClickListener() {
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int item) {
-////                        if (options[item].equals("Hapus")) {
-////
-////                        } else if (options[item].equals("Batal")) {
-////                            dialog.dismiss();
-////                        }
-////                    }
-////                });
-////                builder.show();
-////            }
-//        });
+        holder.btn_validasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url_validasi, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject dataObj = new JSONObject(response);
+
+
+                            Toast.makeText(context, dataObj.getString("message"), Toast.LENGTH_LONG).show();
+                            // adapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG", "Error: " + error.getMessage());
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+
+                    @Override
+
+                    protected Map<String,String> getParams() throws AuthFailureError {
+
+                        Map<String,String> map = new HashMap<String, String>();
+                        map.put("id_siswa", idu);
+                        return map;
+                    }
+
+                };
+                AppController.getInstance().addToRequestQueue(stringRequest);
+            }
+        });
+        holder.btn_hapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url_hapus, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject dataObj = new JSONObject(response);
+
+
+                            Toast.makeText(context, dataObj.getString("message"), Toast.LENGTH_LONG).show();
+                            // adapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG", "Error: " + error.getMessage());
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+
+                    @Override
+
+                    protected Map<String,String> getParams() throws AuthFailureError {
+
+                        Map<String,String> map = new HashMap<String, String>();
+                        map.put("id_siswa", idu);
+                        return map;
+                    }
+
+                };
+                Intent refresh = new Intent(context,validasiPPDB.class);
+                context.startActivity(refresh);
+                AppController.getInstance().addToRequestQueue(stringRequest);
+            }
+        });
+
     }
 
     @Override
@@ -66,13 +147,15 @@ public class AdapterSbaru extends RecyclerView.Adapter<AdapterSbaru.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView namas,kodekelas,kodejurusan,nisn;
+        TextView namas,kodekelas,kodejurusan,nisn  ,btn_validasi,btn_hapus;
         ImageView imgsbaru;
-
         public ViewHolder(View itemView) {
             super(itemView);
 
-            namas = (TextView) itemView.findViewById(R.id.namas);
+            btn_hapus = (TextView) itemView.findViewById(R.id.hapusSbaru);
+            btn_validasi = (TextView) itemView.findViewById(R.id.validSbaru);
+
+            namas = (TextView) itemView.findViewById(R.id.namass);
             kodekelas = (TextView) itemView.findViewById(R.id.kodekelass);
             kodejurusan = (TextView) itemView.findViewById(R.id.kodejurusans);
             nisn = (TextView) itemView.findViewById(R.id.nisns);

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".kehadiran">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarKehadiran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF"/>
+
+    <GridLayout
+        android:id="@+id/kehadiran"
+        android:layout_below="@id/toolbarKehadiran"
+        android:rowCount = "1"
+        android:background="@color/colorWhite"
+        android:columnCount = "2"
+        android:alignmentMode = "alignMargins"
+        android:columnOrderPreserved = "false"
+        android:layout_weight = "5"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:padding = "10dp"
+
+        >
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/absenMasuk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Absensi Masuk"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/absenPulang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="Absensi Pulang"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/absenFormIin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="Isi Form Ijin"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </GridLayout>
+
+
+
+    <TableLayout
+
+        android:id="@+id/rekapBulanan"
+        android:layout_below="@+id/kehadiran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp">
+
+        <TableRow
+            android:id="@+id/rowRekapAbsen"
+            android:layout_height="86dp"
+            android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:padding="6dp">
+
+            <TextView
+                android:layout_width="197dp"
+                android:layout_height="wrap_content"
+                android:text="Rekap Absen Bulanan"
+                android:textAlignment="center"
+                android:layout_span="4"
+                android:textSize="18dp" />
+        </TableRow>
+
+
+        <TableRow
+            android:background="@android:color/darker_gray"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="No."
+
+                />
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Jam Masuk"
+
+                />
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Jam Pulang"
+
+                />
+            <TextView
+                android:id="@+id/tesIDU"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Keterangan"
+
+                />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

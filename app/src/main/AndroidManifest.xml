@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Diskusi"></activity>
+        <activity android:name=".AbsenQR"></activity>
+        <activity android:name=".Pengumuman" />
+        <activity android:name=".daftarUlang" />
+        <activity android:name=".kehadiran" />
+        <activity android:name=".Diskusi" />
         <activity android:name=".fragJadwalPelajaran" />
         <activity android:name=".fragJadwalUjian" />
         <activity android:name=".jadwal" />

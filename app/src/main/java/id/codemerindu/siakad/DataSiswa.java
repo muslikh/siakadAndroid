@@ -42,7 +42,7 @@ public class DataSiswa extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     AlertDialog dialog;
-    String url_sbaru = Server.URL+"siswa.php";
+    String url_sbaru = Server.URL+"siswa.php?aksi=tampil_siswa";
     String url_hpus = Server.URL+"delete.php";
     ArrayList<HashMap<String ,String>> list_data;
     private SearchView cari;

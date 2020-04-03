@@ -27,14 +27,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Login Siakad"
+            android:layout_marginBottom="5dp"
+            android:text="Sistem Informasi Akademik"
             android:textSize="24sp"
             android:textStyle="bold"
             app:fontFamily="monospace" />
@@ -48,85 +47,155 @@
             app:fontFamily="monospace"
             android:text="Username"/>
 
+
         <EditText
-            android:layout_gravity="center"
             android:id="@+id/txt_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ems="10"
-            app:fontFamily="monospace"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            app:fontFamily="monospace" />
 
         <TextView
             android:id="@+id/tv_password"
-            app:fontFamily="monospace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="Password"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Password"
+            app:fontFamily="monospace" />
 
         <EditText
-            android:layout_gravity="center"
-            app:fontFamily="monospace"
             android:id="@+id/txt_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ems="10"
-            android:inputType="textPersonName"
-            />
+            android:inputType="textPassword"
+            app:fontFamily="monospace" />
+
+        <LinearLayout
+            android:paddingTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+
+            <CheckBox
+                android:id="@+id/lihatpass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="1dp"
+                android:text="Tampilkan Password" />
+            <TextView
+                android:id="@+id/btn_lupaPass"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="1dp"
+                android:text="Lupa Password ??"
+                app:fontFamily="monospace" />
+
+        </LinearLayout>
+
 
 
         <Button
 
             android:id="@+id/btn_login"
-            android:layout_width="201dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/btn_normal"
             android:text="Masuk"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
             app:fontFamily="monospace" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/pendaftaran"
+        android:paddingTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
-            <TextView
-                android:id="@+id/btn_lupaPass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="#ffffff"
-                android:text=" Lupa Password "
-                android:textColor="#D81313"
+        <Button
 
-                android:textStyle="bold"
-                app:fontFamily="monospace" />
+            android:id="@+id/btn_isiFormulir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btncustom"
+            android:text=" Isi Formulir "
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:fontFamily="monospace" />
 
-            <TextView
-                android:id="@+id/btn_isiFormulir"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="120dp"
-                android:layout_marginTop="10dp"
-                android:background="#ffffff"
-                android:text=" Isi Formulir "
-                android:textColor="#D81313"
-                android:textStyle="bold"
-                app:fontFamily="monospace" />
-        </LinearLayout>
+        <Button
+
+            android:id="@+id/daftarUlang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btncustomred"
+            android:text=" Daftar Ulang "
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:fontFamily="monospace" />
+
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_pengumuman"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_normal"
+            android:text="Lihat Pengumuman"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:fontFamily="monospace" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:text="Muhamamd Muslikh" />
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="5dp"
+            android:text="Copyright © 2020 M. Muslikh" />
+
     </LinearLayout>
+
 </RelativeLayout>

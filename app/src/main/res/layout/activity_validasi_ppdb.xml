@@ -36,25 +36,25 @@
                 app:queryHint="Cari Data" />
         </TableRow>
 
-        <TableRow android:gravity="center"
-            android:padding="6dp">
+<!--        <TableRow android:gravity="center"-->
+<!--            android:padding="6dp">-->
 
-            <TextView
-                android:id="@+id/validasiSemua"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/btn_normal"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="Validasi Semua" />
+<!--            <TextView-->
+<!--                android:id="@+id/validasiSemua"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:background="@drawable/btn_normal"-->
+<!--                android:paddingLeft="5dp"-->
+<!--                android:paddingRight="5dp"-->
+<!--                android:text="Validasi Semua" />-->
 
 
-        </TableRow>
+<!--        </TableRow>-->
     </TableLayout>
 
     <android.support.v7.widget.RecyclerView

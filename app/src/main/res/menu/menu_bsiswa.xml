@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:id="@+id/jadwal"
+        android:id="@+id/kehadiran"
+        android:icon="@drawable/ic_setting"
+        android:title="Kehadiran" />
+    <item
+        android:id="@+id/kosong"
+        android:enabled="true"
+        android:title="Profil"/>
+
+    <item
+        android:id="@+id/kumpulannilai"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
-        android:title="Jadwal"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/grup"
-        android:enabled="true"
-        android:icon="@drawable/ic_setting"
-        android:title="Diskusi"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/profil"
-        android:enabled="true"
-        android:icon="@drawable/ic_setting"
-        android:title="Profil"
-        app:showAsAction="always" />
+        android:title="Kumpulan Nilai" />
 
 </menu>
+    <!--    <item-->
+    <!--        android:id="@+id/elearning"-->
+    <!--        android:icon="@drawable/ic_setting"-->
+    <!--        android:title="E-Learning"/>-->
+
+    <!--    <item-->
+    <!--        android:id="@+id/tugas"-->
+    <!--        android:enabled="true"-->
+    <!--        android:icon="@drawable/ic_setting"-->
+    <!--        android:title="Tugas" />-->

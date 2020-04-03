@@ -30,7 +30,7 @@ import static id.codemerindu.siakad.Login.session_status;
 
 public class fragSiswa extends Fragment {
 
-    final String url = Server.URL+"siswa.php";
+    final String url = Server.URL+"siswa.php?aksi=tampil_siswa";
 
     TextView namaUser,ttlUser,kodeKelas,jurusan,
             nisn,nipd,nik,jk,agama,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,

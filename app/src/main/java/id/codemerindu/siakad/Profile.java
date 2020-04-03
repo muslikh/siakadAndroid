@@ -70,7 +70,7 @@ public class Profile extends AppCompatActivity {
     Button btneditdata,btnrefresh,btngantifoto;
     ImageView fotoProfile;
     Boolean session = false;
-    final String ambilfoto = Server.URL+"siswa.php";
+    final String ambilfoto = Server.URL+"siswa.php?aksi=tampil_siswa";
     final String gantifoto = Server.URL+"gantifoto.php";
 
     private String Document_img1="";
