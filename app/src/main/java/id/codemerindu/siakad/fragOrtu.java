@@ -32,10 +32,13 @@ public class fragOrtu extends Fragment {
             namaIbu,ttlIbu,agamaIbu,KewargaIbu,pendidikanIbu,kerjaIbu,pengeluaranIbu,AlamatIbu,nohpIbu,
             namaWali,ttlWali,agamaWali,KewargaWali,pendidikanWali,kerjaWali,pengeluaranWali,AlamatWali,nohpWali;
 
-    final String url = Server.URL+"siswa.php";
+    final String url = Server.URL+"siswa/detail?id=";
+    public int extraId;
     Boolean session = false;
     SharedPreferences sharedpreferences;
     public final static String TAG_IDU = "idu";
+    public final static String TOKEN = "&token=";
+    String JWT,id,Token_jwt;
     RequestQueue  requestQueue;
     @Nullable
     @Override
@@ -44,6 +47,9 @@ public class fragOrtu extends Fragment {
 
         sharedpreferences = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
+        id =  sharedpreferences.getString(TAG_IDU, null);
+        Token_jwt = sharedpreferences.getString(JWT, null);
+
         namaAyah = (TextView) view_fragOrtu.findViewById(R.id.namaAyah);
         ttlAyah = (TextView) view_fragOrtu.findViewById(R.id.ttlAyah);
         agamaAyah = (TextView) view_fragOrtu.findViewById(R.id.agamaAyah);
@@ -81,9 +87,12 @@ public class fragOrtu extends Fragment {
 
     public void ambilData()
     {
+
+        extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
+
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequests =
-                new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                new StringRequest(Request.Method.GET, url+extraId+TOKEN+Token_jwt, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -95,9 +104,7 @@ public class fragOrtu extends Fragment {
                                 JSONObject obj = dataArray.getJSONObject(i);
                                 // int extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
 
-                                int extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
-
-                                int id = obj.getInt("id_siswa");
+                                int id = obj.getInt("id");
                                 if (extraId== id )
                                 {
                                     namaAyah.setText(obj.getString("nama_ayah"));

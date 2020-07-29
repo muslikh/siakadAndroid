@@ -1,8 +1,10 @@
 package id.codemerindu.siakad;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,25 +33,41 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static id.codemerindu.siakad.Login.my_shared_preferences;
+import static id.codemerindu.siakad.Login.session_status;
+
 public class AbsenQR extends AppCompatActivity {
+
     private ImageView bgContent;
     private CodeScanner codeScanner;
     private CodeScannerView codeScannerView;
-    String url_absen = Server.URL+"siswa.php?aksi=absen";
-    String TAG_IDU = "idu";
+    String url_absen = Server.URL+"siswa/absen";
+    String TAG_ID = "id";
     String TAG_Jenis = "jenis";
-    String idu,jenis,keterangan;
+    public final static String TAG_KELAS = "kode_kelas";
+    public final static String TAG_SEMESTER = "semester";
+    String id,jenis,keterangan,semester,kelas;
+    SharedPreferences sharedpreferences;
+    Boolean session = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absen_qr);
 
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        id = sharedpreferences.getString(TAG_ID, null);
+
+
+        kelas = getIntent().getStringExtra(TAG_KELAS);
+        semester = getIntent().getStringExtra(TAG_SEMESTER);
 
         bgContent = findViewById(R.id.BgContent);
         codeScannerView = findViewById(R.id.scannerView);
@@ -127,6 +145,9 @@ public class AbsenQR extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent backD = new Intent(AbsenQR.this,kehadiran.class);
+                        backD.putExtra(TAG_ID,id);
+                        backD.putExtra(TAG_KELAS,kelas);
+                        backD.putExtra(TAG_SEMESTER,semester);
                         startActivity(backD);
                     }
                 });
@@ -166,16 +187,22 @@ public class AbsenQR extends AppCompatActivity {
 
             protected Map<String,String> getParams() throws AuthFailureError {
 
-                idu = getIntent().getStringExtra(TAG_IDU);
+//                idu = getIntent().getStringExtra(TAG_IDU);
                 jenis = getIntent().getStringExtra("jenis");
 
-                Date waktu = new Date();
-                String dateFormat = DateFormat.getInstance().format(waktu);
+                Date tgl = new Date();
+                Date jam = new Date();
+                String dateFormat = DateFormat.getInstance().format(tgl);
                 Map<String,String> map = new HashMap<String, String>();
-                map.put("id_siswa", String.valueOf(idu));
-                map.put("waktu", dateFormat);
+                map.put("siswaID", String.valueOf(id));
+                map.put("tgl", dateFormat);
+                map.put("jam", dateFormat);
                 map.put("jenis", jenis);
-                map.put("keterangan", "hadir");
+                map.put("kode_kelas", kelas);
+                map.put("semester", semester);
+                map.put("status", "hadir");
+                map.put("ket_masuk", "tidak masuk");
+                map.put("ket_pulang", "tidak masuk");
                 return map;
             }
 

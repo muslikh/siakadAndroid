@@ -18,7 +18,7 @@ public class AdapterPengumuman extends RecyclerView.Adapter<AdapterPengumuman.Vi
     ArrayList<HashMap<String ,String >> list_data;
     ArrayList<HashMap<String ,String >>  filterL;
 
-    public AdapterPengumuman(Pengumuman Pengumuman, ArrayList<HashMap<String ,String >>list_data)
+    public AdapterPengumuman(MainActivity Pengumuman, ArrayList<HashMap<String ,String >>list_data)
     {
         this.context = Pengumuman;
         this.list_data=list_data;

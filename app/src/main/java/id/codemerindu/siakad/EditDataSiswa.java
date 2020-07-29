@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -54,8 +55,8 @@ public class EditDataSiswa extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormat;
-    String url = Server.URL +"siswa.php?aksi=tampil_siswa";
-    String url_update  = Server.URL+"siswa.php?aksi=editDataSiswa";
+    String url = Server.URL +"siswa/daftarulang?id=";
+    String url_update  = Server.URL+"siswa/";
     final String TAG ="Edit";
     public final static String TAG_IDU = "idu";
     public final static String TAG_MESSAGE = "message";
@@ -68,8 +69,9 @@ public class EditDataSiswa extends AppCompatActivity {
             namaAyah,ttlAyah,agamaAyah,KewargaAyah,pendidikanAyah,kerjaAyah,pengeluaranAyah,AlamatAyah,nohpAyah,
             namaIbu,ttlIbu,agamaIbu,KewargaIbu,pendidikanIbu,kerjaIbu,pengeluaranIbu,AlamatIbu,nohpIbu,
             namaWali,ttlWali,agamaWali,KewargaWali,pendidikanWali,kerjaWali,pengeluaranWali,AlamatWali,nohpWali,
-            password,username;
-    int extraId;
+            edpassword,edusername;
+
+    public int extraId;
     Spinner agama,jk;
     Button updateSiswa;
     ImageView fotoProfile;
@@ -198,8 +200,8 @@ public class EditDataSiswa extends AppCompatActivity {
         pengeluaranWali= (EditText) findViewById(R.id.edpengeluaranWali);
         AlamatWali= (EditText)  findViewById(R.id.edAlamatWali);
         nohpWali= (EditText) findViewById(R.id.ednohpWali);
-        username= (EditText) findViewById(R.id.edUsername);
-        password= (EditText) findViewById(R.id.edPassword);
+        edusername= (EditText) findViewById(R.id.edUsername);
+        edpassword= (EditText) findViewById(R.id.edPassword);
     }
 
     public void editData()
@@ -208,9 +210,10 @@ public class EditDataSiswa extends AppCompatActivity {
         progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
         progressDialog.show();
 
+        extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequests =
-                new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                new StringRequest(Request.Method.GET, url+extraId, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -222,10 +225,9 @@ public class EditDataSiswa extends AppCompatActivity {
 
 
                                 JSONObject obj = dataArray.getJSONObject(i);
-                                extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
                                 String nama = obj.getString("nama");
-                                int id = obj.getInt("id_siswa");
-                                String id_siswa = obj.getString("id_siswa");
+                                int id = obj.getInt("id");
+                                String id_siswa = obj.getString("id");
                                 String nisn = obj.getString("nisn");
                                 String tempatLahir = obj.getString("tempat_lahir");
                                 String kodekelas = obj.getString("kode_kelas");
@@ -299,19 +301,14 @@ public class EditDataSiswa extends AppCompatActivity {
                                     nohpWali.setText(obj.getString("no_telpon_wali"));
 
 
-                                    username.setText(obj.getString("username"));
-                                    password.setText(obj.getString("password"));
+//                                    username.setText(obj.getString("username"));
+//                                    password.setText(obj.getString("password"));
 
 //                                    String cekUsername = obj.getString("username");
 //                                    String cekPassword = obj.getString("password");
-//                                    if(cekUsername.isEmpty())
-//                                    {
-//                                        username.setEnabled(true);
-//                                    }else if(cekPassword.isEmpty())
-//                                    {
-//                                        username.setEnabled(true);
-//                                    }
+
                                 }
+
                             }
                             Log.d(TAG, "onResponse:" + response);
                         }  catch(
@@ -330,13 +327,14 @@ public class EditDataSiswa extends AppCompatActivity {
         requestQueue.add(stringRequests);
     }
 
+
     private void simpan()
     {
         progressDialog = new ProgressDialog(EditDataSiswa.this);
         progressDialog.setMessage("Proses Simpan, Mohon Tunggu...");
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_update, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_update+extraId+'?', new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -374,7 +372,7 @@ public class EditDataSiswa extends AppCompatActivity {
 
                 Map<String,String> map = new HashMap<>();
 //
-                map.put("id_siswa", idUser.getText().toString());
+                map.put("id", idUser.getText().toString());
                 map.put("nama", EdnamaUser.getText().toString());
                 map.put("tempat_lahir", Edtmplahir.getText().toString());
                 map.put("tanggal_lahir", EdtgllahirUser.getText().toString());
@@ -435,8 +433,8 @@ public class EditDataSiswa extends AppCompatActivity {
                   map.put("pengeluaran_wali",pengeluaranWali.getText().toString());
                   map.put("alamat_wali",AlamatWali.getText().toString());
                   map.put("no_telpon_wali",nohpWali.getText().toString());
-                  map.put("username",username.getText().toString());
-                  map.put("password",password.getText().toString());
+//                  map.put("username",username.getText().toString());
+//                  map.put("password",password.getText().toString());
 
 
                 return map;

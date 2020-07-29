@@ -37,7 +37,7 @@ public class AdapterListDaftarUlang extends RecyclerView.Adapter<AdapterListDaft
     public static final String TAG_IDU = "idu";
     ArrayList<HashMap<String ,String >> list_data;
     ArrayList<HashMap<String ,String >>  filterL;
-    public  String url_cek = Server.URL+"siswa.php?aksi=cek_kode";
+    public  String url_cek = Server.URL+"siswa/cekkode";
     private static final String TAG_SUCCESS = "success";
     int success;
     ProgressDialog pDialog;
@@ -57,7 +57,7 @@ public class AdapterListDaftarUlang extends RecyclerView.Adapter<AdapterListDaft
     @Override
     public void onBindViewHolder(final AdapterListDaftarUlang.ViewHolder holder, final int position) {
 
-        final String  idu = list_data.get(position).get("id_siswa");
+        final String  idu = list_data.get(position).get("id");
         holder.noun.setText("NO UN : "+list_data.get(position).get("no_unsmp"));
         holder.nisn.setText("NISN : "+list_data.get(position).get("nisn"));
         holder.namas.setText("Nama : "+list_data.get(position).get("nama"));
@@ -188,16 +188,17 @@ public class AdapterListDaftarUlang extends RecyclerView.Adapter<AdapterListDaft
 
                 hideDialog();
                 try {
+
                     JSONObject jObj = new JSONObject(response);
                     success = jObj.getInt("success");
 
 //                    String kode = jObj.getString("kode");
 
-                    // Check for error node in json
+
                     if (success == 1){
-                        Intent intent = new Intent(context, EditDataSiswa.class);
+                        Intent intent = new Intent(context, EditPassword.class);
                         intent.putExtra(TAG_IDU, idu);
-                        // finish();
+
                         context.startActivity(intent);
                     }  else {
 
@@ -222,8 +223,8 @@ public class AdapterListDaftarUlang extends RecyclerView.Adapter<AdapterListDaft
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("kode", kode);
-                params.put("id_siswa", idu);
+                params.put("kode_aktivasi", kode);
+                params.put("id", idu);
 
                 return params;
             }

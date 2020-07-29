@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,11 +40,10 @@ public class Login extends AppCompatActivity {
     EditText txt_username, txt_password;
     Intent intent;
     CheckBox lihatpass;
-
     int success;
     ConnectivityManager conMgr;
 
-    private String url = Server.URL + "masuk.php";
+    private String url = Server.URL + "masuk";
 
     private static final String TAG = Login.class.getSimpleName();
 
@@ -53,13 +53,16 @@ public class Login extends AppCompatActivity {
     public final static String TAG_USERNAME = "username";
     public final static String TAG_ID = "id";
     public static final String TAG_NAMA = "nama";
+    public static final String TAG_KELAS = "kode_kelas";
+    public static final String TAG_SEMESTER = "semester";
+    public static final String TAG_FOTO = "tag_foto";
 
 
     String tag_json_obj = "json_obj_req";
 
     SharedPreferences sharedpreferences;
     Boolean session = false;
-    String id, username,nama, level;
+    String id, username,nama, level,JWT,Token_JWT,strFoto,kode_kelas,semester;
     public static final String my_shared_preferences = "my_shared_preferences";
     public static final String session_status = "session_status";
 
@@ -68,14 +71,22 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        TextView lupaPass = (TextView) findViewById(R.id.btn_lupaPass);lupaPass.setOnClickListener(new View.OnClickListener() {
+
+        // Cek session login jika TRUE maka langsung buka MainActivity
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        id = sharedpreferences.getString(TAG_ID, null);
+        nama = sharedpreferences.getString(TAG_NAMA, null);
+
+        final TextView lupaPass = (TextView) findViewById(R.id.btn_lupaPass);lupaPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent launchWhatsApp = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
-//                startActivity(launchWhatsApp);
-                Intent webIntent = new Intent(android.content.Intent.ACTION_VIEW);
-                webIntent.setData(Uri.parse("https://api.whatsapp.com/send?phone=6285369000323&text=Assalamu'alaikum, Saya Lupa Password Login Saya, Bisa Minta Bantuannya"));
-                startActivity(webIntent);
+
+                Intent lupa = new Intent(Login.this,LupaPassword.class);
+                startActivity(lupa);
+//                Intent webIntent = new Intent(android.content.Intent.ACTION_VIEW);
+//                webIntent.setData(Uri.parse("https://api.whatsapp.com/send?phone=6285369000323&text=Assalamu'alaikum, Saya Lupa Password Login Saya, Bisa Minta Bantuannya"));
+//                startActivity(webIntent);
 
             }
         });
@@ -121,34 +132,30 @@ public class Login extends AppCompatActivity {
         }
 
         btn_login = (Button) findViewById(R.id.btn_login);
-        btn_pemberitahuan = (Button)  findViewById(R.id.btn_pengumuman);
-        btn_pemberitahuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pengumuman = new Intent(Login.this, Pengumuman.class);
 
-                finish();
-                startActivity(pengumuman);
-            }
-        });
+
+
+
+
         txt_username = (EditText) findViewById(R.id.txt_username);
         txt_password = (EditText) findViewById(R.id.txt_password);
 
-        // Cek session login jika TRUE maka langsung buka MainActivity
-        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-        session = sharedpreferences.getBoolean(session_status, false);
-        id = sharedpreferences.getString(TAG_ID, null);
 //        username = sharedpreferences.getString(TAG_USERNAME, null);
        // nama = sharedpreferences.getString(TAG_NAMA, null);
 
-        if (session) {
-            Intent intent = new Intent(Login.this, MainActivity.class);
-            intent.putExtra(TAG_ID, id);
-            intent.putExtra(TAG_USERNAME, username);
-            intent.putExtra(TAG_LEVEL, level);
-            finish();
-            startActivity(intent);
-        }
+//        if (session) {
+//            Intent intent = new Intent(Login.this, MainActivity.class);
+//            intent.putExtra(TAG_ID, id);
+//            intent.putExtra(TAG_USERNAME, username);
+//            intent.putExtra(TAG_LEVEL, level);
+//            intent.putExtra(TAG_FOTO, strFoto);
+//            intent.putExtra(TAG_NAMA, nama);
+//            intent.putExtra(JWT,Token_JWT);
+//            intent.putExtra(TAG_KELAS, kode_kelas);
+//            intent.putExtra(TAG_SEMESTER, semester);
+//            finish();
+//            startActivity(intent);
+//        }
 
 
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +207,10 @@ public class Login extends AppCompatActivity {
                         String id = jObj.getString(TAG_ID);
                         String level = jObj.getString(TAG_LEVEL);
                         String nama = jObj.getString("nama");
+                        Token_JWT = jObj.getString("token");
+                        kode_kelas = jObj.getString("kode_kelas");
+                        semester = jObj.getString("semester");
+                        strFoto = jObj.getString("foto");
 
                         Log.e("Successfully Login!", jObj.toString());
 
@@ -212,6 +223,10 @@ public class Login extends AppCompatActivity {
                         editor.putString(TAG_USERNAME, username);
                         editor.putString(TAG_LEVEL, level);
                         editor.putString(TAG_NAMA, nama);
+                        editor.putString(TAG_FOTO, strFoto);
+                        editor.putString(JWT, Token_JWT);
+                        editor.putString(TAG_KELAS, kode_kelas);
+                        editor.putString(TAG_SEMESTER, semester);
                         editor.commit();
 //                        if(level.equals("siswa")) {
                             // Memanggil main activity
@@ -220,6 +235,10 @@ public class Login extends AppCompatActivity {
                             intent.putExtra(TAG_USERNAME, username);
                             intent.putExtra(TAG_LEVEL, level);
                             intent.putExtra(TAG_NAMA,nama);
+                            intent.putExtra(JWT,Token_JWT);
+                            intent.putExtra(TAG_FOTO, strFoto);
+                            intent.putExtra(TAG_KELAS, kode_kelas);
+                            intent.putExtra(TAG_SEMESTER, semester);
                            // finish();
                             startActivity(intent);
 //                        }else if(level.equals("admin")){
@@ -255,7 +274,14 @@ public class Login extends AppCompatActivity {
 
             }
         }) {
-
+//            //This is for Headers If You Needed
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String, String> headers = new HashMap<String, String>();
+//                headers.put("Content-Type", "application/json; charset=UTF-8");
+//                headers.put("Authorization", "Bearer " + Token_JWT);
+//                return headers;
+//            }
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url

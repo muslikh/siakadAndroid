@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <TableLayout
+        android:id="@+id/isitabelNilai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp">
+
+        <TableRow
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/noNilai"
+                android:text="1." />
+
+            <TextView
+                android:id="@+id/mapelNilai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/kkmNilai"
+                android:layout_height="wrap_content"
+                android:text="1." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/nilaiAngkaPengetahuan"
+                android:layout_height="wrap_content"
+                android:text="1." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nilaiHurufPengetahuan"
+                android:layout_weight="1"
+                android:text="1." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/nilaiAngkaKeterampilan"
+                android:text="1." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/nilaiHurufKeterampilan"
+                android:text="1." />
+
+        </TableRow>
+
+    </TableLayout>
+</RelativeLayout>

@@ -31,7 +31,7 @@ public class Pengumuman extends AppCompatActivity {
 
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
-    public  String tampil = Server.URL+"utama.php?aksi=tampil_pengumuman";
+    public  String tampil = Server.URL+"pengumuman";
     AdapterPengumuman adapterPengumuman;
     ArrayList<HashMap<String ,String>> list_data;
 
@@ -44,45 +44,46 @@ public class Pengumuman extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        tampilResult = (RecyclerView) findViewById(R.id.listPengumuman);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        tampilResult.setLayoutManager(llm);
-        list_data = new ArrayList<HashMap<String, String>>();
-
-        requestQueue = Volley.newRequestQueue(Pengumuman.this);
-        stringRequest = new StringRequest(Request.Method.GET, tampil, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try{
-                    JSONArray dataArray= new JSONArray(response);
-                    for (int i =0; i<dataArray.length(); i++)
-                    {
-
-                        JSONObject json = dataArray.getJSONObject(i);
-                        HashMap<String, String > map = new HashMap<String , String >();
-                        map.put("isi_pengumuman", json.getString("isi_pengumuman"));
-                        map.put("judul_pengumuman",json.getString("judul_pengumuman"));
-                        map.put("tgl_pengumuman",json.getString("tgl_pengumuman"));
-                        list_data.add(map);
-                        adapterPengumuman = new AdapterPengumuman(Pengumuman.this, list_data);
-                        tampilResult.setAdapter(adapterPengumuman);
-
-                    }
-                } catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener()
-        {
-            public void onErrorResponse(VolleyError error)
-            {
-                Toast.makeText(Pengumuman.this,error.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-        requestQueue.add(stringRequest);
+//        tampilResult = (RecyclerView) findViewById(R.id.listPengumuman);
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        llm.setOrientation(LinearLayoutManager.VERTICAL);
+//        tampilResult.setLayoutManager(llm);
+//        list_data = new ArrayList<HashMap<String, String>>();
+//
+//        requestQueue = Volley.newRequestQueue(Pengumuman.this);
+//        stringRequest = new StringRequest(Request.Method.GET, tampil, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//
+//                try{
+//                    JSONArray dataArray= new JSONArray(response);
+//                    for (int i =0; i<dataArray.length(); i++)
+//                    {
+//
+//                        JSONObject json = dataArray.getJSONObject(i);
+//                        HashMap<String, String > map = new HashMap<String , String >();
+//                        map.put("isi_pengumuman", json.getString("isi_pengumuman"));
+//                        map.put("judul_pengumuman",json.getString("judul_pengumuman"));
+//                        map.put("tgl_pengumuman",json.getString("tgl_pengumuman"));
+//                        map.put("level",json.getString("level"));
+//                        list_data.add(map);
+//                        adapterPengumuman = new AdapterPengumuman(M.this, list_data);
+//                        tampilResult.setAdapter(adapterPengumuman);
+//
+//                    }
+//                } catch (JSONException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener()
+//        {
+//            public void onErrorResponse(VolleyError error)
+//            {
+//                Toast.makeText(Pengumuman.this,error.getMessage(),Toast.LENGTH_LONG).show();
+//            }
+//        });
+//        requestQueue.add(stringRequest);
     }
 
     @Override

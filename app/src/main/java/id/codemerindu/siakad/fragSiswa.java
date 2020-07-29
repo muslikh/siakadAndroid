@@ -30,18 +30,20 @@ import static id.codemerindu.siakad.Login.session_status;
 
 public class fragSiswa extends Fragment {
 
-    final String url = Server.URL+"siswa.php?aksi=tampil_siswa";
+    final String url = Server.URL+"siswa/detail?id=";
+
 
     TextView namaUser,ttlUser,kodeKelas,jurusan,
             nisn,nipd,nik,jk,agama,kewarga,anakke,jmlsdrkandung,jmlsdrtiri,
             hobi,alamat,rt,rw,dusun,kab,prov,hp,stsTinggal,goldar,penyakit,
             tinggi,berat,lulusdari,noijasah,noskhun,nopeUser,pindahdari,alamatSsebelum,kelasAwal,thnmasuk,nounsmp;
-
-    String id;
+   public int extraId;
     Boolean session = false;
     SharedPreferences sharedpreferences;
-    public final static String TAG_IDU = "idu";
     RequestQueue  requestQueue;
+    public final static String TAG_IDU = "idu";
+    public final static String TOKEN = "&token=";
+    String id,JWT,Token_jwt;
 
     @Nullable
     @Override
@@ -50,7 +52,9 @@ public class fragSiswa extends Fragment {
 
         sharedpreferences = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
-//        id =  sharedpreferences.getString(TAG_IDU, null);
+        id =  sharedpreferences.getString(TAG_IDU, null);
+        Token_jwt = sharedpreferences.getString(JWT, null);
+
 
         namaUser = (TextView) view_fragsiswa.findViewById(R.id.namaUser);
         nopeUser = (TextView) view_fragsiswa.findViewById(R.id.nopeUser);
@@ -96,10 +100,12 @@ public class fragSiswa extends Fragment {
     public void ambilData()
     {
 
+        extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
+
 
         RequestQueue  requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequests =
-                new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                new StringRequest(Request.Method.GET, url+extraId+TOKEN+Token_jwt, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -111,9 +117,7 @@ public class fragSiswa extends Fragment {
                                 JSONObject obj = dataArray.getJSONObject(i);
                                // int extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
 
-                                int extraId = Integer.parseInt(getActivity().getIntent().getStringExtra(TAG_IDU));
-
-                                int id = obj.getInt("id_siswa");
+                                int id = obj.getInt("id");
                                 String tempatLahir = obj.getString("tempat_lahir");
                                 String tanggalLahir = obj.getString("tanggal_lahir");
                                 if (extraId== id )

@@ -55,7 +55,7 @@ public class FormulirPPDB extends AppCompatActivity {
     private String TAG_LEVEL = "level";
     private String TAG_SUCCESSS = "success";
     private String TAG_MESSAGE = "message";
-    private static String url = Server.URL+"siswa.php?aksi=daftar";
+    private static String url = Server.URL+"siswa/daftar";
     private static String url_update = Server.URL + "update.php";
     String levelU;
 
@@ -149,7 +149,7 @@ public class FormulirPPDB extends AppCompatActivity {
                     JSONObject dataObj = new JSONObject(response);
 
 
-                    int code = Integer.parseInt(dataObj.getString("code"));
+//                    int code = Integer.parseInt(dataObj.getString("code"));
                     if(
                      nisn.getText().toString().trim().length() > 0 && email.getText().toString().trim().length() > 0
                      && nohp.getText().toString().trim().length() > 0 && tmplahir.getText().toString().trim().length() > 0

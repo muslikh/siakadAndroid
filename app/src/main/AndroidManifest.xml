@@ -6,7 +6,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.flash" />
 
     <application
         android:name=".AppController"
@@ -16,7 +21,18 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AbsenQR"></activity>
+        <activity android:name=".WebviewSMK"
+            android:parentActivityName=".MainActivity"
+            >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".KumpulanNilai" />
+        <activity android:name=".LupaPassword" />
+        <activity android:name=".AbsenQR" />
+        <activity android:name=".FormIjinSakit" />
         <activity android:name=".Pengumuman" />
         <activity android:name=".daftarUlang" />
         <activity android:name=".kehadiran" />
@@ -28,6 +44,7 @@
         <activity android:name=".validasiPPDB" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".Profile" />
+        <activity android:name=".EditPassword" />
         <activity android:name=".FormulirPPDB" />
         <activity android:name=".EditDataSiswa" />
         <activity android:name=".MainActivity" />
@@ -38,15 +55,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.your.package.fileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
     </application>
 

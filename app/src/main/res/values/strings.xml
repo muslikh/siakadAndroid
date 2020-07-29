@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SIAKAD</string>
+    <string name="app_name">Aplikasi Kesiswaan</string>
 
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -14,6 +14,24 @@
         <item>Perempuan</item>
     </string-array>
 
+    <string-array name="semseter">
+        <item>Pilih Semester</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="singkat_program_keahlian">
+        <item>Pilih Program Keahlian</item>
+        <item>AK</item>
+        <item>MM</item>
+        <item>PH</item>
+        <item>TKJ</item>
+        <item>TB</item>
+        <item>TSM</item>
+    </string-array>
     <string-array name="program_keahlian">
         <item>Pilih Program Keahlian</item>
         <item>AKUNTANSI</item>

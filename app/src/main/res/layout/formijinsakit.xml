@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarFormIjin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF"/>
+
+
+    <TextView
+        android:id="@+id/tvkenapa"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/toolbarFormIjin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kenapa Tidak Masuk ?? " />
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/checkBoxSakit"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/tvkenapa"-->
+<!--        android:layout_marginTop="118dp"-->
+<!--        android:text="Sakit" />-->
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/checkBoxIjin"-->
+<!--        android:layout_below="@+id/checkBoxSakit"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Ijin " />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvKeterangna"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Keterangan : " />-->
+
+    <RadioGroup
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/tvkenapa"
+        android:id="@+id/radioKenapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/radioSakit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sakit"/>
+        <RadioButton
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/radioIjin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:text="Ijin" />
+    </RadioGroup>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvKeterangan"
+        android:layout_below="@id/radioKenapa"
+        android:text="Keterangan / Alsan"/>
+
+    <EditText
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/edKeterangan"
+        android:layout_below="@+id/tvKeterangan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text|textMultiLine"
+        android:text="Isi Alasan" />
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/kirimIjin"
+        android:text="Kirim"
+        android:layout_below="@id/edKeterangan"/>
+
+
+</RelativeLayout>

@@ -14,9 +14,9 @@
         android:titleTextColor="#FFFFFF"/>
 
     <GridLayout
-        android:id="@+id/kehadiran"
+        android:id="@+id/jmlabsen"
         android:layout_below="@id/toolbarKehadiran"
-        android:rowCount = "1"
+        android:rowCount = "2"
         android:background="@color/colorWhite"
         android:columnCount = "2"
         android:alignmentMode = "alignMargins"
@@ -48,6 +48,191 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/labelHadir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Jumlah Hadir"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/jmlHadir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="0"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14dp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/labelSakit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="Jumlah Sakit" />
+
+                <TextView
+                    android:id="@+id/jmlSakit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginTop="10dp"
+                    android:text="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/labelIjin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:text="Jumlah Ijin"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"/>
+
+                <TextView
+                    android:id="@+id/jmlIjin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelAlpha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:text="Jumlah Alpha"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"/>
+
+                <TextView
+                    android:id="@+id/jmlAlpha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </GridLayout>
+
+
+
+    <GridLayout
+        android:id="@+id/menuabsen"
+        android:layout_below="@id/jmlabsen"
+        android:rowCount = "1"
+        android:background="@color/colorWhite"
+        android:columnCount = "2"
+        android:alignmentMode = "alignMargins"
+        android:columnOrderPreserved = "false"
+        android:layout_weight = "5"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:padding = "10dp"
+
+        >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@android:color/holo_red_dark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
                     android:id="@+id/absenMasuk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,11 +252,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardBackgroundColor="@android:color/holo_red_dark"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             >
-
             <LinearLayout
                 android:layout_gravity="center_vertical |center_horizontal"
                 android:layout_margin = "16dp"
@@ -80,50 +264,36 @@
                 android:layout_height = "wrap_content">
 
                 <TextView
-                    android:id="@+id/absenPulang"
+                    android:id="@+id/formtidakmasuk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:textSize="14dp"
                     android:textColor="@color/colorWhite"
-                    android:text="Absensi Pulang"
+                    android:text="Form Ijin / Sakit"
                     />
 
             </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_gravity="center_vertical |center_horizontal"-->
+<!--                android:layout_margin = "16dp"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_width = "wrap_content"-->
+<!--                android:layout_height = "wrap_content">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/absenPulang"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:textSize="14dp"-->
+<!--                    android:textColor="@color/colorWhite"-->
+<!--                    android:text="Absensi Pulang"-->
+<!--                    />-->
+
+<!--            </LinearLayout>-->
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            >
-
-            <LinearLayout
-                android:layout_gravity="center_vertical |center_horizontal"
-                android:layout_margin = "16dp"
-                android:orientation="vertical"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content">
-
-                <TextView
-                    android:id="@+id/absenFormIin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textSize="14dp"
-                    android:textColor="@color/colorWhite"
-                    android:text="Isi Form Ijin"
-                    />
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
 
     </GridLayout>
 
@@ -132,11 +302,12 @@
     <TableLayout
 
         android:id="@+id/rekapBulanan"
-        android:layout_below="@+id/kehadiran"
+        android:layout_below="@+id/menuabsen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginRight="10dp">
 
         <TableRow
@@ -149,7 +320,7 @@
             <TextView
                 android:layout_width="197dp"
                 android:layout_height="wrap_content"
-                android:text="Rekap Absen Bulanan"
+                android:text="Rekap Absen"
                 android:textAlignment="center"
                 android:layout_span="4"
                 android:textSize="18dp" />
@@ -171,18 +342,17 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Jam Masuk"
+                android:text="Tanggal"
 
                 />
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Jam Pulang"
+                android:text="Jam"
 
                 />
             <TextView
-                android:id="@+id/tesIDU"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -191,6 +361,13 @@
                 />
         </TableRow>
 
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/logabsensi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </TableLayout>
+
 
 </RelativeLayout>

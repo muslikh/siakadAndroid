@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    tools:context=".KumpulanNilai">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarDKN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#ffffff"/>
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:id="@+id/TvSemester"
+    android:layout_width="match_parent"
+    android:layout_below="@+id/toolbarDKN"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_span="5"
+        android:layout_marginLeft="0000005dp"
+        android:textColor="#000000"
+        android:text="Semester :"
+        android:textAlignment="center"
+        android:textSize="18dp" />
+    <TextView
+        android:id="@+id/tvSemester"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textSize="18dp" />
+
+    <Spinner
+        android:id="@+id/spinSemseter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#777777"
+        android:entries="@array/semseter"
+        android:hint="Pilih Semester "
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#633B3B" />
+
+</LinearLayout>
+
+
+        <ScrollView
+            android:layout_below="@+id/TvSemester"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/Lheader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <TableLayout
+        android:stretchColumns="1"
+android:layout_below="@id/TvSemester"
+        android:id="@+id/headertabelNilai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp">
+
+        <TableRow
+            android:id="@+id/rowlay"
+            android:background="@android:color/holo_blue_dark"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="5"
+                android:text="Nilai Raport"
+                android:textAlignment="center"
+                android:textSize="18dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:color/holo_blue_dark"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="No." />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Mapel " />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="KKM" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_span="2"
+                android:layout_height="wrap_content"
+                android:text="Pengetahuan" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_span="2"
+                android:layout_height="wrap_content"
+                android:id="@+id/keterampilanNilai"
+                android:text="Keterampilan" />
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:color/holo_blue_dark"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="A*" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="H*" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="A*" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="H*" />
+        </TableRow>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listNilai"
+            android:layout_below="@id/headertabelNilai"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_height="wrap_content"/>
+
+<!--        <TableRow-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_marginTop="2dp"-->
+<!--            android:background="@android:color/holo_blue_dark"-->
+<!--            android:layout_marginLeft="2dp"-->
+<!--            android:layout_marginRight="2dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+
+<!--                android:text="Rata - Rata" />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="" />-->
+<!--            <TextView-->
+<!--                android:id="@+id/RataPengetahun"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="8888" />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="" />-->
+<!--            <TextView-->
+<!--                android:id="@+id/RataKeterampilan"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="7777" />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="" />-->
+
+<!--        </TableRow>-->
+
+
+<!--        <TableRow-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:background="@android:color/holo_blue_dark"-->
+<!--            android:layout_marginLeft="2dp"-->
+<!--            android:layout_marginRight="2dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="" />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="" />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+
+<!--                android:text="Total " />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="" />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="" />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="" />-->
+<!--            <TextView-->
+<!--                android:id="@+id/TotalRata"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="999999" />-->
+
+<!--        </TableRow>-->
+
+
+<!--        <TableRow-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:background="@android:color/holo_blue_dark"-->
+<!--            android:layout_marginLeft="2dp"-->
+<!--            android:layout_marginRight="2dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_span="7"-->
+<!--                android:text="Keterangan :" />-->
+
+<!--        </TableRow>-->
+<!--        <TableRow-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:background="@android:color/holo_blue_dark"-->
+<!--            android:layout_marginLeft="2dp"-->
+<!--            android:layout_marginRight="2dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_span="7"-->
+<!--                android:text="A* = Nilai Angka" />-->
+
+<!--        </TableRow>-->
+<!--        <TableRow-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:background="@android:color/holo_blue_dark"-->
+<!--            android:layout_marginLeft="2dp"-->
+<!--            android:layout_marginRight="2dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_span="7"-->
+<!--                android:text="H* = Nilai Huruf" />-->
+
+<!--        </TableRow>-->
+    </TableLayout>
+<!--    </HorizontalScrollView>-->
+<!--&lt;!&ndash;</ScrollView>&ndash;&gt;-->
+<!--        </ScrollView>-->
+
+<!--    </HorizontalScrollView>-->
+<!--            <TableLayout-->
+<!--                android:stretchColumns="1"-->
+<!--                android:layout_below="@id/headertabelNilai"-->
+<!--                android:id="@+id/bottomtabelNilai"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="2dp"-->
+<!--                android:layout_marginRight="2dp">-->
+
+<!--        </TableLayout>-->
+
+        </LinearLayout>
+        </ScrollView>
+</RelativeLayout>

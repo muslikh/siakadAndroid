@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/UtamaHasil"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarHselseksi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:titleTextColor="#FFFFFF"/>
+
+<!--<RelativeLayout-->
+<!--    android:id="@+id/seccondHasil"-->
+<!--    android:layout_marginLeft="10dp"-->
+<!--    android:layout_marginRight="10dp"-->
+<!--    android:layout_marginTop="10dp"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content">-->
+
+
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/SeleksiRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/JmlSeleksi">
+
+        <TableLayout
+            android:id="@+id/cariseleksei"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/JmlSeleksi"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <TableRow
+                android:gravity="center"
+                android:padding="6dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Di Bawa ini Daftar Nama Siswa Yang telah Ditermia"
+                    android:textColor="#070707" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:padding="6dp">
+
+                <android.support.v7.widget.SearchView
+
+                    android:id="@+id/cari"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#333333"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Cari Namamu Disini" />
+            </TableRow>
+
+        </TableLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/Hseleksi"
+            android:layout_width="match_parent"
+            android:layout_height="618dp"
+            android:layout_above="@+id/aksesMenu"
+            android:layout_below="@+id/JmlSeleksi"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp" />
+        <!--</RelativeLayout>-->
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

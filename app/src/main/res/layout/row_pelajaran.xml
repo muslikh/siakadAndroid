@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TableLayout
+        android:id="@+id/pelajaran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <TableRow
+        android:background="@android:color/darker_gray"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/noPelajaran"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="1." />
+
+        <TextView
+            android:id="@+id/hariPelajaran"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Senin  " />
+        <TextView
+            android:id="@+id/jamke"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1 - 10 " />
+
+        <TextView
+            android:id="@+id/guruPelajaran"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Aku" />
+
+        <TextView
+            android:id="@+id/mapelPelajaran"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ngoding" />
+    </TableRow>
+    </TableLayout>
+</RelativeLayout>

@@ -271,9 +271,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#000000"
+                android:textColor="#ffffff"
                 android:entries="@array/jenis_kelamin"
-                android:text=" "
-                android:textColor="#ffffff" />
+                android:text=" " />
         </TableRow>
         <TableRow
             android:layout_gravity="center"

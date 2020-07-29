@@ -22,7 +22,7 @@
         android:layout_below="@id/toolbarPPDB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Penerimaan Peserta Didik \n Baru Tahun Ajaran"/>
+        android:text="Penerimaan Peserta Didik "/>
     <TextView
         android:textColor="#000000"
         android:id="@+id/tahunppdb"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvformulirppdb"
         android:gravity="center"
-        android:text="2019/2020"
+        android:text=""
         android:textSize="18dp"
         android:textStyle="bold" />
 
@@ -210,7 +210,7 @@
                         android:id="@+id/ppdb_jurusan"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/program_keahlian"
+                        android:entries="@array/singkat_program_keahlian"
                         android:hint="  "
                         android:inputType="textPersonName"
                         android:textColor="#000000"

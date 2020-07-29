@@ -44,13 +44,13 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Hari " />
+                android:text="Hari dan Tanggal " />
 
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Jam Ke " />
+                android:text="Waktu" />
 
             <TextView
                 android:layout_width="40dp"
@@ -65,39 +65,10 @@
                 android:text="Nama Pelajaran" />
         </TableRow>
 
-        <TableRow
-            android:background="@android:color/darker_gray"
-            android:padding="5dp">
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="1." />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Senin  " />
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1 - 10 " />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Aku" />
-
-            <TextView
-                android:id="@+id/txt_id"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ngoding" />
-        </TableRow>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/jadwalUjian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </TableLayout>
 

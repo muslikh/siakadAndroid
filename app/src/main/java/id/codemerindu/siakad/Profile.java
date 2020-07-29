@@ -12,11 +12,13 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +41,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -46,6 +50,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +64,8 @@ import static id.codemerindu.siakad.Login.session_status;
 public class Profile extends AppCompatActivity {
 
     TextView namaUser, ttlUser, kodeKelas, jurusan;
-    String idu,levelU;
+    String idu,id,levelU,JWT,Token_jwt,strFoto;
+    Boolean session = false;
     SharedPreferences sharedpreferences;
     public final String deluser = Server.URL+"delperid.php";
     public final static String TAG = "Profile";
@@ -64,37 +73,40 @@ public class Profile extends AppCompatActivity {
     public final static String TAG_IDU = "idu";
     public static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
+    public static final String TAG_FOTO = "tag_foto";
+    public final static String TOKEN = "?token=";
+    public final static String Param = "&foto=";
 
     public  static final int RequestPermissionCode  = 1 ;
     PagerAdapterData pagerAdapter;
     Button btneditdata,btnrefresh,btngantifoto;
     ImageView fotoProfile;
-    Boolean session = false;
-    final String ambilfoto = Server.URL+"siswa.php?aksi=tampil_siswa";
-    final String gantifoto = Server.URL+"gantifoto.php";
+    final String ambilfoto = Server.URL+"siswa/detail/foto/";
+    final String gantifoto = Server.URL+"siswa/detail/ganti_foto/";
 
     private String Document_img1="";
     Bitmap bitmap;
     ProgressDialog progressDialog;
     int PICK_IMAGE_REQUEST = 111;
+
+    static final int REQUEST_TAKE_PHOTO = 1;
+    File mPhotoFile;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
-
+    int extraId;
 
     @Override
     public void onCreate(Bundle savedIntanceState) {
         super.onCreate(savedIntanceState);
         setContentView(R.layout.profile);
-
         ambilfoto();
-
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
+        idu = sharedpreferences.getString(TAG_ID, null);
         levelU = sharedpreferences.getString(TAG_LEVEL, null);
-        idu = sharedpreferences.getString(TAG_IDU, null);
+        Token_jwt = sharedpreferences.getString(JWT, null);
+        strFoto = sharedpreferences.getString(TAG_FOTO, null);
 
-        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-        session = sharedpreferences.getBoolean(session_status, false);
 
         fotoProfile = (ImageView) findViewById(R.id.fotoProfile);
         fotoProfile.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +117,7 @@ public class Profile extends AppCompatActivity {
         });
         btngantifoto = (Button) findViewById(R.id.btngantifoto);
         btngantifoto.setEnabled(false);
+        btngantifoto.setVisibility(View.GONE);
         btngantifoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,16 +134,13 @@ public class Profile extends AppCompatActivity {
         });
         EnableRuntimePermissionToAccessCamera();
 
-        Picasso.with(this).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
+        Picasso.with(this).load("http://muslikh.my.id/default.png").into(fotoProfile);
 
 
         btneditdata = (Button) findViewById(R.id.btneditData);
         btneditdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                idu = getIntent().getStringExtra(TAG_IDU);
-                sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-                session = sharedpreferences.getBoolean(session_status, false);
                 if (session) {
                     Intent profil = new Intent(Profile.this, EditDataSiswa.class);
                     profil.putExtra(TAG_IDU, idu);
@@ -307,7 +317,7 @@ public class Profile extends AppCompatActivity {
                                 idu = getIntent().getStringExtra(TAG_IDU);
                                 sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
                                 Map<String,String> map = new HashMap<String, String>();
-                                map.put("id_siswa", idu);
+                                map.put("id", idu);
                                 return map;
                             }
 
@@ -347,37 +357,50 @@ public class Profile extends AppCompatActivity {
         progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
         progressDialog.show();
 
-        StringRequest request = new StringRequest(Request.Method.GET, ambilfoto, new Response.Listener<String>(){
+        extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
+        String Token = getIntent().getStringExtra(JWT);
+
+        StringRequest request = new StringRequest(Request.Method.GET, ambilfoto+extraId+TOKEN+Token, new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONArray dataArray= new JSONArray(response);
                     progressDialog.dismiss();
+                    JSONArray dataArray= new JSONArray(response);
+
                     for (int i =0; i<dataArray.length(); i++) {
 
                         JSONObject obj = dataArray.getJSONObject(i);
-                        int extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
 
-                        int id = obj.getInt("id_siswa");
-                        if (extraId == id) {
-                            String fotobase64 = obj.getString("foto");
+//                        int id = obj.getInt("id");
+//                        if (extraId == id) {
+                            String fotobase64 = strFoto;
                             byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
                             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-                            if (extraId== id ) {
-
-                                if (fotobase64.isEmpty()) {
-
-                                    Picasso.with(getApplication()).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
+//                            if (extraId== id ) {
+//
+                            if (fotobase64.isEmpty()) {
+                                    Glide.with(getApplication())
+                                            .load("http://muslikh.my.id/default.png")
+                                            .apply(RequestOptions.circleCropTransform())
+                                            .into(fotoProfile);
+//                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
                                 } else if (fotobase64.equals("null")) {
 
-                                    Picasso.with(getApplication()).load("http://smknprigen.sch.id/bkk/image/default.png").into(fotoProfile);
+                                    Glide.with(getApplication())
+                                            .load("http://muslikh.my.id/default.png")
+                                            .apply(RequestOptions.circleCropTransform())
+                                            .into(fotoProfile);
+//                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
                                 } else {
 
-                                    fotoProfile.setImageBitmap(decodedByte);
+                                    Glide.with(getApplication())
+                                            .load(decodedByte)
+                                            .apply(RequestOptions.circleCropTransform())
+                                            .into(fotoProfile);
+//                                    fotoProfile.setImageBitmap(decodedByte);
                                 }
-                            }
-                        }
+//                            }
+//                        }
                     }
                 } catch (JSONException e) {
                     // JSON error
@@ -416,10 +439,29 @@ public class Profile extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Ambil Foto"))
                 {
-                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 100);
 
-                    btngantifoto.setEnabled(true);
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        // Create the File where the photo should go
+                        File photoFile = null;
+                        try {
+                            photoFile = createImageFile();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            // Error occurred while creating the File
+                        }
+                        if (photoFile != null) {
+                            Uri photoURI = FileProvider.getUriForFile(Profile.this,
+                                    BuildConfig.APPLICATION_ID + ".provider",
+                                    photoFile);
+                            mPhotoFile = photoFile;
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+
+                            btngantifoto.setEnabled(true);
+                            btngantifoto.setVisibility(View.VISIBLE);
+                        }
+                    }
 
                 }
                 else if (options[item].equals("Pilih Dari Gallery"))
@@ -430,6 +472,7 @@ public class Profile extends AppCompatActivity {
                     startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
 
                     btngantifoto.setEnabled(true);
+                    btngantifoto.setVisibility(View.VISIBLE);
                 }
                 else if (options[item].equals("Batal")) {
                     dialog.dismiss();
@@ -439,20 +482,30 @@ public class Profile extends AppCompatActivity {
         builder.show();
     }
 
-
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String mFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File mFile = File.createTempFile(mFileName, ".jpg", storageDir);
+        return mFile;
+    }
     private void gantifoto()
     {
         progressDialog = new ProgressDialog(Profile.this);
         progressDialog.setMessage("Proses Simpan, Mohon Tunggu...");
         progressDialog.show();
 
+
+        extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
+        String Token = getIntent().getStringExtra(JWT);
         //converting image to base64 string
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] imageBytes = baos.toByteArray();
         final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, gantifoto, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, gantifoto+extraId+TOKEN+Token+Param, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -481,7 +534,7 @@ public class Profile extends AppCompatActivity {
 
                 Map<String,String> map = new HashMap<>();
 
-                map.put("id_siswa", getIntent().getStringExtra(TAG_IDU));
+                map.put("id", getIntent().getStringExtra(TAG_IDU));
                 map.put("foto",imageString);
 
                 return map;
@@ -495,6 +548,16 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_TAKE_PHOTO) {
+
+                bitmap =  BitmapFactory.decodeFile(mPhotoFile.getAbsolutePath());
+                Glide.with(Profile.this)
+                        .load(bitmap)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(fotoProfile);
+            }
+        }
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
@@ -502,9 +565,10 @@ public class Profile extends AppCompatActivity {
             try {
                 //getting image from gallery
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-
-                //Setting image to ImageView
-                fotoProfile.setImageBitmap(bitmap);
+                Glide.with(Profile.this)
+                        .load(bitmap)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(fotoProfile);
             } catch (Exception e) {
                 e.printStackTrace();
             }

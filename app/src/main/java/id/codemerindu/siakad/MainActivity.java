@@ -1,48 +1,59 @@
 package id.codemerindu.siakad;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
@@ -51,29 +62,42 @@ public class MainActivity extends AppCompatActivity {
 //implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener
     private SliderLayout sliderShow;
 
+    ProgressDialog progressDialog;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
 
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
+    public final static String TOKEN = "&token=";
 
-    TextView txt_id,nmuser,lihatsemuajadwal,tv_lihatPengumunan;
-    String id, username, idu,level,levelU,nama;
+    TextView txt_id,nmuser,welcomesemester,kelas,bantuan;
+    Button lihatsemuajadwal,lihatPengumunan,websmk,elearning,keluar;
+    String id, username, idu,level,levelU,nama,JWT,Token_jwt,kode_kelas,semester,strFoto;
 //    NavigationView navigationView;
     SharedPreferences sharedpreferences;
 
     Boolean session = false;
 
     private static final String TAG_SUCCESS = "success";
-    int success;
-    private String url_slider = Server.URL + "slider.php";
-    private String url_siswa = Server.URL + "siswa.php?aksi=tampil_siswa";
+    int  extraId;
+//    private String url_slider = Server.URL + "slider.php";
+    private String url_siswa = Server.URL + "siswa/detail?id=";
     public static final String TAG_ID = "id";
     public static final String TAG_IDU = "idu";
     private static final String TAG_LEVEL = "level";
     public static final String TAG_USERNAME = "username";
     public static final String TAG_NAMA = "nama";
-    String tag_json_obj = "json_obj_req";
+    public static final String TAG_KELAS = "kode_kelas";
+    public static final String TAG_SEMESTER = "semester";
+    public static final String TAG_FOTO = "tag_foto";
+    String TAG_WEB = "tag_web";
+    String Title = "title";
+    ImageView WelcomefotoProfile;
+
+    private RecyclerView tampilResult;
+    public  String tampil = Server.URL+"pengumuman";
+    AdapterPengumuman adapterPengumuman;
+    ArrayList<HashMap<String ,String>> list_data;
 
     private FloatingActionButton fabProfil;
     BottomNavigationViewEx navigationViewEx;
@@ -86,49 +110,144 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("SIAKAD");
-        toolbar.setSubtitle("SMK NEGERI PRIGEN");
-        nmuser = (TextView) findViewById(R.id.welcomeNama) ;
+        getSupportActionBar().setTitle("AKSI");
+        toolbar.setSubtitle("Aplikasi Kesiswaan");
         toolbar.setLogo(R.mipmap.ic_logo);
-        tv_lihatPengumunan = (TextView) findViewById(R.id.lihatSemuaPengumuman);
-        tv_lihatPengumunan.setOnClickListener(new View.OnClickListener() {
+
+//        cekdatakosong();
+        pengumuman();
+
+
+        // Cek session login jika TRUE
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        idu = sharedpreferences.getString(TAG_ID, null);
+        nama = sharedpreferences.getString(TAG_NAMA, null);
+        levelU = sharedpreferences.getString(TAG_LEVEL, null);
+        Token_jwt = sharedpreferences.getString(JWT, null);
+        kode_kelas = sharedpreferences.getString(TAG_KELAS, null);
+        semester = sharedpreferences.getString(TAG_SEMESTER, null);
+        strFoto = sharedpreferences.getString(TAG_FOTO, null);
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullPengumuman);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                Intent pengumuman = new Intent(MainActivity.this, Pengumuman.class);
-//                            jadwal.putExtra(TAG_IDU, idu);
-                startActivity(pengumuman);
+            public void onRefresh() {
+                recreate(); // your code
+                pullToRefresh.setRefreshing(false);
             }
         });
-        lihatsemuajadwal = (TextView) findViewById(R.id.lihatJadwal);
+
+        bantuan = findViewById(R.id.bantuan);
+        bantuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent webIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                webIntent.setData(Uri.parse("https://api.whatsapp.com/send?phone=6285369000323&text=Assalamu'alaikum, Saya Ada Kendala, Bisa Minta Bantuannya"));
+                startActivity(webIntent);
+            }
+        });
+        ///foto Profil
+        WelcomefotoProfile = findViewById(R.id.WelcomefotoProfile);
+        foto();
+
+        kelas = findViewById(R.id.welcomeKelas);
+        kelas.setText(kode_kelas);
+        welcomesemester = findViewById(R.id.welcomeSemester);
+        welcomesemester.setText(semester);
+        websmk = findViewById(R.id.websekolah);
+        websmk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent websmk = new Intent(MainActivity.this, WebviewSMK.class);
+                websmk.putExtra(TAG_WEB, "http://smknprigen.sch.id/");
+                websmk.putExtra(Title, "Web Sekolah");
+                startActivity(websmk);
+
+
+            }
+        });
+        elearning = findViewById(R.id.e_learning);
+        elearning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent elearning = new Intent(MainActivity.this, WebviewSMK.class);
+                elearning.putExtra(TAG_WEB, "http://kbm.smknprigen.sch.id/Login");
+                elearning.putExtra(Title, "E-Learning");
+                startActivity(elearning);
+
+            }
+        });
+//        lihatPengumunan = findViewById(R.id.lihatSemuaPengumuman);
+//        lihatPengumunan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent pengumuman = new Intent(MainActivity.this, Pengumuman.class);
+////                            jadwal.putExtra(TAG_IDU, idu);
+//                startActivity(pengumuman);
+//            }
+//        });
+        lihatsemuajadwal = findViewById(R.id.lihatJadwal);
         lihatsemuajadwal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (session) {
                     Intent jadwal = new Intent(MainActivity.this, jadwal.class);
-//                            jadwal.putExtra(TAG_IDU, idu);
+                            jadwal.putExtra(TAG_KELAS, kode_kelas );
                     startActivity(jadwal);
 
                 }
             }
         });
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString(TAG_IDU,idu);
-// set Fragmentclass Arguments
-//        fragSiswa fragobj = new fragSiswa();
-//        fragobj.setArguments(bundle);
+        keluar = findViewById(R.id.logout);
+        keluar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        txt_id = (TextView)findViewById(R.id.txt_id);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                    alert
+                            .setMessage("Tekan Ya Untuk Keluar")
+                            .setCancelable(false)
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putBoolean(session_status, false);
+                                    editor.putString(TAG_ID, null);
+                                    editor.putString(TAG_USERNAME, null);
+                                    editor.commit();
+
+                                    Intent intent = new Intent(MainActivity.this, Login.class);
+                                    finish();
+                                    startActivity(intent);
+
+                                }
+                            })
+                            .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog keluar = alert.create();
+                    keluar.show();
+
+            }
+        });
+
         fabProfil = (FloatingActionButton)  findViewById(R.id.fabProfil);
         fabProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-                session = sharedpreferences.getBoolean(session_status, false);
                 if (session) {
                     Intent Tugaas = new Intent(MainActivity.this, Profile.class);
                     Tugaas.putExtra(TAG_IDU, idu);
+                    Tugaas.putExtra(JWT, Token_jwt);
+//                    Tugaas.putExtra(TAG_FOTO, strFoto);
                     startActivity(Tugaas);
                 }
             }
@@ -141,8 +260,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-                session = sharedpreferences.getBoolean(session_status, false);
+
                 switch (menuItem.getItemId())
                 {
                     case  R.id.kehadiran:
@@ -150,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
                         if (session) {
                             Intent kehadiran = new Intent(MainActivity.this, kehadiran.class);
                             kehadiran.putExtra(TAG_IDU, idu);
+                            kehadiran.putExtra(TAG_KELAS, kode_kelas);
+                            kehadiran.putExtra(TAG_SEMESTER, semester);
                             startActivity(kehadiran);
 
                         }
@@ -165,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
                     case  R.id.kumpulannilai:
 
                         if (session) {
-                            Intent Tugaas = new Intent(MainActivity.this, MainActivity.class);
+                            Intent Tugaas = new Intent(MainActivity.this, KumpulanNilai.class);
                             Tugaas.putExtra(TAG_IDU, idu);
                             startActivity(Tugaas);
                         }
@@ -182,21 +302,13 @@ public class MainActivity extends AppCompatActivity {
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 //        menuKiri();
 //        slider();
-        cekdatakosong();
 
-
-        // Cek session login jika TRUE maka langsung buka Profile
-        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-        session = sharedpreferences.getBoolean(session_status, false);
-        idu = sharedpreferences.getString(TAG_ID, null);
-        levelU = sharedpreferences.getString(TAG_LEVEL, null);
-        nama = sharedpreferences.getString(TAG_NAMA, null);
 
         if(levelU.equals("siswa"))
         {
 
-//            nmuser = (TextView) findViewById(R.id.navnamaUser);
-//            nmuser.setText(nama);
+            nmuser = (TextView) findViewById(R.id.welcomeNama) ;
+            nmuser.setText(nama);
 
         }else if(levelU.equals("admin"))
         {
@@ -236,10 +348,10 @@ public class MainActivity extends AppCompatActivity {
     {
         TableLayout tableLayout = (TableLayout) this.findViewById(R.id.tabelJadwal);
         TableRow row = (TableRow)getLayoutInflater().inflate(R.layout.jadwal_row, null);
-        ((TextView)row.findViewById(R.id.noTabel)).setText("2");
+        ((TextView)row.findViewById(R.id.noTabel)).setText("1");
         ((TextView)row.findViewById(R.id.jamTabel)).setText("8 - 10 ");
-        ((TextView)row.findViewById(R.id.GuruTabel)).setText("aku ");
-        ((TextView)row.findViewById(R.id.pelajaranTabel)).setText("ngoding ");
+        ((TextView)row.findViewById(R.id.GuruTabel)).setText("Muslikh ");
+        ((TextView)row.findViewById(R.id.pelajaranTabel)).setText("JarDas ");
 
         return  true;
     }
@@ -360,10 +472,11 @@ public class MainActivity extends AppCompatActivity {
     {
 
 
+        extraId = Integer.parseInt(idu);
         sliderShow = (SliderLayout) findViewById(R.id.slider);
 
         requestQueue = Volley.newRequestQueue(MainActivity.this);
-        stringRequest = new StringRequest(Request.Method.GET, url_siswa, new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.GET, url_siswa+extraId+TOKEN+Token_jwt, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -374,16 +487,14 @@ public class MainActivity extends AppCompatActivity {
                     {
 
                         JSONObject obj = dataArray.getJSONObject(i);
-                        int extraId = Integer.parseInt(idu);
                         String nama = obj.getString("nama");
-                        int id = obj.getInt("id_siswa");
+                        int id = obj.getInt("id");
 //                        String nisn = obj.getString("nisn");
                         String tempatLahir = obj.getString("tempat_lahir");
                         String tanggalLahir = obj.getString("tanggal_lahir");
 //                        String kodekelas = obj.getString("kode_kelas");
 //                        String jurusanS = obj.getString("kode_jurusan");
                         if(extraId==id) {
-                            nmuser.setText(obj.getString("nama"));
                             if (tempatLahir.equals("null") || tempatLahir.isEmpty() ) {
                                 Lengkapi();
                             }else if (tanggalLahir.equals("null") || tanggalLahir.isEmpty() ) {
@@ -434,6 +545,156 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog keluar = alert.create();
         keluar.show();
+    }
+
+    public void pengumuman()
+    {
+        tampilResult = (RecyclerView) findViewById(R.id.listPengumuman);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        tampilResult.setLayoutManager(llm);
+        list_data = new ArrayList<HashMap<String, String>>();
+
+        requestQueue = Volley.newRequestQueue(MainActivity.this);
+        stringRequest = new StringRequest(Request.Method.GET, tampil, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try{
+                    JSONArray dataArray= new JSONArray(response);
+                    for (int i =0; i<dataArray.length(); i++)
+                    {
+
+                        JSONObject json = dataArray.getJSONObject(i);
+                        HashMap<String, String > map = new HashMap<String , String >();
+                        map.put("isi_pengumuman", json.getString("isi_pengumuman"));
+                        map.put("judul_pengumuman",json.getString("judul_pengumuman"));
+                        map.put("tgl_pengumuman",json.getString("tgl_pengumuman"));
+                        map.put("level",json.getString("level"));
+                        list_data.add(map);
+                        adapterPengumuman = new AdapterPengumuman(MainActivity.this, list_data);
+                        tampilResult.setAdapter(adapterPengumuman);
+
+                    }
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+//    private void ambilfoto()
+//    {
+//        progressDialog = new ProgressDialog(MainActivity.this);
+//        progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
+//        progressDialog.show();
+//
+//        extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
+//        String Token = getIntent().getStringExtra(JWT);
+//
+//        StringRequest request = new StringRequest(Request.Method.GET, url_siswa+extraId+TOKEN+Token, new Response.Listener<String>(){
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    progressDialog.dismiss();
+//                    JSONArray dataArray= new JSONArray(response);
+//
+//                    for (int i =0; i<dataArray.length(); i++) {
+//
+//                        JSONObject obj = dataArray.getJSONObject(i);
+//
+////                        int id = obj.getInt("id");
+////                        if (extraId == id) {
+//                        String fotobase64 = strFoto;
+//                        byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
+//                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+////                            if (extraId== id ) {
+////
+//                        if (fotobase64.isEmpty()) {
+//                            Glide.with(getApplication())
+//                                    .load("http://muslikh.my.id/default.png")
+//                                    .apply(RequestOptions.circleCropTransform())
+//                                    .into(fotoProfile);
+////                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
+//                        } else if (fotobase64.equals("null")) {
+//
+//                            Glide.with(getApplication())
+//                                    .load("http://muslikh.my.id/default.png")
+//                                    .apply(RequestOptions.circleCropTransform())
+//                                    .into(fotoProfile);
+////                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
+//                        } else {
+//
+//                            Glide.with(getApplication())
+//                                    .load(decodedByte)
+//                                    .apply(RequestOptions.circleCropTransform())
+//                                    .into(fotoProfile);
+////                                    fotoProfile.setImageBitmap(decodedByte);
+//                        }
+////                            }
+////                        }
+//                    }
+//                } catch (JSONException e) {
+//                    // JSON error
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e(TAG, "Error: " + error.getMessage());
+//                Toast.makeText(Profile.this, error.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        }) {
+//            //adding parameters to send
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> parameters = new HashMap<String, String>();
+//
+//                return parameters;
+//            }
+//        };
+//
+//        RequestQueue rQueue = Volley.newRequestQueue(Profile.this);
+//        rQueue.add(request);
+//    }
+    public void foto()
+    {
+                       String fotobase64 = strFoto;
+                        byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//                            if (extraId== id ) {
+//
+                        if (fotobase64.isEmpty()) {
+                            Glide.with(getApplication())
+                                    .load("http://muslikh.my.id/default.png")
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .into(WelcomefotoProfile);
+//                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
+                        } else if (fotobase64.equals("null")) {
+
+                            Glide.with(getApplication())
+                                    .load("http://muslikh.my.id/default.png")
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .into(WelcomefotoProfile);
+//                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
+                        } else {
+
+                            Glide.with(getApplication())
+                                    .load(decodedByte)
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .into(WelcomefotoProfile);
+//                                    fotoProfile.setImageBitmap(decodedByte);
+                        }
     }
 }
 

@@ -14,11 +14,134 @@
         android:background="@color/colorPrimaryDark"
         android:titleTextColor="#FFFFFF"/>
 
+
+    <GridLayout
+        android:id="@+id/JmlSeleksi"
+        android:layout_below="@+id/toolbarDaftarUlang"
+        android:rowCount = "2"
+        android:background="@color/colorWhite"
+        android:columnCount = "2"
+        android:alignmentMode = "alignMargins"
+        android:columnOrderPreserved = "false"
+        android:layout_weight = "5"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:padding = "5dp"
+
+        >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/labelSDU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:text="Sudah \n Daftar Ulang"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"/>
+
+                <TextView
+                    android:id="@+id/jmlSDU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelHadir"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorWhite"
+                    android:text="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+
+                <TextView
+                    android:id="@+id/labelBDU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Belum \n Daftar Ulang"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/jmlBDU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/labelBDU"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorWhite"
+                    android:text="0" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/tvNotice"
+        android:layout_below="@id/JmlSeleksi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Di Bawah Ini Merupakan data Nama Yang Telah Diterima  |  Hasil Seleksi PPDB Bisa Di Lihat Pada Tanggal 29 Juli 2020"
+        android:textSize="14dp"
+        android:textStyle="bold|italic"
+        android:textColor="#000000"
+        tools:ignore="HardcodedText" />
     <TableLayout
         android:id="@+id/tabelCariNoun"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbarDaftarUlang"
+        android:layout_below="@id/tvNotice"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp">

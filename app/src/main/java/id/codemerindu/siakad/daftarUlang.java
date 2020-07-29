@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,9 +34,11 @@ public class daftarUlang extends AppCompatActivity {
     private StringRequest stringRequest;
 
     AlertDialog dialog;
-    String url_daftarUlang= Server.URL+"siswa.php?aksi=daftar_ulang";
+    String url_daftarUlang= Server.URL+"siswa/diterima";
+    String url_jmlditerima= Server.URL+"siswa/jmlditerima";
     ArrayList<HashMap<String ,String>> list_data;
     private SearchView cari;
+    TextView sdu,bdu;
 
     AdapterListDaftarUlang adapterListDaftarUlang;
     @Override
@@ -43,7 +46,7 @@ public class daftarUlang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar_ulang);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarDaftarUlang);
-        toolbar.setTitle("Daftar Ulang");
+        toolbar.setTitle("Hasil Seleksi");
         setSupportActionBar(toolbar);
         cari = (SearchView) findViewById(R.id.cariNoUn);
 
@@ -61,11 +64,22 @@ public class daftarUlang extends AppCompatActivity {
             }
         });
 
+        sdu = findViewById(R.id.jmlSDU);
+        bdu = findViewById(R.id.jmlBDU);
+
         tampilResult = (RecyclerView) findViewById(R.id.tampilResult);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         tampilResult.setLayoutManager(llm);
         list_data = new ArrayList<HashMap<String, String>>();
+
+        hasilseleksi();
+        jmlditerima();
+
+    }
+
+    public void hasilseleksi()
+    {
 
         requestQueue = Volley.newRequestQueue(daftarUlang.this);
         stringRequest = new StringRequest(Request.Method.GET, url_daftarUlang, new Response.Listener<String>() {
@@ -79,7 +93,7 @@ public class daftarUlang extends AppCompatActivity {
 
                         JSONObject json = dataArray.getJSONObject(i);
                         HashMap<String, String > map = new HashMap<String , String >();
-                        map.put("id_siswa", json.getString("id_siswa"));
+                        map.put("id", json.getString("id"));
                         map.put("nama",json.getString("nama"));
                         map.put("kode_kelas",json.getString("kode_kelas"));
                         map.put("kode_jurusan",json.getString("kode_jurusan"));
@@ -87,6 +101,39 @@ public class daftarUlang extends AppCompatActivity {
                         list_data.add(map);
                         adapterListDaftarUlang = new AdapterListDaftarUlang(daftarUlang.this, list_data);
                         tampilResult.setAdapter(adapterListDaftarUlang);
+
+                    }
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(daftarUlang.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+
+    public void  jmlditerima()
+    {
+
+        requestQueue = Volley.newRequestQueue(daftarUlang.this);
+        stringRequest = new StringRequest(Request.Method.GET, url_jmlditerima, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try{
+                    JSONArray dataArray= new JSONArray(response);
+                    for (int i =0; i<dataArray.length(); i++)
+                    {
+
+                        JSONObject json = dataArray.getJSONObject(i);
+                        sdu.setText(json.getString("sudah_aktif"));
+                        bdu.setText(json.getString("belum_aktif"));
 
                     }
                 } catch (JSONException e)
