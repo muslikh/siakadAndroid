@@ -224,17 +224,15 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/bnve"
         android:gravity="center"
         >
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/pullPengumuman"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="37dp">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPengumuman">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/listPengumuman"
@@ -266,5 +264,15 @@
         app:elevation="9dp" />
 
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"/>
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
 </RelativeLayout>

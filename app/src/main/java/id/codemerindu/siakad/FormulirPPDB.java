@@ -159,7 +159,7 @@ public class FormulirPPDB extends AppCompatActivity {
                         daftarBerhasil();
                     }else {
 
-                        daftarGAgal("Pendaftaran Gagal, Pastikan Semua Sudah Terisi  ");
+                        daftarGAgal("Pengisian Formulir , Pastikan Semua Sudah Terisi  ");
 
                     }
 
@@ -213,7 +213,7 @@ public class FormulirPPDB extends AppCompatActivity {
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert
-                .setMessage("Pendaftaran Berhasil, Tunggu Informasi Berikutnya di Aplikasi atau Email Kalian")
+                .setMessage("Pengisian Formulir Berhasil, Tunggu Informasi Berikutnya di Menu Hasil Seleksi atau Bisa Juga Kalian Cek Pada Email Kalian")
                 .setCancelable(false)
                 .setPositiveButton("OKK", new DialogInterface.OnClickListener() {
                     @Override

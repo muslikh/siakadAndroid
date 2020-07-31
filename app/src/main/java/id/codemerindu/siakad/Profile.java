@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -77,8 +78,10 @@ public class Profile extends AppCompatActivity {
     public final static String TOKEN = "?token=";
     public final static String Param = "&foto=";
 
-    public  static final int RequestPermissionCode  = 1 ;
-    PagerAdapterData pagerAdapter;
+
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int STORAGE_PERMISSION_CODE = 101;
+
     Button btneditdata,btnrefresh,btngantifoto;
     ImageView fotoProfile;
     final String ambilfoto = Server.URL+"siswa/detail/foto/";
@@ -132,9 +135,14 @@ public class Profile extends AppCompatActivity {
                 pullToRefresh.setRefreshing(false);
             }
         });
-        EnableRuntimePermissionToAccessCamera();
+//        EnableRuntimePermissionToAccessCamera();
+        checkPermission(Manifest.permission.CAMERA,
+                CAMERA_PERMISSION_CODE);
+        checkPermission(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                STORAGE_PERMISSION_CODE);
 
-        Picasso.with(this).load("http://muslikh.my.id/default.png").into(fotoProfile);
+//        Picasso.with(this).load("http://muslikh.my.id/default.png").into(fotoProfile);
 
 
         btneditdata = (Button) findViewById(R.id.btneditData);
@@ -342,14 +350,17 @@ public class Profile extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        if(levelU.equals("admin")) {
-            Intent pindah = new Intent(Profile.this, DataSiswa.class);
-            startActivity(pindah);
-        } else
-        {
+//        if(levelU.equals("admin")) {
+//            Intent pindah = new Intent(Profile.this, DataSiswa.class);
+//            startActivity(pindah);
+//        } else
+//        {
             Intent pindah = new Intent(Profile.this, MainActivity.class);
+//            pindah.putExtra(TAG_FOTO, strFoto);
+//            pindah.putExtra(TAG_IDU, idu);
+//            pindah.putExtra(JWT, Token_jwt);
             startActivity(pindah);
-        }
+//        }
     }
     private void ambilfoto()
     {
@@ -370,21 +381,26 @@ public class Profile extends AppCompatActivity {
                     for (int i =0; i<dataArray.length(); i++) {
 
                         JSONObject obj = dataArray.getJSONObject(i);
+                        String fotofile = obj.getString("file");
 
+//                        SharedPreferences.Editor editor = sharedpreferences.edit();
+//                        editor.putBoolean(session_status, false);
+//                        editor.putString(TAG_FOTO, fotofile);
+//                        editor.commit();
 //                        int id = obj.getInt("id");
 //                        if (extraId == id) {
-                            String fotobase64 = strFoto;
-                            byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
-                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//                            String fotobase64 = strFoto;
+//                            byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
+//                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 //                            if (extraId== id ) {
 //
-                            if (fotobase64.isEmpty()) {
+                            if (fotofile.isEmpty()) {
                                     Glide.with(getApplication())
                                             .load("http://muslikh.my.id/default.png")
                                             .apply(RequestOptions.circleCropTransform())
                                             .into(fotoProfile);
 //                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
-                                } else if (fotobase64.equals("null")) {
+                                } else if (fotofile.equals("null")) {
 
                                     Glide.with(getApplication())
                                             .load("http://muslikh.my.id/default.png")
@@ -394,7 +410,7 @@ public class Profile extends AppCompatActivity {
                                 } else {
 
                                     Glide.with(getApplication())
-                                            .load(decodedByte)
+                                            .load(Server.data+"/images/"+fotofile)
                                             .apply(RequestOptions.circleCropTransform())
                                             .into(fotoProfile);
 //                                    fotoProfile.setImageBitmap(decodedByte);
@@ -512,6 +528,10 @@ public class Profile extends AppCompatActivity {
                     JSONObject dataObj = new JSONObject(response);
                     progressDialog.dismiss();
 
+//                    SharedPreferences.Editor editor = sharedpreferences.edit();
+//                    editor.putBoolean(session_status, false);
+//                    editor.putString(TAG_FOTO, null);
+//                    editor.commit();
 
                 } catch (JSONException e) {
                     // JSON error
@@ -575,22 +595,83 @@ public class Profile extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
+        super
+                .onRequestPermissionsResult(requestCode,
+                        permissions,
+                        grantResults);
 
-    // Requesting runtime permission to access camera.
-    public void EnableRuntimePermissionToAccessCamera(){
+        if (requestCode == CAMERA_PERMISSION_CODE) {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(Profile.this,
-                Manifest.permission.CAMERA))
-        {
+            // Checking whether user granted the permission or not.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            // Printing toast message after enabling runtime permission.
-            Toast.makeText(Profile.this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
-
-        } else {
-
-            ActivityCompat.requestPermissions(Profile.this,new String[]{Manifest.permission.CAMERA}, RequestPermissionCode);
-
+                // Showing the toast message
+                Toast.makeText(Profile.this,
+                        "Camera Permission Granted",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else {
+                Toast.makeText(Profile.this,
+                        "Camera Permission Denied",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+        else if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(Profile.this,
+                        "Storage Permission Granted",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else {
+                Toast.makeText(Profile.this,
+                        "Storage Permission Denied",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
     }
+    public void checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(Profile.this, permission)
+                == PackageManager.PERMISSION_DENIED) {
+
+            // Requesting the permission
+            ActivityCompat.requestPermissions(Profile.this,
+                    new String[] { permission },
+                    requestCode);
+        }
+        else {
+            Toast.makeText(Profile.this,
+                    "Permission already granted",
+                    Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+    // Requesting runtime permission to access camera.
+//    public void EnableRuntimePermissionToAccessCamera(){
+//
+//        if (ActivityCompat.shouldShowRequestPermissionRationale(Profile.this,
+//                Manifest.permission.CAMERA))
+//        {
+//
+//            // Printing toast message after enabling runtime permission.
+//            Toast.makeText(Profile.this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
+//
+//        } else {
+//
+//            ActivityCompat.requestPermissions(Profile.this,new String[]{Manifest.permission.CAMERA}, RequestPermissionCode);
+//
+//        }
+//    }
 
 }

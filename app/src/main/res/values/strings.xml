@@ -8,6 +8,10 @@
     <string name="navigation_drawer_open">navigation_drawer_open</string>
     <string name="navigation_drawer_close">navigation_drawer_close</string>
 
+    <string name="msg_token_fmt">
+
+    </string>
+
     <string-array name="jenis_kelamin">
         <item>Pilih Jenis Kelamin</item>
         <item>Laki - Laki</item>

@@ -210,7 +210,7 @@ public class Login extends AppCompatActivity {
                         Token_JWT = jObj.getString("token");
                         kode_kelas = jObj.getString("kode_kelas");
                         semester = jObj.getString("semester");
-                        strFoto = jObj.getString("foto");
+                        strFoto = jObj.getString("file");
 
                         Log.e("Successfully Login!", jObj.toString());
 

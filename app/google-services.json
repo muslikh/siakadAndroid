@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "575980722568",
+    "firebase_url": "https://aksi-12a99.firebaseio.com",
+    "project_id": "aksi-12a99",
+    "storage_bucket": "aksi-12a99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575980722568:android:f216b7ce59a06e5054823d",
+        "android_client_info": {
+          "package_name": "id.codemerindu.siakad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575980722568-ngk4ji88250vmmje4lg5331d80ib7m2n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.codemerindu.siakad",
+            "certificate_hash": "63bee45d4ba422434e7930944a8b7fbbd2af76d4"
+          }
+        },
+        {
+          "client_id": "575980722568-i8vjiaomdr181ffje3tvsm01rmvdp5b1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtmVizHpKPWpuTGIMUNK7IFGkpHCAJOio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575980722568-i8vjiaomdr181ffje3tvsm01rmvdp5b1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

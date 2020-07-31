@@ -45,6 +45,10 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.daimajia.slider.library.SliderLayout;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import org.json.JSONArray;
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
     public final static String TOKEN = "&token=";
+    public final static String TOKEN2 = "?token=";
 
     TextView txt_id,nmuser,welcomesemester,kelas,bantuan;
     Button lihatsemuajadwal,lihatPengumunan,websmk,elearning,keluar;
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_SUCCESS = "success";
     int  extraId;
 //    private String url_slider = Server.URL + "slider.php";
+final String ambilfoto = Server.URL+"siswa/detail/foto/";
     private String url_siswa = Server.URL + "siswa/detail?id=";
     public static final String TAG_ID = "id";
     public static final String TAG_IDU = "idu";
@@ -106,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
+
+//        final String token = FirebaseInstanceId.getInstance().getToken();
+
+//        Log.e("LOG","token: " + token);
+//        Toast.makeText(MainActivity.this,"Token = " +token, Toast.LENGTH_LONG).show();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -133,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recreate(); // your code
+                pengumuman(); // your code
+                ambilfoto();
                 pullToRefresh.setRefreshing(false);
             }
         });
@@ -150,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         });
         ///foto Profil
         WelcomefotoProfile = findViewById(R.id.WelcomefotoProfile);
-        foto();
+        ambilfoto();
 
         kelas = findViewById(R.id.welcomeKelas);
         kelas.setText(kode_kelas);
@@ -247,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent Tugaas = new Intent(MainActivity.this, Profile.class);
                     Tugaas.putExtra(TAG_IDU, idu);
                     Tugaas.putExtra(JWT, Token_jwt);
-//                    Tugaas.putExtra(TAG_FOTO, strFoto);
+                    Tugaas.putExtra(TAG_FOTO, strFoto);
                     startActivity(Tugaas);
                 }
             }
@@ -590,97 +602,34 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(stringRequest);
     }
-//    private void ambilfoto()
-//    {
-//        progressDialog = new ProgressDialog(MainActivity.this);
-//        progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
-//        progressDialog.show();
-//
-//        extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
-//        String Token = getIntent().getStringExtra(JWT);
-//
-//        StringRequest request = new StringRequest(Request.Method.GET, url_siswa+extraId+TOKEN+Token, new Response.Listener<String>(){
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    progressDialog.dismiss();
-//                    JSONArray dataArray= new JSONArray(response);
-//
-//                    for (int i =0; i<dataArray.length(); i++) {
-//
-//                        JSONObject obj = dataArray.getJSONObject(i);
-//
-////                        int id = obj.getInt("id");
-////                        if (extraId == id) {
-//                        String fotobase64 = strFoto;
-//                        byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
-//                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-////                            if (extraId== id ) {
-////
-//                        if (fotobase64.isEmpty()) {
-//                            Glide.with(getApplication())
-//                                    .load("http://muslikh.my.id/default.png")
-//                                    .apply(RequestOptions.circleCropTransform())
-//                                    .into(fotoProfile);
-////                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
-//                        } else if (fotobase64.equals("null")) {
-//
-//                            Glide.with(getApplication())
-//                                    .load("http://muslikh.my.id/default.png")
-//                                    .apply(RequestOptions.circleCropTransform())
-//                                    .into(fotoProfile);
-////                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
-//                        } else {
-//
-//                            Glide.with(getApplication())
-//                                    .load(decodedByte)
-//                                    .apply(RequestOptions.circleCropTransform())
-//                                    .into(fotoProfile);
-////                                    fotoProfile.setImageBitmap(decodedByte);
-//                        }
-////                            }
-////                        }
-//                    }
-//                } catch (JSONException e) {
-//                    // JSON error
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.e(TAG, "Error: " + error.getMessage());
-//                Toast.makeText(Profile.this, error.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        }) {
-//            //adding parameters to send
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> parameters = new HashMap<String, String>();
-//
-//                return parameters;
-//            }
-//        };
-//
-//        RequestQueue rQueue = Volley.newRequestQueue(Profile.this);
-//        rQueue.add(request);
-//    }
-    public void foto()
+    private void ambilfoto()
     {
-                       String fotobase64 = strFoto;
-                        byte[] decodedString = Base64.decode(fotobase64, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//                            if (extraId== id ) {
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Proses Pengambilan Data, Mohon Tunggu...");
+        progressDialog.show();
+
+
+        StringRequest request = new StringRequest(Request.Method.GET, ambilfoto+idu+TOKEN2+Token_jwt, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                try {
+                    progressDialog.dismiss();
+                    JSONArray dataArray= new JSONArray(response);
+
+                    for (int i =0; i<dataArray.length(); i++) {
+
+                        JSONObject obj = dataArray.getJSONObject(i);
+                        String fotofile = obj.getString("file");
+
+
 //
-                        if (fotobase64.isEmpty()) {
+                        if (fotofile.isEmpty()) {
                             Glide.with(getApplication())
                                     .load("http://muslikh.my.id/default.png")
                                     .apply(RequestOptions.circleCropTransform())
                                     .into(WelcomefotoProfile);
 //                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
-                        } else if (fotobase64.equals("null")) {
+                        } else if (fotofile.equals("null")) {
 
                             Glide.with(getApplication())
                                     .load("http://muslikh.my.id/default.png")
@@ -690,11 +639,41 @@ public class MainActivity extends AppCompatActivity {
                         } else {
 
                             Glide.with(getApplication())
-                                    .load(decodedByte)
+                                    .load(Server.data+"/images/"+fotofile)
                                     .apply(RequestOptions.circleCropTransform())
                                     .into(WelcomefotoProfile);
 //                                    fotoProfile.setImageBitmap(decodedByte);
                         }
+//                            }
+//                        }
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //adding parameters to send
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+
+                return parameters;
+            }
+        };
+
+        RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
+        rQueue.add(request);
     }
+
+
 }
 
