@@ -34,6 +34,8 @@ public class kehadiran extends AppCompatActivity {
 
     public  static String url = Server.URL+"jmlabsensi?kode_kelas=";
     public  static String url_log = Server.URL+"logabsensi?kode_kelas=";
+    public  static String url_hitung = Server.URL+"hitungabsensi?kode_kelas=";
+
     SharedPreferences sharedpreferences;
     Boolean session = false;
     TextView btn_absenMasuk,btn_absenPulang,tes,formijinsakit;
@@ -122,6 +124,7 @@ public class kehadiran extends AppCompatActivity {
 
         AmbilJmlAbsen();
         AmbilLogABsen();
+        hitungAbsen();
 
     }
 
@@ -148,6 +151,47 @@ public class kehadiran extends AppCompatActivity {
                                     jmlSakit.setText(obj.getString("sakit"));
                                     jmlIjin.setText(obj.getString("ijin"));
                                     jmlAlpha.setText(obj.getString("alpha"));
+//                                }
+                            }
+                        }  catch(
+                                JSONException e)
+
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        namaUser.setText(error.getLocalizedMessage());
+                    }
+                });
+        requestQueue.add(stringRequests);
+
+    }
+    public void hitungAbsen()
+    {
+
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequests =
+                new StringRequest(Request.Method.GET, url_hitung+kelas+"&semester="+semester+"&siswaID="+id, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray dataArray = new JSONArray(response);
+
+                            for (int i = 0; i < dataArray.length(); i++) {
+
+                                JSONObject obj = dataArray.getJSONObject(i);
+
+//                                int id = obj.getInt("siswaID");
+//                                if (extraId == id) {
+                                jmlHadir.setText(obj.getString("hadir"));
+                                jmlSakit.setText(obj.getString("sakit"));
+                                jmlIjin.setText(obj.getString("ijin"));
+                                jmlAlpha.setText(obj.getString("alpha"));
 //                                }
                             }
                         }  catch(

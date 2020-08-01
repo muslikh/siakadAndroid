@@ -16,8 +16,8 @@ public class FirebaseInstance extends FirebaseInstanceIdService {
     public void onTokenRefresh()
     {
         super.onTokenRefresh();
-//        String token = FirebaseInstanceId.getInstance().getToken();
-//        Log.d(TAG, "refresh token:"+token);
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "refresh token:"+token);
 
     }
 
@@ -25,5 +25,16 @@ public class FirebaseInstance extends FirebaseInstanceIdService {
     {
         onTokenRefresh();
     }
+    // New code
+    // New code
+//    @Override
+//    public void onNewToken(String token) {
+//        Log.d(TAG, "Refreshed token: " + token);
+//
+//        // If you want to send messages to this application instance or
+//        // manage this apps subscriptions on the server side, send the
+//        // Instance ID token to your app server.
+//        sendRegistrationToServer(token);
+//    }
 
 }

@@ -113,10 +113,10 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
-//        final String token = FirebaseInstanceId.getInstance().getToken();
+        final String token = FirebaseInstanceId.getInstance().getToken();
 
-//        Log.e("LOG","token: " + token);
-//        Toast.makeText(MainActivity.this,"Token = " +token, Toast.LENGTH_LONG).show();
+        Log.e("LOG","token: " + token);
+        Toast.makeText(MainActivity.this,"Token = " +token, Toast.LENGTH_LONG).show();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

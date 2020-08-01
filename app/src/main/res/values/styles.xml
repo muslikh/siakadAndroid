@@ -11,6 +11,9 @@
     </style>
 
 
+    <style name="TextAppearance.Compat.Notification.Time"></style>
+
+<!--    android:textAppearance="@style/TextAppearance.Compat.Notification.Time"-->
     <style name="WhiteFocus">
         <item name="colorAccent">@color/colorWhite</item>
         <item name="colorControlNormal">@color/colorWhite</item>
