@@ -35,8 +35,10 @@ import org.json.JSONObject;
 
 import java.sql.Time;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static id.codemerindu.siakad.Login.my_shared_preferences;
@@ -190,13 +192,15 @@ public class AbsenQR extends AppCompatActivity {
 //                idu = getIntent().getStringExtra(TAG_IDU);
                 jenis = getIntent().getStringExtra("jenis");
 
-                Date tgl = new Date();
-                Date jam = new Date();
-                String dateFormat = DateFormat.getInstance().format(tgl);
+                String jam = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                String tgl = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+//                Date tgl = new Date();
+//                Date jam = new Date();
+//                String dateFormat = DateFormat.getInstance().format(tgl);
                 Map<String,String> map = new HashMap<String, String>();
                 map.put("siswaID", String.valueOf(id));
-                map.put("tgl", dateFormat);
-                map.put("jam", dateFormat);
+                map.put("tgl", tgl);
+                map.put("jam", jam);
                 map.put("jenis", jenis);
                 map.put("kode_kelas", kelas);
                 map.put("semester", semester);

@@ -49,6 +49,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import org.json.JSONArray;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView txt_id,nmuser,welcomesemester,kelas,bantuan;
     Button lihatsemuajadwal,lihatPengumunan,websmk,elearning,keluar;
-    String id, username, idu,level,levelU,nama,JWT,Token_jwt,kode_kelas,semester,strFoto;
+    String id, username, idu,level,levelU,nama,JWT,Token_jwt,kode_kelas,semester,strFoto,token;
 //    NavigationView navigationView;
     SharedPreferences sharedpreferences;
 
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 //    private String url_slider = Server.URL + "slider.php";
 final String ambilfoto = Server.URL+"siswa/detail/foto/";
     private String url_siswa = Server.URL + "siswa/detail?id=";
+    private String url_tes = Server.URL + "tes?id=";
+
     public static final String TAG_ID = "id";
     public static final String TAG_IDU = "idu";
     private static final String TAG_LEVEL = "level";
@@ -113,10 +116,6 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
-        final String token = FirebaseInstanceId.getInstance().getToken();
-
-        Log.e("LOG","token: " + token);
-        Toast.makeText(MainActivity.this,"Token = " +token, Toast.LENGTH_LONG).show();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -125,8 +124,6 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
         toolbar.setSubtitle("Aplikasi Kesiswaan");
         toolbar.setLogo(R.mipmap.ic_logo);
 
-//        cekdatakosong();
-        pengumuman();
 
 
         // Cek session login jika TRUE
@@ -173,7 +170,7 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
             @Override
             public void onClick(View v) {
                 Intent websmk = new Intent(MainActivity.this, WebviewSMK.class);
-                websmk.putExtra(TAG_WEB, "http://smknprigen.sch.id/");
+                websmk.putExtra(TAG_WEB, "https://smknprigen.sch.id/");
                 websmk.putExtra(Title, "Web Sekolah");
                 startActivity(websmk);
 
@@ -185,7 +182,7 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
             @Override
             public void onClick(View v) {
                 Intent elearning = new Intent(MainActivity.this, WebviewSMK.class);
-                elearning.putExtra(TAG_WEB, "http://kbm.smknprigen.sch.id/Login");
+                elearning.putExtra(TAG_WEB, "https://kbm.smknprigen.sch.id/Login");
                 elearning.putExtra(Title, "E-Learning");
                 startActivity(elearning);
 
@@ -353,6 +350,13 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
             AlertDialog berhasil = alert.create();
             berhasil.show();
         }
+
+
+//        cekdatakosong();
+        FirebaseGetSubscribe();
+        FirebaseGetToken();
+        pengumuman();
+
 
     }
 
@@ -639,7 +643,7 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
                         } else {
 
                             Glide.with(getApplication())
-                                    .load(Server.data+"/images/"+fotofile)
+                                    .load(Server.data+"images/"+fotofile)
                                     .apply(RequestOptions.circleCropTransform())
                                     .into(WelcomefotoProfile);
 //                                    fotoProfile.setImageBitmap(decodedByte);
@@ -675,5 +679,86 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
     }
 
 
+    private void tesfcm()
+    {
+        //  input token ke database
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_tes+idu+"&fcm_token="+token, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject dataObj = new JSONObject(response);
+
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Log.e(TAG, "Error: " + error.getMessage());
+//                Toast.makeText(FormulirPPDB.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+
+            protected Map<String,String> getParams() throws AuthFailureError{
+
+                Map<String,String> map = new HashMap<String, String>();
+//                    params.put("id_siswaBaru", id_siswaBaru);
+//                map.put("id", Integer.parseInt(idu));
+                map.put("fcm_token", token);
+                //  params.put("tahun_nmasuk", thnmasuk.getText().toString());
+                //}
+                return map;
+            }
+
+        };
+
+        AppController.getInstance().addToRequestQueue(stringRequest);
+    }
+
+    public void FirebaseGetToken()
+    {
+        //get token perdevice id
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("MainActivity", "getInstanceId failed", task.getException());
+                    return;
+                }
+
+                // Get new Instance ID token
+                token = task.getResult().getToken();
+
+                tesfcm();
+                // Log and toast.
+                Log.d("token main activity", token);
+                Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void FirebaseGetSubscribe()
+    {
+        //kirim notif semua user
+        FirebaseMessaging.getInstance().subscribeToTopic(kode_kelas)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = getString(R.string.msg_subscribed);
+                        if (!task.isSuccessful()) {
+                            msg = getString(R.string.msg_subscribe_failed);
+                        }
+                        Log.d("pesan subscribe", msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }
 

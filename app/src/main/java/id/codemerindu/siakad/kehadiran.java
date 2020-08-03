@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,8 +26,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import static id.codemerindu.siakad.Login.my_shared_preferences;
 import static id.codemerindu.siakad.Login.session_status;
@@ -35,16 +41,18 @@ public class kehadiran extends AppCompatActivity {
     public  static String url = Server.URL+"jmlabsensi?kode_kelas=";
     public  static String url_log = Server.URL+"logabsensi?kode_kelas=";
     public  static String url_hitung = Server.URL+"hitungabsensi?kode_kelas=";
+    public  static String cek_absen = Server.URL+"cekabsen?kode_kelas=";
 
     SharedPreferences sharedpreferences;
     Boolean session = false;
     TextView btn_absenMasuk,btn_absenPulang,tes,formijinsakit;
+    CardView cardAbsen,cardIjin,card_pesanCekAbsen;
     String TAG_ID = "id";
     String TAG_IDU = "id";
     public final static String TAG_KELAS = "kode_kelas";
     public final static String TAG_SEMESTER = "semester";
 
-    String id,kelas,semester;
+    String id,kelas,semester,jam,tgl;
     int extraId;
     TextView jmlHadir, jmlSakit, jmlIjin, jmlAlpha;
 
@@ -61,19 +69,30 @@ public class kehadiran extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kehadiran);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarKehadiran);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Kehadiran");
+
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
         id = sharedpreferences.getString(TAG_ID, null);
+        kelas = sharedpreferences.getString(TAG_KELAS, null);
+        semester = sharedpreferences.getString(TAG_SEMESTER, null);
 
-        kelas = getIntent().getStringExtra(TAG_KELAS);
-        semester = getIntent().getStringExtra(TAG_SEMESTER);
+//        kelas = getIntent().getStringExtra(TAG_KELAS);
+//        semester = getIntent().getStringExtra(TAG_SEMESTER);
 
+         jam = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+         tgl = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         jmlHadir = findViewById(R.id.jmlHadir);
         jmlSakit = findViewById(R.id.jmlSakit);
         jmlIjin = findViewById(R.id.jmlIjin);
         jmlAlpha = findViewById(R.id.jmlAlpha);
 
+        cardAbsen = findViewById(R.id.cardAbsen);
+        cardIjin = findViewById(R.id.cardIjin);
+        card_pesanCekAbsen = findViewById(R.id.card_pesanCekAbsen);
 //        tes = findViewById(R.id.isiNo);
 //        tes.setText(semester);
         btn_absenMasuk = (TextView) findViewById(R.id.absenMasuk);
@@ -125,6 +144,7 @@ public class kehadiran extends AppCompatActivity {
         AmbilJmlAbsen();
         AmbilLogABsen();
         hitungAbsen();
+        cekAbsen();
 
     }
 
@@ -226,11 +246,12 @@ public class kehadiran extends AppCompatActivity {
 
                             for (int i =0; i<dataArray.length(); i++)
                             {
-                                int no  = 1;
-                                no++;
+
                                 JSONObject json = dataArray.getJSONObject(i);
                                 HashMap<String, String > map = new HashMap<String , String >();
-                                map.put("no", Integer.toString(no));
+
+                                int key = i+1;
+                                map.put("no", Integer.toString(key));
 //                                map.put("siswaID",json.getString("siswaID"));
                                 map.put("tgl",json.getString("tgl"));
                                 map.put("jam",json.getString("jam"));
@@ -263,4 +284,64 @@ public class kehadiran extends AppCompatActivity {
         requestQueue.add(stringRequests);
     }
 
+
+    public void cekAbsen()
+    {
+
+        String tgl = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequests =
+                new StringRequest(Request.Method.GET, cek_absen+kelas+"&semester="+semester+"&siswaID="+id+"&tgl="+tgl, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray dataArray= new JSONArray(response);
+
+                            for (int i =0; i<dataArray.length(); i++)
+                            {
+
+                                JSONObject json = dataArray.getJSONObject(i);
+
+                                String pesan = json.getString("message");
+                                if(pesan.equals("sudah_absen"))
+                                {
+                                    cardIjin.setVisibility(View.GONE);
+                                    cardAbsen.setVisibility(View.GONE);
+                                    card_pesanCekAbsen.setVisibility(View.VISIBLE);
+
+                                }else {
+
+                                    cardIjin.setVisibility(View.VISIBLE);
+                                    cardAbsen.setVisibility(View.VISIBLE);
+                                    card_pesanCekAbsen.setVisibility(View.GONE);
+                                }
+
+
+                            }
+                        }  catch(
+                                JSONException e)
+
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(stringRequests);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        Intent pindah = new Intent(kehadiran.this, MainActivity.class);
+
+        startActivity(pindah);
+//        }
+    }
 }

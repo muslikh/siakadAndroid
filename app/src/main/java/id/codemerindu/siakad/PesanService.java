@@ -9,14 +9,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-public class getPesan extends FirebaseMessagingService {
+public class PesanService extends FirebaseMessagingService {
 
     private static final String TAG ="Test Test";
 
@@ -33,10 +35,14 @@ public class getPesan extends FirebaseMessagingService {
     private void sendNotif(RemoteMessage remoteMessage)
     {
         Map<String ,String >data = remoteMessage.getData();
-        String title = data.get("Judul");
-        String content = data.get("Message");
+
+        String title = data.get("title");
+        String content = data.get("message");
+//        PendingIntent intent = data.get("intent");
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         RemoteViews contentView = new RemoteViews(getPackageName(),R.layout.notif);
+        contentView.setTextViewText(R.id.content_title, title);
+        contentView.setTextViewText(R.id.content_text, content);
         String NOTIFICATION_CHANNEL_ID = "id1";
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
 //        {
@@ -54,15 +60,24 @@ public class getPesan extends FirebaseMessagingService {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle(title)
-                .setCustomContentView(contentView)
+                .setContentText(content)
+//                .setCustomContentView(contentView)
                 .setSmallIcon(R.mipmap.ic_logo)
                 .setColor(getResources().getColor(R.color.colorPrimaryDark))
-//                .setStyle(new android.support.v7.app.ActionBar.DisplayOptions())
+                .setStyle(new android.support.v4.app.NotificationCompat.DecoratedCustomViewStyle())
+//                .setCustomBigContentView(contentView)
 
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                 .setContentText(content)
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0))
                 .setColor(getResources().getColor(R.color.colorPrimaryDark));
         notificationManager.notify(1,notBuilder.build());
+    }
+
+    @Override
+    public void onNewToken(String token) {
+        super.onNewToken(token);
+        Log.d(TAG, "token:"+ token);
+
     }
 }

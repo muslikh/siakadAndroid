@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme.AppBarOverlay"
     tools:context=".kehadiran">
 
     <android.support.v7.widget.Toolbar
@@ -213,11 +214,13 @@
         >
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardAbsen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_marginLeft="16dp"
+            android:visibility="invisible"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
             app:cardBackgroundColor="@android:color/holo_red_dark"
@@ -245,10 +248,12 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardIjin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
+            android:visibility="invisible"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
@@ -292,12 +297,43 @@
 <!--                    />-->
 
 <!--            </LinearLayout>-->
+
+
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_pesanCekAbsen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@android:color/holo_red_dark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
 
+            <LinearLayout
+                android:layout_gravity="center_vertical |center_horizontal"
+                android:layout_margin = "16dp"
+                android:orientation="vertical"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content">
+
+                <TextView
+                    android:id="@+id/tvpesanCekAbsen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#D50000"
+                    android:textColor="#ffffff"
+                    android:text="Kamu Sudah Absen Hari Ini"/>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </GridLayout>
-
-
 
     <TableLayout
 

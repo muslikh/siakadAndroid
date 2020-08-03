@@ -10,7 +10,6 @@
         android:background="@color/colorPrimaryDark"
         android:titleTextColor="#FFFFFF"/>
 
-
     <TextView
         android:id="@+id/tvkenapa"
         android:layout_marginLeft="10dp"
@@ -77,15 +76,39 @@
         android:text="Keterangan / Alsan"/>
 
     <EditText
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:id="@+id/edKeterangan"
-        android:layout_below="@+id/tvKeterangan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tvKeterangan"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:ems="10"
-        android:inputType="text|textMultiLine"
-        android:text="Isi Alasan" />
+        android:hint="Tulis Alasan Tidak Masuk"
+        android:inputType="text|textMultiLine" />
+    <TextView
+        android:id="@+id/pesanAbsen"
+        android:layout_below="@id/edKeterangan"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Silahkan Upload surat keterangan bertanda tangan Orang Tua"/>
+    <ImageView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/pesanAbsen"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/fotosurat"/>
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:background="@drawable/round_bg"
+        android:layout_height="wrap_content"
+        android:id="@+id/pilihfoto"
+        android:text="Pilih Foto"
+        android:layout_below="@id/fotosurat"/>
     <Button
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -95,7 +118,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/kirimIjin"
         android:text="Kirim"
-        android:layout_below="@id/edKeterangan"/>
-
+        android:layout_below="@id/pilihfoto"/>
 
 </RelativeLayout>

@@ -84,10 +84,12 @@ public class fragJadwalUjian extends Fragment {
 
                             for (int i =0; i<dataArray.length(); i++)
                             {
-                                int no  = 1;
+
+
                                 JSONObject json = dataArray.getJSONObject(i);
                                 HashMap<String, String > map = new HashMap<String , String >();
-                                map.put("no", Integer.toString(no));
+                                int key = i+1;
+                                map.put("no", Integer.toString(key));
                                 map.put("hari",json.getString("hari"));
                                 map.put("waktu",json.getString("waktu"));
                                 map.put("nama_guru",json.getString("nama_guru"));

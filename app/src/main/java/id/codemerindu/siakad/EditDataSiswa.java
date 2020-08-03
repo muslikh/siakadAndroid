@@ -200,8 +200,8 @@ public class EditDataSiswa extends AppCompatActivity {
         pengeluaranWali= (EditText) findViewById(R.id.edpengeluaranWali);
         AlamatWali= (EditText)  findViewById(R.id.edAlamatWali);
         nohpWali= (EditText) findViewById(R.id.ednohpWali);
-        edusername= (EditText) findViewById(R.id.edUsername);
-        edpassword= (EditText) findViewById(R.id.edPassword);
+//        edusername= (EditText) findViewById(R.id.edUsername);
+//        edpassword= (EditText) findViewById(R.id.edPassword);
     }
 
     public void editData()

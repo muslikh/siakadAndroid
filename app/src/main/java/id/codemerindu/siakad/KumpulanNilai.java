@@ -1,5 +1,6 @@
 package id.codemerindu.siakad;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,9 @@ public class KumpulanNilai extends AppCompatActivity {
 
 
     final String url = Server.URL+"siswa/nilai?users_id=";
+    final String url_nilairapor = Server.URL+"siswa/nilairapor?users_id=";
+
+    ProgressDialog progressDialog;
     public int extraId;
     Boolean session = false;
     SharedPreferences sharedpreferences;
@@ -45,9 +49,10 @@ public class KumpulanNilai extends AppCompatActivity {
     public final static String TAG_IDU = "idu";
     String id;
     Button btn1,btn2,btn3,btn4,btn5;
+    TableLayout headertabelNilai;
     String semester;
     Spinner spinnerSemester;
-    TextView tvSemester;
+    TextView tvSemester,ratapengetahuan,rataketerampilan,totalrata;
     RecyclerView recyclerView;
     AdapterNilai adapterNilai;
     ArrayList<HashMap<String, String>> list_data;
@@ -67,6 +72,11 @@ public class KumpulanNilai extends AppCompatActivity {
         list_data = new ArrayList<HashMap<String, String>>();
 
         tvSemester = (TextView) findViewById(R.id.tvSemester);
+        headertabelNilai = findViewById(R.id.headertabelNilai);
+
+        ratapengetahuan = findViewById(R.id.rataP);
+        rataketerampilan = findViewById(R.id.rataK);
+        totalrata = findViewById(R.id.TotalRata);
 
         spinnerSemester = (Spinner) findViewById(R.id.spinSemseter);
         spinnerSemester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -75,7 +85,8 @@ public class KumpulanNilai extends AppCompatActivity {
 
                 tvSemester.setText(String.valueOf(spinnerSemester.getSelectedItemPosition()).toString());
                 list_data.clear();
-                    getDataNilai();
+                getDataNilai();
+                getNilaiAkhir();
 
             }
 
@@ -85,12 +96,17 @@ public class KumpulanNilai extends AppCompatActivity {
             }
         });
 
-        getDataNilai();
+//        getDataNilai();
+//        getNilaiAkhir();
     }
 
 
     public void getDataNilai()
     {
+//        progressDialog = new ProgressDialog(KumpulanNilai.this);
+//        progressDialog.setMessage("Proses Simpan, Mohon Tunggu...");
+//        progressDialog.show();
+
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
         id =  sharedpreferences.getString(TAG_IDU, null);
@@ -107,15 +123,19 @@ public class KumpulanNilai extends AppCompatActivity {
                         try{
                             JSONArray dataArray= new JSONArray(response);
 
+//                            progressDialog.dismiss();
                             for (int i =0; i<dataArray.length(); i++)
                             {
+                                headertabelNilai.setVisibility(View.VISIBLE);
+
+                                HashMap<String, String > map = new HashMap<String , String >();
 
                                 JSONObject json = dataArray.getJSONObject(i);
-                                HashMap<String, String > map = new HashMap<String , String >();
-                                int key=1;
-                                map.put("noNilai", Integer.toString(key++));
+
+                                int key = i+1;
+                                map.put("noNilai", Integer.toString(key));
                                 map.put("kkm",json.getString("kkm"));
-                                    map.put("nama_mapel", json.getString("nama_mapel"));
+                                map.put("nama_mapel", json.getString("nama_mapel"));
                                 map.put("nilaiAngkaPengetahuan",json.getString("nilaiAngkaPengetahuan"));
                                 map.put("nilaiHurufPengetahuan", json.getString("nilaiHurufPengetahuan"));
                                 map.put("nilaiAngkaKeterampilan",json.getString("nilaiAngkaKeterampilan"));
@@ -143,4 +163,50 @@ public class KumpulanNilai extends AppCompatActivity {
         requestQueue.add(stringRequests);
     }
 
+    public void getNilaiAkhir()
+    {
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedpreferences.getBoolean(session_status, false);
+        id =  sharedpreferences.getString(TAG_IDU, null);
+
+        extraId = Integer.parseInt(getIntent().getStringExtra(TAG_IDU));
+
+        String semester= tvSemester.getText().toString();
+        RequestQueue  requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequests =
+                new StringRequest(Request.Method.GET, url_nilairapor+extraId+"&semester="+semester, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try{
+                            JSONArray dataArray= new JSONArray(response);
+
+
+
+                            for (int i =0; i<dataArray.length(); i++)
+                            {
+
+                                JSONObject json = dataArray.getJSONObject(i);
+                                rataketerampilan.setText(json.getString("rerataK"));
+                                ratapengetahuan.setText(json.getString("rerataP"));
+                                totalrata.setText(json.getString("total"));
+
+
+
+//                                recreate();
+                            }
+                        } catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+                {
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(KumpulanNilai.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+        requestQueue.add(stringRequests);
+    }
 }

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -23,6 +24,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +74,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
+        FirebaseGetSubscribe();
 
         // Cek session login jika TRUE maka langsung buka MainActivity
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
@@ -143,16 +147,27 @@ public class Login extends AppCompatActivity {
 //        username = sharedpreferences.getString(TAG_USERNAME, null);
        // nama = sharedpreferences.getString(TAG_NAMA, null);
 
-//        if (session) {
-//            Intent intent = new Intent(Login.this, MainActivity.class);
-//            intent.putExtra(TAG_ID, id);
-//            intent.putExtra(TAG_USERNAME, username);
-//            intent.putExtra(TAG_LEVEL, level);
-//            intent.putExtra(TAG_FOTO, strFoto);
-//            intent.putExtra(TAG_NAMA, nama);
-//            intent.putExtra(JWT,Token_JWT);
-//            intent.putExtra(TAG_KELAS, kode_kelas);
-//            intent.putExtra(TAG_SEMESTER, semester);
+        if (session) {
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            intent.putExtra(TAG_ID, id);
+            intent.putExtra(TAG_USERNAME, username);
+            intent.putExtra(TAG_LEVEL, level);
+            intent.putExtra(TAG_FOTO, strFoto);
+            intent.putExtra(TAG_NAMA, nama);
+            intent.putExtra(JWT,Token_JWT);
+            intent.putExtra(TAG_KELAS, kode_kelas);
+            intent.putExtra(TAG_SEMESTER, semester);
+            finish();
+            startActivity(intent);
+        }
+//        else {
+//            SharedPreferences.Editor editor = sharedpreferences.edit();
+//            editor.putBoolean(session_status, false);
+//            editor.putString(TAG_ID, null);
+//            editor.putString(TAG_USERNAME, null);
+//            editor.commit();
+//
+//            Intent intent = new Intent(Login.this, Login.class);
 //            finish();
 //            startActivity(intent);
 //        }
@@ -181,6 +196,19 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = getString(R.string.msg_subscribed);
+                        if (!task.isSuccessful()) {
+                            msg = getString(R.string.msg_subscribe_failed);
+                        }
+                        Log.d(TAG, msg);
+                        Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
@@ -296,6 +324,23 @@ public class Login extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
+    }
+
+    public void FirebaseGetSubscribe()
+    {
+        //kirim notif semua user
+        FirebaseMessaging.getInstance().subscribeToTopic("umum")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = getString(R.string.msg_subscribed);
+                        if (!task.isSuccessful()) {
+                            msg = getString(R.string.msg_subscribe_failed);
+                        }
+                        Log.d("pesan subscribe", msg);
+                        Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void showDialog() {

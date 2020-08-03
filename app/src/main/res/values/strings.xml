@@ -11,6 +11,12 @@
     <string name="msg_token_fmt">
 
     </string>
+    <string name="msg_subscribed">
+  sukses
+     </string>
+    <string name="msg_subscribe_failed">
+    gagal
+    </string>
 
     <string-array name="jenis_kelamin">
         <item>Pilih Jenis Kelamin</item>
