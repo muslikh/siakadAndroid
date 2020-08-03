@@ -4,30 +4,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -78,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView txt_id,nmuser,welcomesemester,kelas,bantuan;
     Button lihatsemuajadwal,lihatPengumunan,websmk,elearning,keluar;
-    String id, username, idu,level,levelU,nama,JWT,Token_jwt,kode_kelas,semester,strFoto,token;
+    String id, username, idu,level,levelU,nama,JWT,Token_jwt,kode_kelas,semester,strFoto,token,deviceId;
 //    NavigationView navigationView;
     SharedPreferences sharedpreferences;
 
@@ -90,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
 final String ambilfoto = Server.URL+"siswa/detail/foto/";
     private String url_siswa = Server.URL + "siswa/detail?id=";
     private String url_tes = Server.URL + "tes?id=";
+    private String url_hapuslogin = Server.URL + "hapuslogin?username=";
+
 
     public static final String TAG_ID = "id";
     public static final String TAG_IDU = "idu";
@@ -116,7 +110,6 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
-
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -130,6 +123,7 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
         idu = sharedpreferences.getString(TAG_ID, null);
+        username = sharedpreferences.getString(TAG_USERNAME, null);
         nama = sharedpreferences.getString(TAG_NAMA, null);
         levelU = sharedpreferences.getString(TAG_LEVEL, null);
         Token_jwt = sharedpreferences.getString(JWT, null);
@@ -159,7 +153,6 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
         });
         ///foto Profil
         WelcomefotoProfile = findViewById(R.id.WelcomefotoProfile);
-        ambilfoto();
 
         kelas = findViewById(R.id.welcomeKelas);
         kelas.setText(kode_kelas);
@@ -222,6 +215,8 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
                             .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+
+                                    hapusLogin();
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putBoolean(session_status, false);
                                     editor.putString(TAG_ID, null);
@@ -353,10 +348,14 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
 
 
 //        cekdatakosong();
+
+        getDeviceId();
+        ambilfoto();
         FirebaseGetSubscribe();
         FirebaseGetToken();
         pengumuman();
 
+        Log.d("UUID", deviceId);
 
     }
 
@@ -624,30 +623,63 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
 
                         JSONObject obj = dataArray.getJSONObject(i);
                         String fotofile = obj.getString("file");
+                        String get_deviceId = obj.getString("deviceId");
 
+                        if (get_deviceId.equals(deviceId))
+                        {
 
 //
-                        if (fotofile.isEmpty()) {
-                            Glide.with(getApplication())
-                                    .load("http://muslikh.my.id/default.png")
-                                    .apply(RequestOptions.circleCropTransform())
-                                    .into(WelcomefotoProfile);
+                            if (fotofile.isEmpty()) {
+                                Glide.with(getApplication())
+                                        .load("http://muslikh.my.id/default.png")
+                                        .apply(RequestOptions.circleCropTransform())
+                                        .into(WelcomefotoProfile);
 //                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
-                        } else if (fotofile.equals("null")) {
+                            } else if (fotofile.equals("null")) {
 
-                            Glide.with(getApplication())
-                                    .load("http://muslikh.my.id/default.png")
-                                    .apply(RequestOptions.circleCropTransform())
-                                    .into(WelcomefotoProfile);
+                                Glide.with(getApplication())
+                                        .load("http://muslikh.my.id/default.png")
+                                        .apply(RequestOptions.circleCropTransform())
+                                        .into(WelcomefotoProfile);
 //                                    Picasso.with(getApplication()).load("http://muslikh.my.id/default.png").into(fotoProfile);
-                        } else {
-
-                            Glide.with(getApplication())
-                                    .load(Server.data+"images/"+fotofile)
-                                    .apply(RequestOptions.circleCropTransform())
-                                    .into(WelcomefotoProfile);
+                            } else {
+                                Glide.with(getApplication())
+                                        .load(Server.data+"images/"+fotofile)
+                                        .apply(RequestOptions.circleCropTransform())
+                                        .into(WelcomefotoProfile);
 //                                    fotoProfile.setImageBitmap(decodedByte);
+                            }
+                        }else if (get_deviceId.equals("NULL")) {
+                            tesfcm();
+                        }else if (get_deviceId.isEmpty()) {
+                            tesfcm();
+                        }else{
+                            android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(MainActivity.this);
+                            alert
+                                    .setMessage("User Telah Login Pada Device Yang Baru, Jika Bukan Kamu, Segera Hubungi Admin ")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            hapusLogin();
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putBoolean(session_status, false);
+                                            editor.putString(TAG_ID, null);
+                                            editor.putString(TAG_USERNAME, null);
+                                            editor.commit();
+
+                                            Intent intent = new Intent(MainActivity.this, Login.class);
+                                            finish();
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                            android.app.AlertDialog kodesalah = alert.create();
+                            kodesalah.show();
+
                         }
+
 //                            }
 //                        }
                     }
@@ -682,7 +714,7 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
     private void tesfcm()
     {
         //  input token ke database
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_tes+idu+"&fcm_token="+token, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_tes+idu+"&fcm_token="+token+"&deviceId="+deviceId+"&aktif=1", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -700,7 +732,7 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
             @Override
             public void onErrorResponse(VolleyError error) {
 //                Log.e(TAG, "Error: " + error.getMessage());
-//                Toast.makeText(FormulirPPDB.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
 
@@ -709,16 +741,55 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
             protected Map<String,String> getParams() throws AuthFailureError{
 
                 Map<String,String> map = new HashMap<String, String>();
-//                    params.put("id_siswaBaru", id_siswaBaru);
-//                map.put("id", Integer.parseInt(idu));
                 map.put("fcm_token", token);
-                //  params.put("tahun_nmasuk", thnmasuk.getText().toString());
-                //}
+
                 return map;
             }
 
         };
 
+        AppController.getInstance().addToRequestQueue(stringRequest);
+    }
+
+    public void hapusLogin ()
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_hapuslogin+username+"&aktif=0&deviceId=NULL", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject dataObj = new JSONObject(response);
+
+
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("hapuslogin", "Error: " + error.getMessage());
+
+            }
+        }) {
+
+            @Override
+
+            protected Map<String,String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<String, String>();
+                map.put("aktif", "0");
+                map.put("username", username);
+                map.put("deciveId", "NULL");
+
+                return map;
+            }
+
+        };
         AppController.getInstance().addToRequestQueue(stringRequest);
     }
 
@@ -736,17 +807,19 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
                 // Get new Instance ID token
                 token = task.getResult().getToken();
 
+                //input db
                 tesfcm();
+
                 // Log and toast.
                 Log.d("token main activity", token);
-                Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void FirebaseGetSubscribe()
     {
-        //kirim notif semua user
+        //kirim notif per kelas
         FirebaseMessaging.getInstance().subscribeToTopic(kode_kelas)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -756,9 +829,25 @@ final String ambilfoto = Server.URL+"siswa/detail/foto/";
                             msg = getString(R.string.msg_subscribe_failed);
                         }
                         Log.d("pesan subscribe", msg);
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public void getDeviceId()
+    {
+//        String deviceId = "";
+//        if (Build.VERSION.SDK_INT >= 26) {
+//            deviceId = getSystemService(TelephonyManager.class).getImei();
+//        }else{
+//            deviceId = getSystemService(TelephonyManager.class).getDeviceId();
+//        }
+        TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        deviceId = tManager.getDeviceId();
+//        if (session==false) {
+//            Intent intent = new Intent(MainActivity.this, Login.class);
+//            startActivity(intent);
+//        }
     }
 }
 

@@ -69,7 +69,7 @@ public class PesanService extends FirebaseMessagingService {
 
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                 .setContentText(content)
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0))
+                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, Pengumuman.class), 0))
                 .setColor(getResources().getColor(R.color.colorPrimaryDark));
         notificationManager.notify(1,notBuilder.build());
     }

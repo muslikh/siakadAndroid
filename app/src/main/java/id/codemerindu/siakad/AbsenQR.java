@@ -88,7 +88,7 @@ public class AbsenQR extends AppCompatActivity {
 //                            pesan(idu);
                         }else{
 
-                            pesan(";p");
+                            pesan("Gagal");
                         }
 
                     }
