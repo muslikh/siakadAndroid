@@ -82,8 +82,8 @@ public class Profile extends AppCompatActivity {
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS= 7;
 
-    Button btneditdata,btnrefresh,btngantifoto;
-    ImageView fotoProfile;
+    Button btneditdata,btngantifoto;
+    ImageView fotoProfile,pilihfoto;
     final String ambilfoto = Server.URL+"siswa/detail/foto/";
     final String gantifoto = Server.URL+"siswa/detail/ganti_foto/";
 
@@ -114,7 +114,15 @@ public class Profile extends AppCompatActivity {
 
 
         fotoProfile = (ImageView) findViewById(R.id.fotoProfile);
-        fotoProfile.setOnClickListener(new View.OnClickListener() {
+
+//        fotoProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                pilihgambar();
+//            }
+//        });
+        pilihfoto = findViewById(R.id.pilihfotoprofile);
+        pilihfoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pilihgambar();
@@ -222,10 +230,10 @@ public class Profile extends AppCompatActivity {
         if(levelU.equals("admin"))
         {
             menu.findItem(R.id.logout).setEnabled(false).setVisible(false);
-            menu.findItem(R.id.hapus).setEnabled(true).setVisible(true);
+            menu.findItem(R.id.hapus).setEnabled(false).setVisible(false);
         }else if(levelU.equals("siswa"))
         {
-            menu.findItem(R.id.logout).setEnabled(true).setVisible(true);
+            menu.findItem(R.id.logout).setEnabled(false).setVisible(false);
             menu.findItem(R.id.hapus).setEnabled(false).setVisible(false);
         }
         return super.onCreateOptionsMenu(menu);

@@ -167,7 +167,6 @@
             android:background="#00FFFFFF"
             android:text="Jadwal"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:textColor="#000000" />
         <Button
             android:id="@+id/websekolah"
@@ -195,6 +194,7 @@
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             android:text="Keluar"
+            android:layout_marginRight="5dp"
             android:layout_gravity="center_vertical"
             android:textColor="#EB0000"
             android:textStyle="bold" />
@@ -262,6 +262,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="70dp"
+        android:visibility="gone"
         android:text="Bantuan ??"
         android:textSize="14dp"
         android:textColor="#D50000"

@@ -132,7 +132,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:text="Di Bawah Ini Merupakan data Nama Yang Telah Diterima  |  Hasil Seleksi PPDB Bisa Di Lihat Pada Tanggal 29 Juli 2020"
+        android:text="Di Bawah Ini Merupakan data Nama Yang Telah Diterima  |  Hasil Seleksi Bisa Kalan Lihat Disini Atau DI Email Kalian"
         android:textSize="14dp"
         android:textStyle="bold|italic"
         android:textColor="#000000"

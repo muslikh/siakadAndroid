@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -38,11 +39,13 @@ public class PesanService extends FirebaseMessagingService {
 
         String title = data.get("title");
         String content = data.get("message");
+
 //        PendingIntent intent = data.get("intent");
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         RemoteViews contentView = new RemoteViews(getPackageName(),R.layout.notif);
         contentView.setTextViewText(R.id.content_title, title);
         contentView.setTextViewText(R.id.content_text, content);
+
         String NOTIFICATION_CHANNEL_ID = "id1";
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
 //        {
@@ -61,16 +64,17 @@ public class PesanService extends FirebaseMessagingService {
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle(title)
                 .setContentText(content)
-//                .setCustomContentView(contentView)
+                .setCustomContentView(contentView)
                 .setSmallIcon(R.mipmap.ic_logo)
-                .setColor(getResources().getColor(R.color.colorPrimaryDark))
+//                .setColor(getResources().getColor(R.color.colorPrimaryDark))
                 .setStyle(new android.support.v4.app.NotificationCompat.DecoratedCustomViewStyle())
-//                .setCustomBigContentView(contentView)
+                .setCustomBigContentView(contentView)
 
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                 .setContentText(content)
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, Pengumuman.class), 0))
-                .setColor(getResources().getColor(R.color.colorPrimaryDark));
+                .setContentIntent(PendingIntent.getActivity(PesanService.this, 0, new Intent(this, Pengumuman.class), 0))
+//                .setColor(getResources().getColor(R.color.colorPrimaryDark));
+        ;
         notificationManager.notify(1,notBuilder.build());
     }
 

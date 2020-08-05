@@ -213,7 +213,7 @@ public class FormulirPPDB extends AppCompatActivity {
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert
-                .setMessage("Pengisian Formulir Berhasil, Tunggu Informasi Berikutnya di Menu Hasil Seleksi atau Bisa Juga Kalian Cek Pada Email Kalian")
+                .setMessage("Pengisian Formulir Berhasil, Tunggu Informasi Pada Pemberitahuan Di Aplikasi Ini Atau Bisa juda di cek pada Email Kalian, Jika Dikotak Masuk TIdak ada Silahkan Cek Di Spam Yaa")
                 .setCancelable(false)
                 .setPositiveButton("OKK", new DialogInterface.OnClickListener() {
                     @Override
